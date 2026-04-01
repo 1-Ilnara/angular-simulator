@@ -51,4 +51,4 @@ const users: IUser[] = [
 
 const filteredUsers = users.filter((user: IUser) => user.name === 'Ivan');
 
-console.log(filteredUsers); // В консоли останется только массив из двух Иванов
+console.log(filteredUsers); 
