@@ -1,12 +1,12 @@
-function sum(a:number,b:number):number {
-    return a + b ;
+function sum(a: number, b: number): number {
+    return a + b;
 }
 
-type TUploadStatus = "loading" | "success" | "error";
-let uploadStatus: TUploadStatus = "loading";
+type UploadStatus = "loading" | "success" | "error";
+let uploadStatus: UploadStatus = "loading";
 
-type TTextFormat = 'uppercase' | 'lowercase' | 'capitalize';
-let textFormat: TTextFormat = 'uppercase';
+type TextFormat = 'uppercase' | 'lowercase' | 'capitalize';
+let textFormat: TextFormat = 'uppercase';
 
 interface IUser {
     id: number;
@@ -19,7 +19,7 @@ interface IEmployee extends IUser {
     position: string;
 }
 
-function formatText(text: string, format: TTextFormat): string {
+function formatText(text: string, format: TextFormat): string {
     if (format === 'uppercase') {
         return text.toUpperCase();
     } 
@@ -32,23 +32,25 @@ function formatText(text: string, format: TTextFormat): string {
     return text;
 }
 
-console.log(formatText('привет МИР', 'capitalize')); 
-console.log(formatText('привет', 'uppercase'));     
-
 function removeChar(text: string, char: string): string {
-
     return text.replaceAll(char, '');
 }
 
-
-console.log(removeChar("экскаватор", "а")); 
-
 const users: IUser[] = [
-    { id: 1, name: 'Anna', email: 'anna@mail.com' },
-    { id: 2, name: 'Ivan' }, 
-    { id: 3, name: 'Ivan', email: 'ivan2@mail.com' }
+    { 
+        id: 1, 
+        name: 'Anna', 
+        email: 'anna@mail.com' 
+    },
+    { 
+        id: 2, 
+        name: 'Ivan' 
+    }, 
+    { 
+        id: 3, 
+        name: 'Ivan', 
+        email: 'ivan2@mail.com' 
+    }
 ];
 
-const filteredUsers = users.filter((user: IUser) => user.name === 'Ivan');
-
-console.log(filteredUsers); // В консоли останется только массив из двух Иванов
+const filteredUsers: IUser[] = users.filter((user: IUser) => user.name === 'Ivan');
