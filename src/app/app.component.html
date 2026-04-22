@@ -1,1 +1,274 @@
-<h1 style="display: flex; justify-content: center; font-family: sans-serif;">NGX SIMULATOR</h1>
+<header class="header">
+  <div class="header__container">
+    <a href="/" class="header__logo">
+      <img src="Images/icon-logo.svg" alt="РумТибет">
+    </a>
+    <nav class="header__nav">
+      <ul class="nav__list">
+        <li class="nav__item"><a href="/" class="nav__link">Главная</a></li>
+        <li class="nav__item"><a href="/guide" class="nav__link">Про гида</a></li>
+        <li class="nav__item"><a href="/program" class="nav__link">Программа тура</a></li>
+        <li class="nav__item"><a href="/price" class="nav__link">Стоимость</a></li>
+        <li class="nav__item"><a href="/blog" class="nav__link">Блог</a></li>
+        <li class="nav__item"><a href="/contacts" class="nav__link">Контакты</a></li>
+      </ul>
+    </nav>
+    <button class="header__btn">Консультация</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__container">
+    <h1 class="hero__title">
+      НАСЛАДИСЬ ПРОГУЛКОЙ В ГОРАХ<br>
+      С КОМАНДОЙ ЕДИНОМЫШЛЕННИКОВ
+    </h1>
+
+    <form class="hero__search tour-search" (ngSubmit)="onSearch()">
+  
+  <div class="tour-search__item">
+    <label class="tour-search__label">Локация для тура</label>
+    <div class="tour-search__field-wrapper">
+      <select name="location" class="tour-search__select" [(ngModel)]="searchData.location" required>
+        <option value="" disabled selected>выберите из списка</option>
+        @for (loc of locations; track loc) {
+          <option [value]="loc">{{ loc }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="tour-search__item">
+    <label class="tour-search__label">Дата похода</label>
+    <div class="tour-search__field-wrapper">
+      <select name="date" class="tour-search__select" [(ngModel)]="searchData.date" required>
+        <option value="" disabled selected>укажите дату</option>
+        @for (d of availableDates; track d) {
+          <option [value]="d">{{ d }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="tour-search__item">
+    <label class="tour-search__label">Участники</label>
+    <div class="tour-search__field-wrapper">
+      <select name="participants" class="tour-search__select" [(ngModel)]="searchData.participants" required>
+        <option value="" disabled selected>выберите из списка</option>
+        @for (p of participants; track p) {
+          <option [value]="p">{{ p }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <button type="submit" class="tour-search__btn">Найти программу</button>
+</form>
+
+    
+  </div>
+</section>
+
+<section class="tour-section">
+  <div class="container">
+    <div class="image-wrapper">
+      <img [src]="tourAbout.imageTop" alt="Снежная гора" class="img-top">
+      <div class="video-overlay img-bottom">
+         <img [src]="tourAbout.imageBottom" alt="Дом">
+         <button class="play-btn">▶</button>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+      <span class="subtitle">{{ tourAbout.subtitle }}</span>
+      <h2 class="title">{{ tourAbout.title }}</h2>
+      <p class="description">{{ tourAbout.description }}</p>
+      <a href="#" class="btn">Программа тура</a>
+    </div>
+  </div>
+</section>
+<section class="offer-section">
+  <div class="offer-content">
+    <span class="subtitle">наше предложение</span>
+    <h2 class="title">Лучшие программы для тебя</h2>
+    <p class="description">
+      Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. 
+      Ричард МакКлинток, профессор латыни из колледжа.
+    </p>
+
+    <div class="features-list">
+      @for (item of features; track item.title) {
+        <div class="feature-item">
+          <div class="icon-box">
+            <img [src]="item.icon" [alt]="item.title">
+          </div>
+          <div class="feature-text">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <button class="btn-primary">Стоимость программ</button>
+  </div>
+
+  <div class="image-collage">
+    @for (img of collageImages; track img) {
+      <div class="img-wrapper">
+        <img [src]="img" alt="mountains">
+      </div>
+    }
+  </div>
+</section>
+
+
+<section class="destinations-section">
+  <div class="destinations-header">
+    <span class="subtitle">по версии отдыхающих</span>
+    <h2 class="title">Популярные направления</h2>
+  </div>
+
+  <div class="cards-grid">
+    @for (item of destinations; track item.title) {
+      <div class="card" [ngClass]="item.class">
+        <div class="rating-badge">
+          <span class="star">★</span> {{ item.rating }}
+        </div>
+
+        <div class="card-footer">
+          <div class="info">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </div>
+          <div class="price-tag">
+            {{ item.price }} $
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="actions">
+    <button class="btn-rating">Рейтинг направлений</button>
+  </div>
+</section>
+
+<section class="blog-section">
+  <div class="blog-header">
+    <span class="subtitle">Делимся впечатлениями</span>
+    <h2 class="title">Блог о путешествиях</h2>
+  </div>
+  <div class="blog-grid">
+    @for (post of blogPosts; track post.title) {
+      <article class="blog-card">
+        <img [src]="post.image" [alt]="post.title" class="card-img">
+        <div class="card-content">
+          <h3 class="card-title">{{ post.title }}</h3>
+          <p class="card-text">{{ post.text }}</p>
+          <div class="card-footer">
+           <span class="date">{{ post.date }}</span>
+          <a href="#" class="read-more">Читать далее</a>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+
+  <button class="btn-more">Другие материалы</button>
+</section>
+
+
+
+
+
+<section class="gallery-section">
+  <div class="gallery-header">
+    <span class="subtitle">фото-отчет</span>
+    <h2 class="title">Делимся впечатлениями</h2>
+  </div>
+  <div class="gallery-container">
+    @for (img of galleryImages.getAll(); track img) {
+      <div class="gallery-item">
+        <img [src]="img" alt="Фото">
+      </div>
+    }
+  </div>
+</section>
+
+<footer class="main-footer">
+  <div class="subscribe__section">
+  <div class="subscribe-container">
+    <div class="subscribe-text">
+      <span class="label">актуально</span>
+      <h2 class="title">Получайте полезные рассылки о путешествиях</h2>
+    </div>
+
+    <div class="subscribe-form-wrapper">
+      <form class="subscribe-form">
+        <div class="input-group">
+          <label for="email">Введите e-mail адрес</label>
+          <input type="email" id="email" placeholder="name@domain.com">
+        </div>
+        <button type="submit" class="btn-subscribe">Подписаться на новости</button>
+      </form>
+      <p class="policy-text">
+        подписываясь на новости, вы автоматически соглашаетесь с 
+        <a href="#">условиями обработки персональных данных</a> и 
+        <a href="#">правилами рекламных рассылок</a>
+      </p>
+    </div>
+  </div>
+</div>
+  
+<div class="footer-container">
+    
+    <div class="footer-col about">
+      <h3 class="footer-title">Компания «РумТибет»</h3>
+      <p class="footer-text">
+        Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney.
+      </p>
+      <div class="footer-contacts">
+        <a href="mailto:info@domain.com" class="contact-link">info@domain.com</a>
+        <a href="tel:+71234567890" class="contact-link">+7 (123) 456-78-90</a>
+      </div>
+      <div class="social-icons">
+        <a href="#" class="social-link"><img src="/Images/icon-TG.svg" alt="Telegram"></a>
+        <a href="#" class="social-link"><img src="/Images/icon-vk.svg" alt="VK"></a>
+        <a href="#" class="social-link"><img src="/Images/icon-pinterest.svg" alt="Pinterest"></a>
+        <a href="#" class="social-link"><img src="/Images/icon-skype.svg" alt="Skype"></a>
+      </div>
+    </div>
+
+  
+    <div class="footer-col services">
+      <h3 class="footer-title">Наши услуги</h3>
+      <ul class="footer-list">
+        <li><a href="#">Прогулки в горы летом</a></li>
+        <li><a href="#">Зимние походы в горы</a></li>
+        <li><a href="#">Посещение храмов в горах</a></li>
+        <li><a href="#">Экстремальные виды туризма</a></li>
+        <li><a href="#">Походы в джунглях Амазонии</a></li>
+        <li><a href="#">Поездка в Африку</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col useful">
+      <h3 class="footer-title">Важно для путешествий</h3>
+      <ul class="footer-list">
+        <li><a href="#">Как собрать в долгий поход?</a></li>
+        <li><a href="#">Жизненно важные предметы для похода</a></li>
+        <li><a href="#">Медицинская страховка, гарантии безопасности</a></li>
+        <li><a href="#">Если вы врач - загляните сюда</a></li>
+      </ul>
+    </div>
+  </div>
+
+  
+  <div class="footer-bottom">
+    <div class="bottom-container">
+      <span>ИП Константинопольский К.К., 2023</span>
+      <a href="#">Политика обработки персональных данных</a>
+    </div>
+  </div>
+</footer>
