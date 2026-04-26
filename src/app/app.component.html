@@ -1,8 +1,8 @@
 <header class="header">
   <div class="header__container">
-    <a href="/" class="header__logo">
-      <img src="Images/icon-logo.svg" alt="РумТибет">
-    </a>
+    <div href="/" class="header__logo">
+      <img src="Images/logo_icon.svg" alt="logo">
+    </div>
     <nav class="header__nav">
       <ul class="nav__list">
         <li class="nav__item"><a href="/" class="nav__link">Главная</a></li>
@@ -27,23 +27,31 @@
     <form class="hero__search tour-search" (ngSubmit)="onSearch()">
   
   <div class="tour-search__item">
-    <label class="tour-search__label">Локация для тура</label>
-    <div class="tour-search__field-wrapper">
-      <select name="location" class="tour-search__select" [(ngModel)]="searchData.location" required>
-        <option value="" disabled selected>выберите из списка</option>
-        @for (loc of locations; track loc) {
-          <option [value]="loc">{{ loc }}</option>
-        }
-      </select>
-    </div>
+  <label for="tour-location-select" class="tour-search__label">Локация для тура</label>
+  
+  <div class="tour-search__field-wrapper">
+    <select 
+      id="tour-location-select" 
+      name="location" 
+      class="tour-search__select" 
+      [(ngModel)]="searchData.location" 
+      required
+    >
+      <option value="" disabled selected>выберите из списка</option>
+      
+      @for (location of locations; track $index) {
+        <option [value]="location">{{ location }}</option>
+      }
+    </select>
   </div>
+</div>
 
   <div class="tour-search__item">
     <label class="tour-search__label">Дата похода</label>
     <div class="tour-search__field-wrapper">
       <select name="date" class="tour-search__select" [(ngModel)]="searchData.date" required>
         <option value="" disabled selected>укажите дату</option>
-        @for (d of availableDates; track d) {
+        @for (d of availableDates; track availableDates) {
           <option [value]="d">{{ d }}</option>
         }
       </select>
@@ -55,7 +63,7 @@
     <div class="tour-search__field-wrapper">
       <select name="participants" class="tour-search__select" [(ngModel)]="searchData.participants" required>
         <option value="" disabled selected>выберите из списка</option>
-        @for (p of participants; track p) {
+        @for (p of participants; track participants) {
           <option [value]="p">{{ p }}</option>
         }
       </select>
@@ -72,11 +80,17 @@
 <section class="tour-section">
   <div class="container">
     <div class="image-wrapper">
-      <img [src]="tourAbout.imageTop" alt="Снежная гора" class="img-top">
+      
+      <img [src]="'Images/' + tourAbout.imageTop" 
+           [alt]="tourAbout.title" 
+           class="img-top">
+      
       <div class="video-overlay img-bottom">
-         <img [src]="tourAbout.imageBottom" alt="Дом">
-         <button class="play-btn">▶</button>
+        <img [src]="'Images/' + tourAbout.imageBottom" 
+             [alt]="tourAbout.title">
+        <button class="play-btn">▶</button>
       </div>
+      
     </div>
 
     <div class="content-wrapper">
@@ -100,7 +114,7 @@
       @for (item of features; track item.title) {
         <div class="feature-item">
           <div class="icon-box">
-            <img [src]="item.icon" [alt]="item.title">
+            <img [src]="'Images/' + item.icon + '.svg'" [alt]="item.title">
           </div>
           <div class="feature-text">
             <h3>{{ item.title }}</h3>
@@ -116,12 +130,11 @@
   <div class="image-collage">
     @for (img of collageImages; track img) {
       <div class="img-wrapper">
-        <img [src]="img" alt="mountains">
+        <img [src]="'Images/' + img" [alt]="img">
       </div>
     }
   </div>
 </section>
-
 
 <section class="destinations-section">
   <div class="destinations-header">
@@ -130,8 +143,12 @@
   </div>
 
   <div class="cards-grid">
-    @for (item of destinations; track item.title) {
-      <div class="card" [ngClass]="item.class">
+    @for (item of destinations; track item.slug) {
+      <div 
+        [id]="'destination-card-' + item.slug" 
+        class="card" 
+        [style.background-image]="'url(/Images/' + item.card + ')'"
+      >
         <div class="rating-badge">
           <span class="star">★</span> {{ item.rating }}
         </div>
@@ -141,7 +158,8 @@
             <h3>{{ item.title }}</h3>
             <p>{{ item.description }}</p>
           </div>
-          <div class="price-tag">
+          
+          <div [id]="'destination-price-tag-' + item.slug" class="price-tag">
             {{ item.price }} $
           </div>
         </div>
@@ -150,7 +168,9 @@
   </div>
 
   <div class="actions">
-    <button class="btn-rating">Рейтинг направлений</button>
+    <button id="view-destinations-rating-button" class="btn-rating">
+      Рейтинг направлений
+    </button>
   </div>
 </section>
 
@@ -162,7 +182,7 @@
   <div class="blog-grid">
     @for (post of blogPosts; track post.title) {
       <article class="blog-card">
-        <img [src]="post.image" [alt]="post.title" class="card-img">
+        <img [src]="'/Images/' + post.image" [alt]="post.title" class="card-img">
         <div class="card-content">
           <h3 class="card-title">{{ post.title }}</h3>
           <p class="card-text">{{ post.text }}</p>
@@ -178,10 +198,6 @@
   <button class="btn-more">Другие материалы</button>
 </section>
 
-
-
-
-
 <section class="gallery-section">
   <div class="gallery-header">
     <span class="subtitle">фото-отчет</span>
@@ -190,7 +206,7 @@
   <div class="gallery-container">
     @for (img of galleryImages.getAll(); track img) {
       <div class="gallery-item">
-        <img [src]="img" alt="Фото">
+        <img [src]="'/Images/' + img" [alt]="img">
       </div>
     }
   </div>
@@ -233,11 +249,17 @@
         <a href="tel:+71234567890" class="contact-link">+7 (123) 456-78-90</a>
       </div>
       <div class="social-icons">
-        <a href="#" class="social-link"><img src="/Images/icon-TG.svg" alt="Telegram"></a>
-        <a href="#" class="social-link"><img src="/Images/icon-vk.svg" alt="VK"></a>
-        <a href="#" class="social-link"><img src="/Images/icon-pinterest.svg" alt="Pinterest"></a>
-        <a href="#" class="social-link"><img src="/Images/icon-skype.svg" alt="Skype"></a>
-      </div>
+  @for (link of socialLinks; track link.slug) {
+    <a 
+  [id]="'footer-social-link-' + link.slug" 
+  [href]="link.url" 
+  [attr.aria-label]="'Перейти в ' + link.slug"
+  class="social-link"
+>
+  <img [src]="'/Images/' + link.icon" [alt]="link.slug">
+</a>
+  }
+</div>
     </div>
 
   

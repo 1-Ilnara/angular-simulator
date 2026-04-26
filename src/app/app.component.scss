@@ -1,3 +1,4 @@
+@use "sass:color";
 .header, .hero {
   width: 100%;
   max-width: 1920px;
@@ -434,9 +435,6 @@
   flex-direction: column;
   justify-content: flex-end;
   
-  &.card-1 { background-image: url('/Images/popular-tour.png'); }
-  &.card-2 { background-image: url('/Images/starry-night.png'); }
-  &.card-3 { background-image: url('/Images/Yoga.png'); }
 
   .rating-badge {
     position: absolute;
@@ -818,7 +816,7 @@ $subscribe-height: 196px;
           cursor: pointer;
           transition: background 0.3s;
           
-          &:hover { background-color: lighten(rgba(26, 62, 62, 1), 5%); }
+          &:hover { background-color: color.adjust(rgba(26, 62, 62, 1), $lightness: 5%); }
         }
       }
 
