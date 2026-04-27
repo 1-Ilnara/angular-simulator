@@ -1,19 +1,31 @@
 <header class="header">
   <div class="header__container">
-    <div href="/" class="header__logo">
+    <a href="/" class="header__logo">
       <img src="Images/logo_icon.svg" alt="logo">
-    </div>
+    </a>
     <nav class="header__nav">
       <ul class="nav__list">
-        <li class="nav__item"><a href="/" class="nav__link">Главная</a></li>
-        <li class="nav__item"><a href="/guide" class="nav__link">Про гида</a></li>
-        <li class="nav__item"><a href="/program" class="nav__link">Программа тура</a></li>
-        <li class="nav__item"><a href="/price" class="nav__link">Стоимость</a></li>
-        <li class="nav__item"><a href="/blog" class="nav__link">Блог</a></li>
-        <li class="nav__item"><a href="/contacts" class="nav__link">Контакты</a></li>
+        <li class="nav__item">
+          <a href="/" class="nav__link">Главная</a>
+        </li>
+        <li class="nav__item">
+          <a href="/guide" class="nav__link">Про гида</a>
+        </li>
+        <li class="nav__item">
+          <a href="/program" class="nav__link">Программа тура</a>
+        </li>
+        <li class="nav__item">
+          <a href="/price" class="nav__link">Стоимость</a>
+        </li>
+        <li class="nav__item">
+          <a href="/blog" class="nav__link">Блог</a>
+        </li>
+        <li class="nav__item">
+          <a href="/contacts" class="nav__link">Контакты</a>
+        </li>
       </ul>
     </nav>
-    <button class="header__btn">Консультация</button>
+    <button id="btn-consultation" class="header__btn">Консультация</button>
   </div>
 </header>
 
@@ -24,73 +36,83 @@
       С КОМАНДОЙ ЕДИНОМЫШЛЕННИКОВ
     </h1>
 
-    <form class="hero__search tour-search" (ngSubmit)="onSearch()">
-  
-  <div class="tour-search__item">
-  <label for="tour-location-select" class="tour-search__label">Локация для тура</label>
-  
-  <div class="tour-search__field-wrapper">
-    <select 
-      id="tour-location-select" 
-      name="location" 
-      class="tour-search__select" 
-      [(ngModel)]="searchData.location" 
-      required
-    >
-      <option value="" disabled selected>выберите из списка</option>
-      
-      @for (location of locations; track $index) {
-        <option [value]="location">{{ location }}</option>
-      }
-    </select>
-  </div>
-</div>
+    <form class="hero__search tour-search" (ngsubmit)="onSearch()">
+      <div class="tour-search__item">
+        <label for="tour-location-select" class="tour-search__label">Локация для тура</label>
+        <div class="tour-search__field-wrapper">
+          <select 
+            id="tour-location-select" 
+            name="location" 
+            class="tour-search__select" 
+            [(ngModel)]="searchData.location" 
+            required
+          >
+            <option value="" disabled selected>выберите из списка</option>
+            @for (location of locations; track location) {
+            <option [value]="location">{{ location }}</option>
+          }
+          </select>
+        </div>
+      </div>
 
-  <div class="tour-search__item">
-    <label class="tour-search__label">Дата похода</label>
-    <div class="tour-search__field-wrapper">
-      <select name="date" class="tour-search__select" [(ngModel)]="searchData.date" required>
-        <option value="" disabled selected>укажите дату</option>
-        @for (d of availableDates; track availableDates) {
-          <option [value]="d">{{ d }}</option>
-        }
-      </select>
-    </div>
-  </div>
+      <div class="tour-search__item">
+        <label class="tour-search__label">Дата похода</label>
+        <div class="tour-search__field-wrapper">
+          <select 
+            name="date" 
+            class="tour-search__select" 
+            [(ngModel)]="searchData.date" 
+            required
+          >
+            <option value="" disabled selected>укажите дату</option>
+            @for (dateItem of availableDates; track dateItem) {
+            <option [value]="dateItem">{{ dateItem }}</option>
+          }
+          </select>
+        </div>
+      </div>
 
-  <div class="tour-search__item">
-    <label class="tour-search__label">Участники</label>
-    <div class="tour-search__field-wrapper">
-      <select name="participants" class="tour-search__select" [(ngModel)]="searchData.participants" required>
-        <option value="" disabled selected>выберите из списка</option>
-        @for (p of participants; track participants) {
-          <option [value]="p">{{ p }}</option>
-        }
-      </select>
-    </div>
-  </div>
-
-  <button type="submit" class="tour-search__btn">Найти программу</button>
-</form>
-
-    
+      <div class="tour-search__item">
+        <label class="tour-search__label">Участники</label>
+        <div class="tour-search__field-wrapper">
+          <select 
+            name="participants" 
+            class="tour-search__select" 
+            [(ngModel)]="searchData.participants" 
+            required
+          >
+            <option value="" disabled selected>выберите из списка</option>
+            @for (participantCount of participants; track participantCount) {
+              <option [value]="participantCount">{{ participantCount }}</option>
+            }
+          </select>
+        </div>
+      </div>
+        <button 
+          type="submit" 
+          class="tour-search__btn" 
+          [disabled]="isSearchInvalid">
+          Найти программу
+        </button>
+    </form>
   </div>
 </section>
 
 <section class="tour-section">
   <div class="container">
     <div class="image-wrapper">
-      
-      <img [src]="'Images/' + tourAbout.imageTop" 
-           [alt]="tourAbout.title" 
-           class="img-top">
-      
+      <img 
+        [src]="'Images/' + tourAbout.imageTop + '.png'" 
+        [alt]="tourAbout.title" 
+        class="img-top"
+      >
       <div class="video-overlay img-bottom">
-        <img [src]="'Images/' + tourAbout.imageBottom" 
-             [alt]="tourAbout.title">
-        <button class="play-btn">▶</button>
+        <img 
+          [src]="'Images/' + tourAbout.imageBottom + '.png'" 
+          [alt]="tourAbout.title"
+        >
+        <button id="btn-play" class="play-btn">▶</button>
       </div>
-      
     </div>
 
     <div class="content-wrapper">
@@ -101,20 +123,23 @@
     </div>
   </div>
 </section>
+
 <section class="offer-section">
   <div class="offer-content">
     <span class="subtitle">наше предложение</span>
     <h2 class="title">Лучшие программы для тебя</h2>
     <p class="description">
-      Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. 
-      Ричард МакКлинток, профессор латыни из колледжа.
+      Его корни уходят в один фрагмент классической латыни 45 года н.э.
     </p>
 
     <div class="features-list">
       @for (item of features; track item.title) {
         <div class="feature-item">
           <div class="icon-box">
-            <img [src]="'Images/' + item.icon + '.svg'" [alt]="item.title">
+            <img 
+              [src]="'Images/' + item.icon + '.svg'" 
+              [alt]="item.title"
+            >
           </div>
           <div class="feature-text">
             <h3>{{ item.title }}</h3>
@@ -124,15 +149,18 @@
       }
     </div>
 
-    <button class="btn-primary">Стоимость программ</button>
+    <button id="btn-program" class="btn-primary">Стоимость программ</button>
   </div>
 
   <div class="image-collage">
     @for (img of collageImages; track img) {
-      <div class="img-wrapper">
-        <img [src]="'Images/' + img" [alt]="img">
-      </div>
-    }
+  <div class="img-wrapper">
+    <img 
+      [src]="'Images/' + img + '.png'" 
+      [alt]="img"
+    >
+  </div>
+}
   </div>
 </section>
 
@@ -145,9 +173,9 @@
   <div class="cards-grid">
     @for (item of destinations; track item.slug) {
       <div 
-        [id]="'destination-card-' + item.slug" 
+        [id]="'destination-card-' + item.slug " 
         class="card" 
-        [style.background-image]="'url(/Images/' + item.card + ')'"
+        [style.background-image]="'url(/Images/' + item.card + '.png)'" 
       >
         <div class="rating-badge">
           <span class="star">★</span> {{ item.rating }}
@@ -182,22 +210,25 @@
   <div class="blog-grid">
     @for (post of blogPosts; track post.title) {
       <article class="blog-card">
-        <img [src]="'/Images/' + post.image" [alt]="post.title" class="card-img">
+        <img 
+          [src]="'/Images/' + post.image + '.png'" 
+          [alt]="post.title" 
+          class="card-img"
+        >
         <div class="card-content">
           <h3 class="card-title">{{ post.title }}</h3>
           <p class="card-text">{{ post.text }}</p>
           <div class="card-footer">
-           <span class="date">{{ post.date }}</span>
-          <a href="#" class="read-more">Читать далее</a>
+            <span class="date">{{ post.date }}</span>
+            <a href="#" class="read-more">Читать далее</a>
           </div>
         </div>
       </article>
     }
   </div>
+    <button id="btn-other-materials" class="btn-more">Другие материалы</button>
 
-  <button class="btn-more">Другие материалы</button>
 </section>
-
 <section class="gallery-section">
   <div class="gallery-header">
     <span class="subtitle">фото-отчет</span>
@@ -206,72 +237,90 @@
   <div class="gallery-container">
     @for (img of galleryImages.getAll(); track img) {
       <div class="gallery-item">
-        <img [src]="'/Images/' + img" [alt]="img">
+        <img [src]="'Images/' + img + '.png'" [alt]="img">
       </div>
     }
   </div>
+  <button 
+    type="button" 
+    id="btn-pinterest"
+    class="btn-pinterest"
+  >
+    Наш Pinterest
+  </button>
 </section>
 
 <footer class="main-footer">
   <div class="subscribe__section">
-  <div class="subscribe-container">
-    <div class="subscribe-text">
-      <span class="label">актуально</span>
-      <h2 class="title">Получайте полезные рассылки о путешествиях</h2>
-    </div>
+    <div class="subscribe-container">
+      <div class="subscribe-text">
+        <span class="label">актуально</span>
+        <h2 class="title">Получайте полезные рассылки о путешествиях</h2>
+      </div>
 
-    <div class="subscribe-form-wrapper">
-      <form class="subscribe-form">
-        <div class="input-group">
-          <label for="email">Введите e-mail адрес</label>
-          <input type="email" id="email" placeholder="name@domain.com">
-        </div>
-        <button type="submit" class="btn-subscribe">Подписаться на новости</button>
-      </form>
-      <p class="policy-text">
-        подписываясь на новости, вы автоматически соглашаетесь с 
-        <a href="#">условиями обработки персональных данных</a> и 
-        <a href="#">правилами рекламных рассылок</a>
-      </p>
+      <div class="subscribe-form-wrapper">
+        <form class="subscribe-form">
+          <div class="input-group">
+            <label for="email">Введите e-mail адрес</label>
+            <input 
+              type="email" 
+              id="email" 
+              placeholder="name@domain.com"
+            >
+          </div>
+          <input 
+            type="email" 
+            #emailInput
+            placeholder="name@domain.com"
+            (input)="0" 
+          > 
+          <button>
+            type="submit" 
+            class="btn-subscribe" 
+            [disabled]="!emailInput.value">
+            Подписаться на новости
+          </button>
+        </form>
+        <p class="policy-text">
+          подписываясь на новости, вы автоматически соглашаетесь с 
+          <a href="#">условиями обработки персональных данных</a>
+        </p>
+      </div>
     </div>
   </div>
-</div>
   
-<div class="footer-container">
-    
+  <div class="footer-container">
     <div class="footer-col about">
-      <h3 class="footer-title">Компания «РумТибет»</h3>
+      <h3 class="footer-title">Компания «{{ companyName }}»</h3>
       <p class="footer-text">
-        Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney.
+        Его корни уходят в один фрагмент классической латыни 45 года н.э.
       </p>
       <div class="footer-contacts">
         <a href="mailto:info@domain.com" class="contact-link">info@domain.com</a>
         <a href="tel:+71234567890" class="contact-link">+7 (123) 456-78-90</a>
       </div>
       <div class="social-icons">
-  @for (link of socialLinks; track link.slug) {
-    <a 
-  [id]="'footer-social-link-' + link.slug" 
-  [href]="link.url" 
-  [attr.aria-label]="'Перейти в ' + link.slug"
-  class="social-link"
->
-  <img [src]="'/Images/' + link.icon" [alt]="link.slug">
-</a>
-  }
-</div>
+        @for (link of socialLinks; track link.slug) {
+          <a 
+            [id]="'footer-social-link-' + link.slug" 
+            [href]="link.url" 
+            [attr.aria-label]="'Перейти в ' + link.slug"
+            class="social-link"
+          >
+            <img 
+              [src]="'/Images/' + link.icon + '.svg'" 
+              [alt]="link.slug"
+            >
+          </a>
+        }
+      </div>
     </div>
 
-  
     <div class="footer-col services">
       <h3 class="footer-title">Наши услуги</h3>
       <ul class="footer-list">
         <li><a href="#">Прогулки в горы летом</a></li>
         <li><a href="#">Зимние походы в горы</a></li>
-        <li><a href="#">Посещение храмов в горах</a></li>
-        <li><a href="#">Экстремальные виды туризма</a></li>
-        <li><a href="#">Походы в джунглях Амазонии</a></li>
-        <li><a href="#">Поездка в Африку</a></li>
       </ul>
     </div>
 
@@ -279,14 +328,10 @@
       <h3 class="footer-title">Важно для путешествий</h3>
       <ul class="footer-list">
         <li><a href="#">Как собрать в долгий поход?</a></li>
-        <li><a href="#">Жизненно важные предметы для похода</a></li>
-        <li><a href="#">Медицинская страховка, гарантии безопасности</a></li>
-        <li><a href="#">Если вы врач - загляните сюда</a></li>
       </ul>
     </div>
   </div>
 
-  
   <div class="footer-bottom">
     <div class="bottom-container">
       <span>ИП Константинопольский К.К., 2023</span>

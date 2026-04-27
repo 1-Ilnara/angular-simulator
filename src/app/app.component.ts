@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Color } from '../enums/color';
 import { Collection } from './collection';
 import { FormsModule } from '@angular/forms';
-import { IDestination } from '../IDestination';
-import { IFeature } from '../IFeature';
-import { ISocialLink } from '../ISocialLink';
-import { ITourAbout } from '../ITourAbout'; 
-import { IBlogPost } from '../IBlogPost';
+import { IDestination } from '../interfaces/IDestination';
+import { IFeature } from '../interfaces/IFeature';
+import { ISocialLink } from '../interfaces/ISocialLink';
+import { ITourAbout } from '../interfaces/ITourAbout'; 
+import { IBlogPost } from '../interfaces/IBlogPost';
 
 @Component({
   selector: 'app-root',
@@ -28,12 +28,16 @@ export class AppComponent  {
     participants: ''
   };
 
+  get isSearchInvalid(): boolean {
+  return !this.searchData.location || !this.searchData.date || !this.searchData.participants;
+}
+
   tourAbout: ITourAbout = {
   subtitle: 'о нашем походе',
   title: 'Исследуйте все горные массивы мира вместе с нами',
   description: 'Его корни уходят в один фрагмент классической латыни 45 года н.э...',
-  imageTop: 'snowy_mountain.png',
-  imageBottom: 'house_forest.png'
+  imageTop: 'snowy_mountain',
+  imageBottom: 'house_forest'
 };
 
   features: IFeature[] = [
@@ -55,34 +59,34 @@ export class AppComponent  {
   ];
 
   collageImages: string[] = [
-    'tea_canyon.png',
-    'snake_canyon.png',
-    'snow_mobile.png',
-    'gree_hills.png'
+    'tea_canyon',
+    'snake_canyon',
+    'snow_mobile',
+    'gree_hills'
   ];
 
   blogPosts: IBlogPost [] = [
     {
       title: 'Красивая Италия, какая она в реальности?',
-      image: 'manarola_italy.png',
+      image: 'manarola_italy',
       text: 'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации.',
       date: '01/04/2023'
     },
     {
       title: 'Долой сомнения! Весь мир открыт для вас!',
-      image: 'airplane_tail.png',
+      image: 'airplane_tail',
       text: 'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации...',
       date: '02/04/2023'
     },
     {
       title: 'Как подготовиться к путешествию в одиночку?',
-      image: 'tourist.png',
+      image: 'tourist',
       text: 'Для современного мира базовый вектор развития предполагает...',
       date: '03/04/2023'
     },
     {
       title: 'Индия . . . летим?',
-      image: 'taj_mahal_india.png',
+      image: 'taj_mahal_india',
       text: 'Для современного мира базовый.',
       date: '04/04/2023'
     }
@@ -95,7 +99,7 @@ export class AppComponent  {
       description: 'Романтическое приключение',
       rating: 4.9,
       price: 480,
-      card: 'popular_tour.png'
+      card: 'popular_tour'
     },
     {
       slug: 'starry-night',
@@ -103,7 +107,7 @@ export class AppComponent  {
       description: 'в компании друзей',
       rating: 4.5,
       price: 500,
-      card: 'starry_night.png'
+      card: 'starry_night'
     },
     {
       slug: 'yoga_hill',
@@ -111,39 +115,39 @@ export class AppComponent  {
       description: 'для тех, кто заботится о себе',
       rating: 5.0,
       price: 230,
-      card: 'yoga_hill.png'
+      card: 'yoga_hill'
     }
   ];
 
   galleryImages = new Collection<string>([
-    'balloons_cappadocia.png',
-    'map_travel.png',
-    'dubai_hotel.png',
-    'tropical_coast.png',
-    'canyon.png',
-    'camera.png'
+    'balloons_cappadocia',
+    'map_travel',
+    'dubai_hotel',
+    'tropical_coast',
+    'canyon',
+    'camera'
   ]);
 
   socialLinks: ISocialLink[] = [
     {
       slug: 'telegram',
       url: 'https://t.me/your_channel',
-      icon: 'tg_icon.svg'
+      icon: 'tg_icon'
     },
     {
       slug: 'vk',
       url: 'https://vk.com/your_group',
-      icon: 'vk_icon.svg'
+      icon: 'vk_icon'
     },
     {
       slug: 'pinterest',
       url: 'https://pinterest.com/your_profile',
-      icon: 'pinterest_icon.svg'
+      icon: 'pinterest_icon'
     },
     {
       slug: 'skype',
       url: 'https://skype.com/your_profile',
-      icon: 'skype_icon.svg'
+      icon: 'skype_icon'
     }
   ];
 
