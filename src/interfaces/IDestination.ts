@@ -6,3 +6,4 @@ export interface IDestination {
   price: number;
   card: string;
 }
+

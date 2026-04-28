@@ -1,31 +1,35 @@
 <header class="header">
   <div class="header__container">
-    <a href="/" class="header__logo">
-      <img src="Images/logo_icon.svg" alt="logo">
+    <a href="/" id="header-logo-link" class="header__logo">
+      <img src="Images/logo_icon.svg" alt="Логотип компании">
     </a>
+
     <nav class="header__nav">
       <ul class="nav__list">
         <li class="nav__item">
-          <a href="/" class="nav__link">Главная</a>
+          <a href="/" id="nav-link-home" class="nav__link">Главная</a>
         </li>
         <li class="nav__item">
-          <a href="/guide" class="nav__link">Про гида</a>
+          <a href="/guide" id="nav-link-guide" class="nav__link">Про гида</a>
         </li>
         <li class="nav__item">
-          <a href="/program" class="nav__link">Программа тура</a>
+          <a href="/program" id="nav-link-program" class="nav__link">Программа тура</a>
         </li>
         <li class="nav__item">
-          <a href="/price" class="nav__link">Стоимость</a>
+          <a href="/price" id="nav-link-price" class="nav__link">Стоимость</a>
         </li>
         <li class="nav__item">
-          <a href="/blog" class="nav__link">Блог</a>
+          <a href="/blog" id="nav-link-blog" class="nav__link">Блог</a>
         </li>
         <li class="nav__item">
-          <a href="/contacts" class="nav__link">Контакты</a>
+          <a href="/contacts" id="nav-link-contacts" class="nav__link">Контакты</a>
         </li>
       </ul>
     </nav>
-    <button id="btn-consultation" class="header__btn">Консультация</button>
+
+    <button id="header-consultation-button" class="header__btn">
+      Консультация
+    </button>
   </div>
 </header>
 
@@ -37,6 +41,7 @@
     </h1>
 
     <form class="hero__search tour-search" (ngsubmit)="onSearch()">
+      
       <div class="tour-search__item">
         <label for="tour-location-select" class="tour-search__label">Локация для тура</label>
         <div class="tour-search__field-wrapper">
@@ -49,16 +54,17 @@
           >
             <option value="" disabled selected>выберите из списка</option>
             @for (location of locations; track location) {
-            <option [value]="location">{{ location }}</option>
-          }
+              <option [value]="location">{{ location }}</option>
+            }
           </select>
         </div>
       </div>
 
       <div class="tour-search__item">
-        <label class="tour-search__label">Дата похода</label>
+        <label for="tour-date-select" class="tour-search__label">Дата похода</label>
         <div class="tour-search__field-wrapper">
           <select 
+            id="tour-date-select" 
             name="date" 
             class="tour-search__select" 
             [(ngModel)]="searchData.date" 
@@ -66,16 +72,17 @@
           >
             <option value="" disabled selected>укажите дату</option>
             @for (dateItem of availableDates; track dateItem) {
-            <option [value]="dateItem">{{ dateItem }}</option>
-          }
+              <option [value]="dateItem">{{ dateItem }}</option>
+            }
           </select>
         </div>
       </div>
 
       <div class="tour-search__item">
-        <label class="tour-search__label">Участники</label>
+        <label for="tour-participants-select" class="tour-search__label">Участники</label>
         <div class="tour-search__field-wrapper">
           <select 
+            id="tour-participants-select" 
             name="participants" 
             class="tour-search__select" 
             [(ngModel)]="searchData.participants" 
@@ -88,12 +95,15 @@
           </select>
         </div>
       </div>
-        <button 
-          type="submit" 
-          class="tour-search__btn" 
-          [disabled]="isSearchInvalid">
-          Найти программу
-        </button>
+
+      <button 
+        id="tour-search-submit-button" 
+        type="submit" 
+        class="tour-search__btn" 
+        [disabled]="isSearchInvalid">
+        Найти программу
+      </button>
+
     </form>
   </div>
 </section>
@@ -103,15 +113,15 @@
     <div class="image-wrapper">
       <img 
         [src]="'Images/' + tourAbout.imageTop + '.png'" 
-        [alt]="tourAbout.title" 
+        [alt]="tourAbout.title + ' - вид сверху'" 
         class="img-top"
       >
       <div class="video-overlay img-bottom">
         <img 
           [src]="'Images/' + tourAbout.imageBottom + '.png'" 
-          [alt]="tourAbout.title"
+          [alt]="tourAbout.title + ' - превью видео'"
         >
-        <button id="btn-play" class="play-btn">▶</button>
+        <button id="tour-video-play-button" class="play-btn">▶</button>
       </div>
     </div>
 
@@ -119,7 +129,10 @@
       <span class="subtitle">{{ tourAbout.subtitle }}</span>
       <h2 class="title">{{ tourAbout.title }}</h2>
       <p class="description">{{ tourAbout.description }}</p>
-      <a href="#" class="btn">Программа тура</a>
+      
+      <a href="#" id="view-tour-program-link" class="btn">
+        Программа тура
+      </a>
     </div>
   </div>
 </section>
@@ -149,18 +162,23 @@
       }
     </div>
 
-    <button id="btn-program" class="btn-primary">Стоимость программ</button>
+    <button 
+      id="view-programs-price-button" 
+      class="btn-primary"
+    >
+      Стоимость программ
+    </button>
   </div>
 
   <div class="image-collage">
-    @for (img of collageImages; track img) {
-  <div class="img-wrapper">
-    <img 
-      [src]="'Images/' + img + '.png'" 
-      [alt]="img"
-    >
-  </div>
-}
+    @for (img of collageImages; track img; let i = $index) {
+      <div class="img-wrapper">
+        <img 
+          [src]="'Images/' + img + '.png'" 
+          [alt]="'Изображение предложения ' + (i + 1)"
+        >
+      </div>
+    }
   </div>
 </section>
 
@@ -173,9 +191,9 @@
   <div class="cards-grid">
     @for (item of destinations; track item.slug) {
       <div 
-        [id]="'destination-card-' + item.slug " 
+        [id]="'destination-card-' + item.slug" 
         class="card" 
-        [style.background-image]="'url(/Images/' + item.card + '.png)'" 
+        [style.backgroundImage]="'url(/Images/' + item.card + '.png)'"
       >
         <div class="rating-badge">
           <span class="star">★</span> {{ item.rating }}
@@ -187,7 +205,7 @@
             <p>{{ item.description }}</p>
           </div>
           
-          <div [id]="'destination-price-tag-' + item.slug" class="price-tag">
+          <div class="price-tag">
             {{ item.price }} $
           </div>
         </div>
@@ -196,7 +214,10 @@
   </div>
 
   <div class="actions">
-    <button id="view-destinations-rating-button" class="btn-rating">
+    <button 
+      id="view-destinations-rating-button" 
+      class="btn-rating"
+    >
       Рейтинг направлений
     </button>
   </div>
@@ -207,8 +228,9 @@
     <span class="subtitle">Делимся впечатлениями</span>
     <h2 class="title">Блог о путешествиях</h2>
   </div>
+
   <div class="blog-grid">
-    @for (post of blogPosts; track post.title) {
+    @for (post of blogPosts; track post.title; let i = $index) {
       <article class="blog-card">
         <img 
           [src]="'/Images/' + post.image + '.png'" 
@@ -220,75 +242,104 @@
           <p class="card-text">{{ post.text }}</p>
           <div class="card-footer">
             <span class="date">{{ post.date }}</span>
-            <a href="#" class="read-more">Читать далее</a>
+            
+            <a 
+              href="#" 
+              [id]="'read-more-link-' + i" 
+              class="read-more"
+            >
+              Читать далее
+            </a>
           </div>
         </div>
       </article>
     }
   </div>
-    <button id="btn-other-materials" class="btn-more">Другие материалы</button>
 
+  <button 
+    id="view-all-blog-posts-button" 
+    class="btn-more"
+  >
+    Другие материалы
+  </button>
 </section>
+
 <section class="gallery-section">
   <div class="gallery-header">
     <span class="subtitle">фото-отчет</span>
     <h2 class="title">Делимся впечатлениями</h2>
   </div>
+
   <div class="gallery-container">
-    @for (img of galleryImages.getAll(); track img) {
-      <div class="gallery-item">
-        <img [src]="'Images/' + img + '.png'" [alt]="img">
+    @for (img of galleryImages.getAll(); track img; let i = $index) {
+      <div 
+        [id]="'gallery-item-wrapper-' + i" 
+        class="gallery-item"
+      >
+        <img 
+          [src]="'Images/' + img + '.png'" 
+          [alt]="'Фото из отчета о путешествии ' + (i + 1)"
+        >
       </div>
     }
   </div>
+
   <button 
     type="button" 
-    id="btn-pinterest"
+    id="open-social-gallery-button"
     class="btn-pinterest"
   >
     Наш Pinterest
   </button>
 </section>
 
-<footer class="main-footer">
-  <div class="subscribe__section">
-    <div class="subscribe-container">
-      <div class="subscribe-text">
+<footer>
+  <footer class="main-footer">
+    <div class="subscribe__section">
+      <div class="subscribe-container">
+        
+        <div class="subscribe-text">
         <span class="label">актуально</span>
         <h2 class="title">Получайте полезные рассылки о путешествиях</h2>
       </div>
 
       <div class="subscribe-form-wrapper">
-        <form class="subscribe-form">
+        <form class="subscribe-form" (ngsubmit)="onSubscribe()">
           <div class="input-group">
-            <label for="email">Введите e-mail адрес</label>
-            <input 
-              type="email" 
-              id="email" 
-              placeholder="name@domain.com"
-            >
+            <label for="newsletter-email-input">Введите e-mail адрес</label>
+            <div class="form-row">
+              <input 
+                type="email" 
+                id="newsletter-email-input" 
+                name="email"
+                #emailInput
+                placeholder="name@domain.com"
+                required
+                class="subscribe-input"
+              >
+              
+              <button 
+                type="submit" 
+                id="newsletter-subscribe-button" 
+                class="btn-subscribe" 
+                [disabled]="!emailInput.value"
+              >
+                Подписаться на новости
+              </button>
+            </div>
           </div>
-          <input 
-            type="email" 
-            #emailInput
-            placeholder="name@domain.com"
-            (input)="0" 
-          > 
-          <button>
-            type="submit" 
-            class="btn-subscribe" 
-            [disabled]="!emailInput.value">
-            Подписаться на новости
-          </button>
         </form>
+
         <p class="policy-text">
           подписываясь на новости, вы автоматически соглашаетесь с 
-          <a href="#">условиями обработки персональных данных</a>
+          <a href="#" id="privacy-policy-link">условиями обработки персональных данных</a> 
+          и <a href="#" id="advertising-rules-link">правилами рекламных рассылок</a>
         </p>
       </div>
+
     </div>
   </div>
-  
+
   <div class="footer-container">
     <div class="footer-col about">
       <h3 class="footer-title">Компания «{{ companyName }}»</h3>
@@ -319,15 +370,42 @@
     <div class="footer-col services">
       <h3 class="footer-title">Наши услуги</h3>
       <ul class="footer-list">
-        <li><a href="#">Прогулки в горы летом</a></li>
-        <li><a href="#">Зимние походы в горы</a></li>
+        <li>
+          <a href="#" id="service-summer-mountains-link">Прогулки в горы летом</a>
+        </li>
+        <li>
+          <a href="#" id="service-winter-mountains-link">Зимние походы в горы</a>
+        </li>
+        <li>
+          <a href="#" id="service-mountain-temples-link">Посещение храмов в горах</a>
+        </li>
+        <li>
+          <a href="#" id="service-extreme-tourism-link">Экстремальные виды туризма</a>
+        </li>
+        <li>
+          <a href="#" id="service-amazon-jungle-link">Походы в джунглях Амазонии</a>
+        </li>
+        <li>
+          <a href="#" id="service-africa-trip-link">Поездка в Африку</a>
+        </li>
       </ul>
     </div>
 
     <div class="footer-col useful">
       <h3 class="footer-title">Важно для путешествий</h3>
       <ul class="footer-list">
-        <li><a href="#">Как собрать в долгий поход?</a></li>
+        <li>
+          <a href="#" id="useful-hiking-prep-link">Как собрать в долгий поход?</a>
+        </li>
+        <li>
+          <a href="#" id="useful-essential-items-link">Жизненно важные предметы для похода</a>
+        </li>
+        <li>
+          <a href="#" id="useful-insurance-safety-link">Медицинская страховка, гарантии безопасности</a>
+        </li>
+        <li>
+          <a href="#" id="useful-medical-doctor-link">Если вы врач - загляните сюда</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -335,7 +413,7 @@
   <div class="footer-bottom">
     <div class="bottom-container">
       <span>ИП Константинопольский К.К., 2023</span>
-      <a href="#">Политика обработки персональных данных</a>
+      <a href="#" id="footer-privacy-policy-link">Политика обработки персональных данных</a>
     </div>
   </div>
 </footer>

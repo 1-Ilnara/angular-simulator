@@ -16,11 +16,12 @@ import { IBlogPost } from '../interfaces/IBlogPost';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent  {
- readonly companyName: string = 'РумТибет';
- locations = ['Алтай', 'Кавказ', 'Памир', 'Урал'];
- participants = ['1 человек', '2-4 человека', 'Группа 5+'];
- availableDates = ['10/05/2023', '20/06/2023', '15/07/2023', '01/08/2023'];
+export class AppComponent {
+
+  readonly companyName: string = 'РумТибет';
+  locations = ['Алтай', 'Кавказ', 'Памир', 'Урал'];
+  participants = ['1 человек', '2-4 человека', 'Группа 5+'];
+  availableDates = ['10/05/2023', '20/06/2023', '15/07/2023', '01/08/2023'];
 
   searchData = {
     location: '',
@@ -28,17 +29,13 @@ export class AppComponent  {
     participants: ''
   };
 
-  get isSearchInvalid(): boolean {
-  return !this.searchData.location || !this.searchData.date || !this.searchData.participants;
-}
-
   tourAbout: ITourAbout = {
-  subtitle: 'о нашем походе',
-  title: 'Исследуйте все горные массивы мира вместе с нами',
-  description: 'Его корни уходят в один фрагмент классической латыни 45 года н.э...',
-  imageTop: 'snowy_mountain',
-  imageBottom: 'house_forest'
-};
+    subtitle: 'о нашем походе',
+    title: 'Исследуйте все горные массивы мира вместе с нами',
+    description: 'Его корни уходят в один фрагмент классической латыни 45 года н.э...',
+    imageTop: 'snowy_mountain',
+    imageBottom: 'house_forest'
+  };
 
   features: IFeature[] = [
     {
@@ -65,7 +62,7 @@ export class AppComponent  {
     'gree_hills'
   ];
 
-  blogPosts: IBlogPost [] = [
+  blogPosts: IBlogPost[] = [
     {
       title: 'Красивая Италия, какая она в реальности?',
       image: 'manarola_italy',
@@ -151,10 +148,13 @@ export class AppComponent  {
     }
   ];
 
-
   constructor() {
     this.setLastVisit();
     this.setVisitCount();
+  }
+
+  get isSearchInvalid(): boolean {
+    return !this.searchData.location || !this.searchData.date || !this.searchData.participants;
   }
 
   onSearch() {
@@ -163,7 +163,12 @@ export class AppComponent  {
   }
 
   isPrimaryColor(color: Color): boolean {
-    return color === Color.Red || color === Color.Green || color === Color.Blue;
+    return color === Color.RED || color === Color.GREEN || color === Color.BLUE;
+  }
+
+  onSubscribe() {
+    console.log('Подписка оформлена!');
+    alert('Спасибо за подписку!');
   }
 
   private setLastVisit(): void {

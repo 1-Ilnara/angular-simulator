@@ -1,8 +1,9 @@
 export class Collection<T> {
+
   private items: T[] = [];
 
   constructor(initialData: T[]) {
-    this.items = initialData;
+    this.items = [...initialData];
   }
 
   getAll(): T[] {
@@ -18,10 +19,11 @@ export class Collection<T> {
   }
 
   remove(index: number): void {
-    this.items.splice(index, 1);
+    this.items = this.items.filter((_, i) => i !== index);
   }
 
   replace(index: number, newItem: T): void {
-    this.items[index] = newItem;
+    this.items = this.items.map((item, i) => i === index ? newItem : item);
   }
+
 }
