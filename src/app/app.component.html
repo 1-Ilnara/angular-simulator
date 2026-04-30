@@ -1,7 +1,7 @@
 <header class="header">
   <div class="header__container">
     <a href="/" id="header-logo-link" class="header__logo">
-      <img src="Images/logo_icon.svg" alt="Логотип компании">
+      <img src="Images/svg/logo_icon.svg" alt="Логотип компании">
     </a>
 
     <nav class="header__nav">
@@ -51,11 +51,12 @@
             class="tour-search__select" 
             [(ngModel)]="searchData.location" 
             required
-          >
+          > 
             <option value="" disabled selected>выберите из списка</option>
-            @for (location of locations; track location) {
-              <option [value]="location">{{ location }}</option>
-            }
+            @for (location of locations; track location.id) {
+    <option [value]="location.id">{{ location.name }}</option>
+  }
+
           </select>
         </div>
       </div>
@@ -71,9 +72,9 @@
             required
           >
             <option value="" disabled selected>укажите дату</option>
-            @for (dateItem of availableDates; track dateItem) {
-              <option [value]="dateItem">{{ dateItem }}</option>
-            }
+            @for (dateItem of availableDates; track dateItem.id) {
+    <option [value]="dateItem.id">{{ dateItem.date }}</option>
+  }
           </select>
         </div>
       </div>
@@ -150,7 +151,7 @@
         <div class="feature-item">
           <div class="icon-box">
             <img 
-              [src]="'Images/' + item.icon + '.svg'" 
+              [src]="'Images/svg/' + item.icon + '.svg'" 
               [alt]="item.title"
             >
           </div>
@@ -271,18 +272,18 @@
   </div>
 
   <div class="gallery-container">
-    @for (img of galleryImages.getAll(); track img; let i = $index) {
-      <div 
-        [id]="'gallery-item-wrapper-' + i" 
-        class="gallery-item"
+  @for (img of galleryImages.getAll(); track img.id) {
+    <div 
+      [id]="'gallery-item-wrapper-' + img.id" 
+      class="gallery-item"
+    >
+      <img 
+        [src]="'Images/' + img.url + '.png'" 
+        [alt]="'Фото из отчета о путешествии ' + img.id"
       >
-        <img 
-          [src]="'Images/' + img + '.png'" 
-          [alt]="'Фото из отчета о путешествии ' + (i + 1)"
-        >
-      </div>
-    }
-  </div>
+    </div>
+  }
+</div>
 
   <button 
     type="button" 
@@ -332,8 +333,17 @@
 
         <p class="policy-text">
           подписываясь на новости, вы автоматически соглашаетесь с 
-          <a href="#" id="privacy-policy-link">условиями обработки персональных данных</a> 
-          и <a href="#" id="advertising-rules-link">правилами рекламных рассылок</a>
+          <a href="mailto:info@domain.com" 
+            id="contact-email-link" 
+            class="contact-link">
+            info@domain.com
+          </a>
+
+          <a href="tel:+71234567890" 
+            id="contact-phone-link" 
+            class="contact-link">
+            +7 (123) 456-78-90
+          </a>
         </p>
       </div>
 
@@ -359,7 +369,7 @@
             class="social-link"
           >
             <img 
-              [src]="'/Images/' + link.icon + '.svg'" 
+              [src]="'Images/' + link.icon + '.svg'" 
               [alt]="link.slug"
             >
           </a>

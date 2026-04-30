@@ -1,4 +1,6 @@
-export class Collection<T> {
+interface Identifiable {
+  id: string | number;
+}export class Collection< T extends Identifiable> {
 
   private items: T[] = [];
 
@@ -10,20 +12,20 @@ export class Collection<T> {
     return this.items;
   }
 
-  getOne(index: number): T {
-    return this.items[index];
-  }
+  getOne(id: string | number): T | undefined {
+  return this.items.find(item => item.id === id);
+}
 
   clear(): void {
     this.items = [];
   }
 
-  remove(index: number): void {
-    this.items = this.items.filter((_, i) => i !== index);
+  remove(id: string | number): void {
+    this.items = this.items.filter(item => item.id !== id);
   }
 
-  replace(index: number, newItem: T): void {
-    this.items = this.items.map((item, i) => i === index ? newItem : item);
+  replace(id: string | number, newItem: T): void {
+    this.items = this.items.map(item => item.id === id ? newItem : item);
   }
 
 }

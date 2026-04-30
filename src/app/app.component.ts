@@ -8,6 +8,8 @@ import { IFeature } from '../interfaces/IFeature';
 import { ISocialLink } from '../interfaces/ISocialLink';
 import { ITourAbout } from '../interfaces/ITourAbout'; 
 import { IBlogPost } from '../interfaces/IBlogPost';
+import { Location, DateItem, SearchData } from '../interfaces/Identifiable';
+import { IGalleryImage } from '../interfaces/IGalleryImage';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +21,25 @@ import { IBlogPost } from '../interfaces/IBlogPost';
 export class AppComponent {
 
   readonly companyName: string = 'РумТибет';
-  locations = ['Алтай', 'Кавказ', 'Памир', 'Урал'];
-  participants = ['1 человек', '2-4 человека', 'Группа 5+'];
-  availableDates = ['10/05/2023', '20/06/2023', '15/07/2023', '01/08/2023'];
 
-  searchData = {
+  availableDates: DateItem[] = [
+    { id: 1, date: '2026-05-10' },
+    { id: 2, date: '2026-06-11' },
+    { id: 3, date: '2026-07-12' },
+    { id: 4, date: '2026-08-13' },
+    { id: 5, date: '2026-09-14' }
+  ];
+
+  locations: Location[] = [
+    { id: 101, name: 'Алтай ' },
+    { id: 102, name: 'Кавказ' },
+    { id: 103, name: 'Памир' },
+    { id: 104, name: 'Урал' } 
+  ];
+
+  participants: number[] = [1, 2, 3, 4, 5, 6];
+
+  searchData: SearchData = {
     location: '',
     date: '',
     participants: ''
@@ -96,7 +112,7 @@ export class AppComponent {
       description: 'Романтическое приключение',
       rating: 4.9,
       price: 480,
-      card: 'popular_tour'
+      card: 'mountain_lake'
     },
     {
       slug: 'starry-night',
@@ -116,35 +132,35 @@ export class AppComponent {
     }
   ];
 
-  galleryImages = new Collection<string>([
-    'balloons_cappadocia',
-    'map_travel',
-    'dubai_hotel',
-    'tropical_coast',
-    'canyon',
-    'camera'
+  galleryImages: Collection<IGalleryImage> = new Collection<IGalleryImage>([
+    { id: 1, url: 'balloons_cappadocia' },
+    { id: 2, url: 'map_travel' },
+    { id: 3, url: 'dubai_hotel' },
+    { id: 4, url: 'tropical_coast' },
+    { id: 5, url: 'canyon' },
+    { id: 6, url: 'travel_items' },
   ]);
 
   socialLinks: ISocialLink[] = [
     {
       slug: 'telegram',
       url: 'https://t.me/your_channel',
-      icon: 'tg_icon'
+      icon: 'svg/tg_icon'
     },
     {
       slug: 'vk',
       url: 'https://vk.com/your_group',
-      icon: 'vk_icon'
+      icon: 'svg/vk_icon'
     },
     {
       slug: 'pinterest',
       url: 'https://pinterest.com/your_profile',
-      icon: 'pinterest_icon'
+      icon: 'svg/pinterest_icon'
     },
     {
       slug: 'skype',
       url: 'https://skype.com/your_profile',
-      icon: 'skype_icon'
+      icon: 'svg/skype_icon'
     }
   ];
 
@@ -157,7 +173,7 @@ export class AppComponent {
     return !this.searchData.location || !this.searchData.date || !this.searchData.participants;
   }
 
-  onSearch() {
+  onSearch(): void {
     console.log('Данные формы отправлены:', this.searchData);
     alert('Поиск запущен!');
   }
@@ -166,7 +182,7 @@ export class AppComponent {
     return color === Color.RED || color === Color.GREEN || color === Color.BLUE;
   }
 
-  onSubscribe() {
+  onSubscribe(): void {
     console.log('Подписка оформлена!');
     alert('Спасибо за подписку!');
   }
