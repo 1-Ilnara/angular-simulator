@@ -8,8 +8,8 @@ import { IFeature } from '../interfaces/IFeature';
 import { ISocialLink } from '../interfaces/ISocialLink';
 import { ITourAbout } from '../interfaces/ITourAbout'; 
 import { IBlogPost } from '../interfaces/IBlogPost';
-import { Location, DateItem, SearchData } from '../interfaces/Identifiable';
-import { IGalleryImage } from '../interfaces/IGalleryImage';
+import { SearchData } from '../interfaces/ISearchData';
+
 
 @Component({
   selector: 'app-root',
@@ -20,28 +20,17 @@ import { IGalleryImage } from '../interfaces/IGalleryImage';
 })
 export class AppComponent {
 
-  readonly companyName: string = 'РумТибет';
+  companyName: string = 'РумТибет';
 
-  availableDates: DateItem[] = [
-    { id: 1, date: '2026-05-10' },
-    { id: 2, date: '2026-06-11' },
-    { id: 3, date: '2026-07-12' },
-    { id: 4, date: '2026-08-13' },
-    { id: 5, date: '2026-09-14' }
-  ];
+  availableDates: string[] = ['2026-05-10', '2026-06-11', '2026-07-12', '2026-08-13', '2026-09-14'];
 
-  locations: Location[] = [
-    { id: 101, name: 'Алтай ' },
-    { id: 102, name: 'Кавказ' },
-    { id: 103, name: 'Памир' },
-    { id: 104, name: 'Урал' } 
-  ];
+  locations: string[] = ['Алтай', 'Кавказ', 'Памир', 'Урал'];
 
-  participants: number[] = [1, 2, 3, 4, 5, 6];
+  participants: number[] = [1, 2, 3, 4, 5];
 
   searchData: SearchData = {
     location: '',
-    date: '',
+    availableDates: '',
     participants: ''
   };
 
@@ -71,33 +60,31 @@ export class AppComponent {
     }
   ];
 
-  collageImages: string[] = [
-    'tea_canyon',
-    'snake_canyon',
-    'snow_mobile',
-    'gree_hills'
-  ];
+  collageImages: string [] = ['tea_canyon', 'snake_canyon', 'snow_mobile', 'gree_hills'];
 
   blogPosts: IBlogPost[] = [
     {
-      title: 'Красивая Италия, какая она в реальности?',
+      id: 1,
+      title:'Красивая Италия, какая она в реальности?',
       image: 'manarola_italy',
       text: 'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации.',
       date: '01/04/2023'
     },
     {
+      id: 2,
       title: 'Долой сомнения! Весь мир открыт для вас!',
       image: 'airplane_tail',
       text: 'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации...',
       date: '02/04/2023'
     },
     {
+      id: 3,  
       title: 'Как подготовиться к путешествию в одиночку?',
       image: 'tourist',
       text: 'Для современного мира базовый вектор развития предполагает...',
       date: '03/04/2023'
     },
-    {
+    { id: 4,
       title: 'Индия . . . летим?',
       image: 'taj_mahal_india',
       text: 'Для современного мира базовый.',
@@ -132,14 +119,7 @@ export class AppComponent {
     }
   ];
 
-  galleryImages: Collection<IGalleryImage> = new Collection<IGalleryImage>([
-    { id: 1, url: 'balloons_cappadocia' },
-    { id: 2, url: 'map_travel' },
-    { id: 3, url: 'dubai_hotel' },
-    { id: 4, url: 'tropical_coast' },
-    { id: 5, url: 'canyon' },
-    { id: 6, url: 'travel_items' },
-  ]);
+  galleryImages: string[] = ['balloons_cappadocia','map_travel','dubai_hotel','tropical_coast','canyon' ,'travel_items',];
 
   socialLinks: ISocialLink[] = [
     {
@@ -170,7 +150,7 @@ export class AppComponent {
   }
 
   get isSearchInvalid(): boolean {
-    return !this.searchData.location || !this.searchData.date || !this.searchData.participants;
+    return !this.searchData.location || !this.searchData.availableDates || !this.searchData.participants;
   }
 
   onSearch(): void {

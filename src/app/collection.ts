@@ -1,7 +1,4 @@
-interface Identifiable {
-  id: string | number;
-}export class Collection< T extends Identifiable> {
-
+export class Collection<T> {
   private items: T[] = [];
 
   constructor(initialData: T[]) {
@@ -12,20 +9,25 @@ interface Identifiable {
     return this.items;
   }
 
-  getOne(id: string | number): T | undefined {
-  return this.items.find(item => item.id === id);
-}
+  getByIndex(index: number): T | undefined {
+    return this.items[index];
+  }
 
   clear(): void {
     this.items = [];
   }
 
-  remove(id: string | number): void {
-    this.items = this.items.filter(item => item.id !== id);
+  removeAt(index: number): void {
+    this.items = this.items.filter((item: T, i: number) => i !== index);
   }
 
-  replace(id: string | number, newItem: T): void {
-    this.items = this.items.map(item => item.id === id ? newItem : item);
+  replaceAt(index: number, newItem: T): void {
+    if (index >= 0 && index < this.items.length) {
+      this.items[index] = newItem;
+    }
   }
 
+  find(predicate: (item: T) => boolean): T | undefined {
+    return this.items.find(predicate);
+  }
 }

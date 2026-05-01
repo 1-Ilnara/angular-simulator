@@ -1,8 +1,9 @@
 export interface IBlogPost {
+  id: number;
   title: string;
   image: string;
   text: string;
-  date: number | string;
+  date: string;
 
 
 }

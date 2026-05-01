@@ -53,9 +53,9 @@
             required
           > 
             <option value="" disabled selected>выберите из списка</option>
-            @for (location of locations; track location.id) {
-    <option [value]="location.id">{{ location.name }}</option>
-  }
+             @for (location of locations; track location; let i = $index) {
+                <option [value]="location">{{ location }}</option>
+              }
 
           </select>
         </div>
@@ -68,13 +68,13 @@
             id="tour-date-select" 
             name="date" 
             class="tour-search__select" 
-            [(ngModel)]="searchData.date" 
+            [(ngModel)]="searchData.availableDates" 
             required
           >
             <option value="" disabled selected>укажите дату</option>
-            @for (dateItem of availableDates; track dateItem.id) {
-    <option [value]="dateItem.id">{{ dateItem.date }}</option>
-  }
+              @for (dateItem of availableDates; track dateItem; let i = $index) {
+                <option [value]="dateItem">{{ dateItem }}</option>
+              }
           </select>
         </div>
       </div>
@@ -90,9 +90,9 @@
             required
           >
             <option value="" disabled selected>выберите из списка</option>
-            @for (participantCount of participants; track participantCount) {
-              <option [value]="participantCount">{{ participantCount }}</option>
-            }
+              @for (participant of participants; track participant; let i = $index) {
+                <option [value]="participant">{{ participant }}</option>
+              }
           </select>
         </div>
       </div>
@@ -147,7 +147,7 @@
     </p>
 
     <div class="features-list">
-      @for (item of features; track item.title) {
+      @for (item of features; track item.title; let i = $index) {
         <div class="feature-item">
           <div class="icon-box">
             <img 
@@ -172,15 +172,16 @@
   </div>
 
   <div class="image-collage">
-    @for (img of collageImages; track img; let i = $index) {
-      <div class="img-wrapper">
-        <img 
-          [src]="'Images/' + img + '.png'" 
-          [alt]="'Изображение предложения ' + (i + 1)"
-        >
-      </div>
-    }
-  </div>
+  @for (img of collageImages; track img; let i = $index) {
+    <div [id]="'offer-collage-item-wrapper-' + i" class="img-wrapper">
+      <img 
+        [id]="'offer-collage-image-' + i"
+        [src]="'Images/' + img + '.png'" 
+        [alt]="'Изображение предложения ' + (i + 1)"
+      >
+    </div>
+  }
+</div>
 </section>
 
 <section class="destinations-section">
@@ -190,7 +191,7 @@
   </div>
 
   <div class="cards-grid">
-    @for (item of destinations; track item.slug) {
+    @for (item of destinations; track item.slug; let i = $index) {
       <div 
         [id]="'destination-card-' + item.slug" 
         class="card" 
@@ -231,31 +232,26 @@
   </div>
 
   <div class="blog-grid">
-    @for (post of blogPosts; track post.title; let i = $index) {
-      <article class="blog-card">
-        <img 
-          [src]="'/Images/' + post.image + '.png'" 
-          [alt]="post.title" 
-          class="card-img"
-        >
-        <div class="card-content">
-          <h3 class="card-title">{{ post.title }}</h3>
-          <p class="card-text">{{ post.text }}</p>
-          <div class="card-footer">
-            <span class="date">{{ post.date }}</span>
-            
-            <a 
-              href="#" 
-              [id]="'read-more-link-' + i" 
-              class="read-more"
-            >
-              Читать далее
-            </a>
-          </div>
+  @for (post of blogPosts; track post; let i = $index) {
+    <article [id]="'blog-post-card-' + i" class="blog-card">
+      <img 
+        [src]="'/Images/' + post.image + '.png'" 
+        [alt]="post.title" 
+        class="card-img"
+      >
+      <div class="card-content">
+        <h3 class="card-title">{{ post.title }}</h3>
+        <p class="card-text">{{ post.text }}</p>
+        <div class="card-footer">
+          <span class="date">{{ post.date }}</span>
+          <a href="#" [id]="'blog-post-read-more-link-' + i" class="read-more">
+            Читать далее
+          </a>
         </div>
-      </article>
-    }
-  </div>
+      </div>
+    </article>
+  }
+</div>
 
   <button 
     id="view-all-blog-posts-button" 
@@ -271,15 +267,13 @@
     <h2 class="title">Делимся впечатлениями</h2>
   </div>
 
-  <div class="gallery-container">
-  @for (img of galleryImages.getAll(); track img.id) {
-    <div 
-      [id]="'gallery-item-wrapper-' + img.id" 
-      class="gallery-item"
-    >
+ <div class="image-collage">
+  @for (img of collageImages; track img; let i = $index) {
+    <div [id]="'offer-collage-item-wrapper-' + i" class="img-wrapper">
       <img 
-        [src]="'Images/' + img.url + '.png'" 
-        [alt]="'Фото из отчета о путешествии ' + img.id"
+        [id]="'offer-collage-image-' + i"
+        [src]="'Images/' + img + '.png'" 
+        [alt]="'Изображение предложения ' + (i + 1)"
       >
     </div>
   }
@@ -294,8 +288,7 @@
   </button>
 </section>
 
-<footer>
-  <footer class="main-footer">
+ <footer class="main-footer">
     <div class="subscribe__section">
       <div class="subscribe-container">
         
@@ -361,7 +354,7 @@
         <a href="tel:+71234567890" class="contact-link">+7 (123) 456-78-90</a>
       </div>
       <div class="social-icons">
-        @for (link of socialLinks; track link.slug) {
+        @for (link of socialLinks; track link.slug; let i = $index) {
           <a 
             [id]="'footer-social-link-' + link.slug" 
             [href]="link.url" 
