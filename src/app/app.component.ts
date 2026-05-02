@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Color } from '../enums/color';
-import { Collection } from './collection';
 import { FormsModule } from '@angular/forms';
 import { IDestination } from '../interfaces/IDestination';
 import { IFeature } from '../interfaces/IFeature';
@@ -9,7 +8,6 @@ import { ISocialLink } from '../interfaces/ISocialLink';
 import { ITourAbout } from '../interfaces/ITourAbout'; 
 import { IBlogPost } from '../interfaces/IBlogPost';
 import { SearchData } from '../interfaces/ISearchData';
-
 
 @Component({
   selector: 'app-root',
@@ -27,6 +25,10 @@ export class AppComponent {
   locations: string[] = ['Алтай', 'Кавказ', 'Памир', 'Урал'];
 
   participants: number[] = [1, 2, 3, 4, 5];
+
+  collageImages: string[] = ['tea_canyon', 'snake_canyon', 'snow_mobile', 'gree_hills'];
+
+  galleryImages: string[] = ['balloons_cappadocia', 'map_travel', 'dubai_hotel', 'tropical_coast', 'canyon', 'travel_items'];
 
   searchData: SearchData = {
     location: '',
@@ -60,12 +62,10 @@ export class AppComponent {
     }
   ];
 
-  collageImages: string [] = ['tea_canyon', 'snake_canyon', 'snow_mobile', 'gree_hills'];
-
   blogPosts: IBlogPost[] = [
     {
       id: 1,
-      title:'Красивая Италия, какая она в реальности?',
+      title: 'Красивая Италия, какая она в реальности?',
       image: 'manarola_italy',
       text: 'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации.',
       date: '01/04/2023'
@@ -74,17 +74,18 @@ export class AppComponent {
       id: 2,
       title: 'Долой сомнения! Весь мир открыт для вас!',
       image: 'airplane_tail',
-      text: 'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации...',
+      text: 'Для современного мира базовый вектор развития предполагает соответствующих условий активизации...',
       date: '02/04/2023'
     },
     {
-      id: 3,  
+      id: 3,
       title: 'Как подготовиться к путешествию в одиночку?',
       image: 'tourist',
       text: 'Для современного мира базовый вектор развития предполагает...',
       date: '03/04/2023'
     },
-    { id: 4,
+    {
+      id: 4,
       title: 'Индия . . . летим?',
       image: 'taj_mahal_india',
       text: 'Для современного мира базовый.',
@@ -118,8 +119,6 @@ export class AppComponent {
       card: 'yoga_hill'
     }
   ];
-
-  galleryImages: string[] = ['balloons_cappadocia','map_travel','dubai_hotel','tropical_coast','canyon' ,'travel_items',];
 
   socialLinks: ISocialLink[] = [
     {
