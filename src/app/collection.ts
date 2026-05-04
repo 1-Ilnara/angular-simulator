@@ -18,7 +18,9 @@ export class Collection<T> {
   }
 
   removeAt(index: number): void {
-    this.items = this.items.filter((item: T, i: number) => i !== index);
+    if (index >= 0 && index < this.items.length) {
+      this.items = this.items.filter((item: T, i: number) => i !== index);
+    }
   }
 
   replaceAt(index: number, newItem: T): void {

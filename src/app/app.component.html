@@ -52,8 +52,8 @@
             required
           > 
             <option value="" disabled selected>выберите из списка</option>
-            @for (location of locations; track location; let i = $index) {
-              <option [value]="location" [id]="'location-option-' + i">{{ location }}</option>
+              @for (location of locations; track $index) {
+            <option [value]="location">{{ location }}</option>
             }
           </select>
         </div>
@@ -70,9 +70,9 @@
             required
           >
             <option value="" disabled selected>укажите дату</option>
-            @for (dateItem of availableDates; track dateItem; let i = $index) {
-              <option [value]="dateItem" [id]="'date-option-' + i">{{ dateItem }}</option>
-            }
+             @for (dateItem of availableDates; track $index) {
+            <option [value]="dateItem">{{ dateItem }}</option>
+             }
           </select>
         </div>
       </div>
@@ -88,9 +88,9 @@
             required
           >
             <option value="" disabled selected>выберите из списка</option>
-            @for (participant of participants; track participant; let i = $index) {
-              <option [value]="participant" [id]="'participant-option-' + i">{{ participant }}</option>
-            }
+             @for (participant of participants; track $index) {
+            <option [value]="participant">{{ participant }}</option>
+             }
           </select>
         </div>
       </div>
@@ -167,12 +167,9 @@
   </div>
 
   <div class="image-collage">
-    @for (img of collageImages; track img; let i = $index) {
-      <div [id]="'offer-collage-item-wrapper-' + i" class="img-wrapper">
-        <img 
-          [src]="'Images/' + img + '.png'" 
-          [alt]="'Изображение предложения ' + (i + 1)"
-        >
+    @for (img of collageImages; track $index) {
+      <div class="img-wrapper">
+        <img [src]="'Images/' + img + '.png'" alt="">
       </div>
     }
   </div>
@@ -256,14 +253,12 @@
   </div>
 
   <div class="gallery-container">
-  @for (img of galleryImages; track img; let i = $index) {
-    <div [id]="'gallery-collage-item-wrapper-' + i" class="gallery-item">
-      <img 
-        [src]="'Images/' + img + '.png'" 
-        [alt]="'Изображение галереи ' + (i + 1)"
-      >
-    </div>
+    @for (img of galleryImages; track $index) {
+      <div class="gallery-item">
+        <img [src]="'Images/' + img + '.png'" alt="">
+      </div>
   }
+  
   </div>
   <button type="button" id="open-social-gallery-button" class="btn-pinterest">
     Наш Pinterest
