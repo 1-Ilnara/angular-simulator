@@ -8,7 +8,7 @@ import { ISocialLink } from '../interfaces/ISocialLink';
 import { ITourAbout } from '../interfaces/ITourAbout'; 
 import { IBlogPost } from '../interfaces/IBlogPost';
 import { SearchData } from '../interfaces/ISearchData';
-
+import { Collection } from './collection';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -35,6 +35,7 @@ export class AppComponent {
     availableDates: '',
     participants: ''
   };
+
 
   tourAbout: ITourAbout = {
     subtitle: 'о нашем походе',
@@ -143,9 +144,19 @@ export class AppComponent {
     }
   ];
 
+  destinationCollection!: Collection<IDestination>;
+  blogPostCollection!: Collection<IBlogPost>;
+
   constructor() {
-    this.setLastVisit();
-    this.setVisitCount();
+  this.setLastVisit();
+  this.setVisitCount();
+
+  this.destinationCollection = new Collection<IDestination>(this.destinations);
+  this.blogPostCollection = new Collection<IBlogPost>(this.blogPosts);
+
+  console.log(this.isPrimaryColor(Color.RED));
+  console.log(this.destinationCollection.getAll());
+  console.log(this.blogPostCollection.getAll());
   }
 
   get isSearchInvalid(): boolean {
@@ -169,7 +180,7 @@ export class AppComponent {
   private setLastVisit(): void {
     localStorage.setItem('lastVisit', new Date().toLocaleString());
   }
-
+  
   private setVisitCount(): void {
     let count = Number(localStorage.getItem('visitCount')) || 0;
     localStorage.setItem('visitCount', (count + 1).toString());

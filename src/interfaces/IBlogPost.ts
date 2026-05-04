@@ -4,6 +4,4 @@ export interface IBlogPost {
   image: string;
   text: string;
   date: string;
-
-
 }
