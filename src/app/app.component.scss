@@ -293,13 +293,13 @@
 
       .subtitle {
         color: rgba(242, 190, 34, 1);
-        font-size: 16px;
+        font-size: 20px;
         font-weight: 600;
         text-transform: lowercase;
       }
 
       .title {
-        font-size: 32px;
+        font-size: 38px;
         font-weight: 700;
         color: #1A1A1A;
         margin: 0;
@@ -324,7 +324,7 @@
         align-items: flex-start;
 
         .icon-box {
-          width: 40px;
+          width: 64px;
           flex-shrink: 0;
           img { width: 100%; display: block; }
         }
