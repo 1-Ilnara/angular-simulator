@@ -68,9 +68,9 @@
             required
           >
             <option value="" disabled selected>укажите дату</option>
-              @for (dateItem of availableDates; track $index) {
-                <option [value]="dateItem">{{ dateItem }}</option>
-              }
+            @for (dateItem of availableDates; track $index) {
+              <option [value]="dateItem">{{ dateItem }}</option>
+            }
           </select>
         </div>
       </div>
@@ -307,7 +307,7 @@
             [attr.aria-label]="'Перейти в ' + link.slug"
             class="social-link"
           >
-            <img [src]="'Images/' + link.icon + '.svg'" [alt]="link.slug" />
+            <img [src]="'Images/svg/' + link.icon + '.svg'" [alt]="link.slug" />
           </a>
         }
       </div>

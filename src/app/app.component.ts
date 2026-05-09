@@ -19,6 +19,7 @@ import { Collection } from './collection';
 })
 
 export class AppComponent {
+
   companyName: string = 'РумТибет';
 
   availableDates: string[] = ['2026-05-10', '2026-06-11', '2026-07-12', '2026-08-13', '2026-09-14'];
@@ -134,26 +135,26 @@ export class AppComponent {
     { 
       slug: 'telegram',
        url: 'https://t.me/your_channel', 
-       icon: 'svg/tg_icon' 
+       icon: 'tg_icon' 
     },
 
     { 
       slug: 'vk', 
       url: 'https://vk.com/your_group', 
-      icon: 'svg/vk_icon' 
+      icon: 'vk_icon' 
     },
 
     {
       slug: 'pinterest',
       url: 'https://pinterest.com/your_profile',
-      icon: 'svg/pinterest_icon'
+      icon: 'pinterest_icon'
 
     },
 
     {
       slug: 'skype',
       url: 'https://skype.com/your_profile',
-      icon: 'svg/skype_icon'
+      icon: 'skype_icon'
     }
 
   ];
