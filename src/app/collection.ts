@@ -25,8 +25,8 @@ export class Collection<T> {
   }
 
   replaceAt(index: number, newItem: T): void {
-  if (index >= 0 && index < this.items.length) {
-    this.items = this.items.map((item, i) => i === index ? newItem : item);
+    if (index >= 0 && index < this.items.length) {
+      this.items = this.items.map((item, i) => i === index ? newItem : item);
     } 
   }
 
