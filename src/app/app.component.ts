@@ -21,68 +21,73 @@ import { Collection } from './../collection';
 
 export class AppComponent implements OnInit, OnDestroy {
 
-  public readonly companyName: string = 'РумТибет';
+  readonly companyName: string = 'РумТибет';
 
-  public readonly availableDates: string[] = ['2026-05-10', '2026-06-11', '2026-07-12', '2026-08-13', '2026-09-14'];
+  readonly availableDates: string[] = ['2026-05-10', '2026-06-11', '2026-07-12', '2026-08-13', '2026-09-14'];
 
-  public readonly locations: string[] = ['Алтай', 'Кавказ', 'Памир', 'Урал'];
+  readonly locations: string[] = ['Алтай', 'Кавказ', 'Памир', 'Урал'];
 
-  public readonly participants: number[] = [1, 2, 3, 4, 5];
+  readonly participants: number[] = [1, 2, 3, 4, 5];
 
-  public readonly collageImages: string[] = ['tea_canyon', 'snake_canyon', 'snow_mobile', 'gree_hills'];
+  readonly collageImages: string[] = ['tea_canyon', 'snake_canyon', 'snow_mobile', 'gree_hills'];
 
-  public readonly galleryImages: string[] = ['balloons_cappadocia', 'map_travel', 'dubai_hotel', 'tropical_coast', 'canyon_gallery', 'travel_items'];
+  readonly galleryImages: string[] = ['balloons_cappadocia', 'map_travel', 'dubai_hotel', 'tropical_coast', 'canyon_gallery', 'travel_items'];
   
-  public currentDate: Date = new Date(); 
+   currentDate: string = '';  
   
-  public clickCount: number = 0;         
+  clickCount: number = 0;         
   
-  public showTimer: boolean = true;       
+  showTimer: boolean = true;       
   
-  public liveText: string = '';         
+  liveText: string = '';         
   
-  public isLoading: boolean = true;       
+  isLoading: boolean = true;       
 
-  public ngOnInit(): void {
-  this.timerId = setInterval(() => {
-    this.currentDate = new Date();
-  }, 1000);
+  private timerId: any; 
 
-  setTimeout(() => {
-    this.isLoading = false;
-  }, 2000);
-  
+  ngOnInit(): void {
+    this.updateDateTime();
+
+    this.timerId = setInterval(() => {
+      this.updateDateTime();
+    }, 1000);
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
   }
 
-  public increment(): void {
-  this.clickCount++;
+  private updateDateTime(): void {
+    this.currentDate = new Date().toLocaleString('ru-RU');
   }
 
-  public decrement(): void {
+  increment(): void {
+    this.clickCount++;
+  }
+
+  decrement(): void {
     if (this.clickCount > 0) {
       this.clickCount--;
     }
   }
-
   
-  public toggleHeaderContent(): void {
+  toggleHeaderContent(): void {
     this.showTimer = !this.showTimer;
   }
 
-  public ngOnDestroy(): void {
-  if (this.timerId) {
-    clearInterval(this.timerId);
+  ngOnDestroy(): void {
+    if (this.timerId) {
+      clearInterval(this.timerId);
+    }
   }
- }
 
-  private timerId: any; 
-  public searchData: SearchData = {
+  searchData: SearchData = {
     location: '',
     availableDates: '',
     participants: ''
   };
 
-  public tourAbout: ITourAbout = {
+  tourAbout: ITourAbout = {
     subtitle: 'о нашем походе',
     title: 'Исследуйте все горные массивы мира вместе с нами',
     description: 'Его корни уходят в один фрагмент классической латыни 45 года н.э...',
@@ -90,7 +95,7 @@ export class AppComponent implements OnInit, OnDestroy {
     imageBottom: 'house_forest'
   };
 
-  public features: IFeature[] = [
+  features: IFeature[] = [
      {
       icon: 'experienced_guide_icon',
       title: 'Опытный гид',
@@ -111,7 +116,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ];
 
-  public destinations: IDestination[] = [
+  destinations: IDestination[] = [
      {
       slug: 'tropical-coast',
       title: 'Озеро в горах',
@@ -140,7 +145,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }
    ];
 
-  public blogPosts: IBlogPost[] = [
+  blogPosts: IBlogPost[] = [
     {
       id: 1,
       title: 'Красивая Италия, какая она в реальности?',
@@ -175,7 +180,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ];
 
-  public socialLinks: ISocialLink[] = [
+  socialLinks: ISocialLink[] = [
     { 
       slug: 'telegram',
        url: 'https://t.me/your_channel', 
@@ -203,8 +208,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ];
 
-  public destinationCollection: Collection<IDestination>;
-  public blogPostCollection: Collection<IBlogPost>;
+  destinationCollection: Collection<IDestination>;
+  blogPostCollection: Collection<IBlogPost>;
 
   constructor() {
     this.setLastVisit();
@@ -216,16 +221,16 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('Основной цвет?', this.isPrimaryColor(Color.RED));
   }
 
-  public isPrimaryColor(color: Color): boolean {
+  isPrimaryColor(color: Color): boolean {
     return color === Color.RED || color === Color.GREEN || color === Color.BLUE;
   }
 
-  public onSearch(): void {
+  onSearch(): void {
     console.log('Поиск:', this.searchData);
     alert('Поиск запущен!');
   }
 
-  public onSubscribe(): void {
+  onSubscribe(): void {
     alert('Спасибо за подписку!');
   }
 

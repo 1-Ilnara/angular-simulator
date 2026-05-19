@@ -44,7 +44,7 @@
 
           @if (showTimer) {
             <div class="timer-display">
-              {{ currentDate | date: 'dd.MM.yyyy HH:mm:ss' }}
+              {{ currentDate }}
             </div>
           } @else {
             <div class="counter-display">
@@ -65,7 +65,6 @@
         С КОМАНДОЙ ЕДИНОМЫШЛЕННИКОВ
       </h1>
 
-      <!-- Заменено (ngsubmit) на (ngSubmit) -->
       <form class="hero__search tour-search" (ngSubmit)="onSearch()">
         <div class="tour-search__item">
           <label for="tour-location-select" class="tour-search__label">Локация для тура</label>
@@ -196,7 +195,7 @@
   <div class="image-collage">
     @for (img of collageImages; track $index) {
       <div class="img-wrapper">
-        <img [src]="'Images/' + img + '.png'" alt="" />
+        <img [src]="'Images/' + img + '.png'"/>
       </div>
     }
   </div>
