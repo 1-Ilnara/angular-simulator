@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Color } from './enums/color'; 
+import { Color } from './enums/Color'; 
 import { IDestination } from './interfaces/IDestination';
 import { IBlogPost } from './interfaces/IBlogPost';
 import { SearchData } from './interfaces/ISearchData';
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   readonly galleryImages: string[] = ['balloons_cappadocia', 'map_travel', 'dubai_hotel', 'tropical_coast', 'canyon_gallery', 'travel_items'];
   
-   currentDate: string = '';  
+  currentDate: string = '';  
   
   clickCount: number = 0;         
   
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
   
   isLoading: boolean = true;       
 
-  private timerId: any; 
+  timerId: any; 
 
   ngOnInit(): void {
     this.updateDateTime();
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }, 2000);
   }
 
-  private updateDateTime(): void {
+  updateDateTime(): void {
     this.currentDate = new Date().toLocaleString('ru-RU');
   }
 
@@ -226,7 +226,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onSearch(): void {
-    console.log('Поиск:', this.searchData);
     alert('Поиск запущен!');
   }
 
@@ -234,12 +233,13 @@ export class AppComponent implements OnInit, OnDestroy {
     alert('Спасибо за подписку!');
   }
 
-  private setLastVisit(): void {
+  setLastVisit(): void {
     localStorage.setItem('lastVisit', new Date().toLocaleString());
   }
 
-  private setVisitCount(): void {
-    const count = Number(localStorage.getItem('visitCount')) || 0;
+  setVisitCount(): void {
+    const savedCount: string | null = localStorage.getItem('visitCount');
+    const count: number = savedCount ? Number(savedCount) : 0;
     localStorage.setItem('visitCount', (count + 1).toString());
   }
 
