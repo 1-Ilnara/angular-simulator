@@ -6,7 +6,7 @@ import { IDestination } from './interfaces/IDestination';
 import { IBlogPost } from './interfaces/IBlogPost';
 import { SearchData } from './interfaces/ISearchData';
 import { IFeature } from './interfaces/IFeature';
-import { ITourAbout } from './interfaces/ITourAbout';
+import { ITour } from './interfaces/ITour';
 import { ISocialLink } from './interfaces/ISocialLink';
 import { Collection } from './../collection';
 
@@ -87,7 +87,7 @@ export class AppComponent implements OnInit, OnDestroy {
     participants: ''
   };
 
-  tourAbout: ITourAbout = {
+  tourAbout: ITour = {
     subtitle: 'о нашем походе',
     title: 'Исследуйте все горные массивы мира вместе с нами',
     description: 'Его корни уходят в один фрагмент классической латыни 45 года н.э...',
@@ -217,12 +217,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.destinationCollection = new Collection<IDestination>(this.destinations);
     this.blogPostCollection = new Collection<IBlogPost>(this.blogPosts);
-
-    console.log('Основной цвет?', this.isPrimaryColor(Color.RED));
   }
 
   isPrimaryColor(color: Color): boolean {
-    return color === Color.RED || color === Color.GREEN || color === Color.BLUE;
+    const primaryColors = [Color.RED, Color.GREEN, Color.BLUE];
+    return primaryColors.includes(color);
   }
 
   onSearch(): void {
