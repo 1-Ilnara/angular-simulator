@@ -69,12 +69,12 @@
         <div class="tour-search__item">
           <label for="tour-location-select" class="tour-search__label">Локация для тура</label>
           <div class="tour-search__field-wrapper">
-           <select id="tour-location-select" name="location">
-              name="location"
+           <select 
+              id="tour-location-select" name="location"
               class="tour-search__select"
               [(ngModel)]="searchData.location"
               required
-              
+              >
               <option value="" disabled selected>выберите из списка</option>
               @for (location of locations; track $index) {
                 <option [value]="location">{{ location }}</option>
@@ -88,7 +88,6 @@
           <div class="tour-search__field-wrapper">
             <select
               id="tour-date-select" name="availableDates"
-              name="date"
               class="tour-search__select"
               [(ngModel)]="searchData.availableDates"
               required
@@ -107,7 +106,6 @@
           <div class="tour-search__field-wrapper">
             <select
               id="tour-participants-select" name="participants"
-              name="participants"
               class="tour-search__select"
               [(ngModel)]="searchData.participants"
               required
