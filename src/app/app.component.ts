@@ -21,18 +21,27 @@ import { Collection } from './../collection';
 
 export class AppComponent implements OnInit, OnDestroy {
 
-  readonly companyName: string = 'РумТибет';
+readonly companyName: string = 'РумТибет';
 
-  readonly availableDates: string[] = ['2026-05-10', '2026-06-11', '2026-07-12', '2026-08-13', '2026-09-14'];
+  get locations(): string[] {
+    return ['Алтай', 'Кавказ', 'Памир', 'Урал'];
+  }
 
-  readonly locations: string[] = ['Алтай', 'Кавказ', 'Памир', 'Урал'];
+  get availableDates(): string[] {
+    return ['2026-05-10', '2026-06-11', '2026-07-12', '2026-08-13', '2026-09-14'];
+  }
+    
+  get participants(): number[] {
+    return [1, 2, 3, 4, 5];
+  }
 
-  readonly participants: number[] = [1, 2, 3, 4, 5];
+  get collageImages(): string[] {
+  return ['tea_canyon', 'snake_canyon', 'snow_mobile', 'gree_hills'];
+  }
 
-  readonly collageImages: string[] = ['tea_canyon', 'snake_canyon', 'snow_mobile', 'gree_hills'];
-
-  readonly galleryImages: string[] = ['balloons_cappadocia', 'map_travel', 'dubai_hotel', 'tropical_coast', 'canyon_gallery', 'travel_items'];
-  
+  get galleryImages(): string[] {
+    return ['balloons_cappadocia', 'map_travel', 'dubai_hotel', 'tropical_coast', 'canyon_gallery', 'travel_items'];
+  }
   currentDate: string = '';  
   
   clickCount: number = 0;         
@@ -220,7 +229,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   isPrimaryColor(color: Color): boolean {
-    const primaryColors = [Color.RED, Color.GREEN, Color.BLUE];
+    const primaryColors: Color[] = [Color.RED, Color.GREEN, Color.BLUE];
     return primaryColors.includes(color);
   }
 

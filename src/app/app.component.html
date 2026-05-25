@@ -69,8 +69,7 @@
         <div class="tour-search__item">
           <label for="tour-location-select" class="tour-search__label">Локация для тура</label>
           <div class="tour-search__field-wrapper">
-            <select
-              id="tour-location-select"
+           <select id="tour-location-select" name="location">
               name="location"
               class="tour-search__select"
               [(ngModel)]="searchData.location"
@@ -88,7 +87,7 @@
           <label for="tour-date-select" class="tour-search__label">Дата похода</label>
           <div class="tour-search__field-wrapper">
             <select
-              id="tour-date-select"
+              id="tour-date-select" name="availableDates"
               name="date"
               class="tour-search__select"
               [(ngModel)]="searchData.availableDates"
@@ -107,7 +106,7 @@
           <label for="tour-participants-select" class="tour-search__label">Участники</label>
           <div class="tour-search__field-wrapper">
             <select
-              id="tour-participants-select"
+              id="tour-participants-select" name="participants"
               name="participants"
               class="tour-search__select"
               [(ngModel)]="searchData.participants"

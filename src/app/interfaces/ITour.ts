@@ -1,4 +1,4 @@
-export interface ITour{
+export interface ITour {
   subtitle: string;
   title: string;
   description: string;
