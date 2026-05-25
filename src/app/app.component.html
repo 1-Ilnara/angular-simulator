@@ -74,7 +74,7 @@
               class="tour-search__select"
               [(ngModel)]="searchData.location"
               required
-              >
+            >
               <option value="" disabled selected>выберите из списка</option>
               @for (location of locations; track $index) {
                 <option [value]="location">{{ location }}</option>

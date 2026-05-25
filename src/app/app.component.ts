@@ -11,12 +11,14 @@ import { ISocialLink } from './interfaces/ISocialLink';
 import { Collection } from './../collection';
 
 @Component({
+
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
+
 export class AppComponent implements OnInit, OnDestroy {
   companyName: string = 'РумТибет';
   availableDates: string[] = ['2026-05-10', '2026-06-11', '2026-07-12', '2026-08-13', '2026-09-14'];
