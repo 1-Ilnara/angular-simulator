@@ -1,3 +1,4 @@
+feature/homework-16
 @if (isLoading) {
   <div class="loader-overlay">
     <img src="Images/svg/loader_icon.svg" class="loader-icon" alt="Загрузка...">
@@ -135,6 +136,113 @@
     </div>
   </section>
 
+<header class="header">
+  <div class="header__container">
+    <a href="/" id="header-logo-link" class="header__logo">
+      <img src="Images/svg/logo_icon.svg" alt="Логотип компании" />
+    </a>
+
+    <nav class="header__nav">
+      <ul class="nav__list">
+        <li class="nav__item">
+          <a href="/" id="nav-link-home" class="nav__link">Главная</a>
+        </li>
+        <li class="nav__item">
+          <a href="/guide" id="nav-link-guide" class="nav__link">Про гида</a>
+        </li>
+        <li class="nav__item">
+          <a href="/program" id="nav-link-program" class="nav__link">Программа тура</a>
+        </li>
+        <li class="nav__item">
+          <a href="/price" id="nav-link-price" class="nav__link">Стоимость</a>
+        </li>
+        <li class="nav__item">
+          <a href="/blog" id="nav-link-blog" class="nav__link">Блог</a>
+        </li>
+        <li class="nav__item">
+          <a href="/contacts" id="nav-link-contacts" class="nav__link">Контакты</a>
+        </li>
+      </ul>
+    </nav>
+
+    <button id="header-consultation-button" class="header__btn">Консультация</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__container">
+    <h1 class="hero__title">
+      НАСЛАДИСЬ ПРОГУЛКОЙ В ГОРАХ<br />
+      С КОМАНДОЙ ЕДИНОМЫШЛЕННИКОВ
+    </h1>
+
+    <form class="hero__search tour-search" (ngSubmit)="onSearch()">
+      <div class="tour-search__item">
+        <label for="tour-location-select" class="tour-search__label">Локация для тура</label>
+        <div class="tour-search__field-wrapper">
+          <select
+            id="tour-location-select"
+            name="location"
+            class="tour-search__select"
+            [(ngModel)]="searchData.location"
+            required
+          >
+            <option value="" disabled selected>выберите из списка</option>
+            @for (location of locations; track $index) {
+              <option [value]="location">{{ location }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="tour-search__item">
+        <label for="tour-date-select" class="tour-search__label">Дата похода</label>
+        <div class="tour-search__field-wrapper">
+          <select
+            id="tour-date-select"
+            name="date"
+            class="tour-search__select"
+            [(ngModel)]="searchData.availableDates"
+            required
+          >
+            <option value="" disabled selected>укажите дату</option>
+            @for (dateItem of availableDates; track $index) {
+              <option [value]="dateItem">{{ dateItem }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="tour-search__item">
+        <label for="tour-participants-select" class="tour-search__label">Участники</label>
+        <div class="tour-search__field-wrapper">
+          <select
+            id="tour-participants-select"
+            name="participants"
+            class="tour-search__select"
+            [(ngModel)]="searchData.participants"
+            required
+          >
+            <option value="" disabled selected>выберите из списка</option>
+              @for (participant of participants; track $index) {
+                <option [value]="participant">{{ participant }}</option>
+              }
+          </select>
+        </div>
+      </div>
+
+      <button
+        id="tour-search-submit-button"
+        type="submit"
+        class="tour-search__btn"
+        [disabled]="isSearchInvalid"
+      >
+        Найти программу
+      </button>
+    </form>
+  </div>
+</section>
+master
 
 <section class="tour-section">
   <div class="container">
@@ -160,7 +268,9 @@
 
       <a href="#" id="view-tour-program-link" class="btn"> Программа тура </a>
     </div>
+ feature/homework-16
     
+ master
   </div>
 </section>
 
@@ -192,7 +302,11 @@
   <div class="image-collage">
     @for (img of collageImages; track $index) {
       <div class="img-wrapper">
+ feature/homework-16
         <img [src]="'Images/' + img + '.png'"/>
+
+        <img [src]="'Images/' + img + '.png'" alt="" />
+ master
       </div>
     }
   </div>
@@ -348,6 +462,7 @@
     <div class="footer-col services">
       <h3 class="footer-title">Наши услуги</h3>
       <ul class="footer-list">
+feature/homework-16
         <li>
           <a href="#" id="service-summer-mountains-link">Прогулки в горы летом</a>
         </li>
@@ -366,15 +481,25 @@
         <li>
           <a href="#" id="service-africa-trip-link">Поездка в Африку</a>
         </li>
+        <li><a href="#" id="service-summer-mountains-link">Прогулки в горы летом</a></li>
+        <li><a href="#" id="service-winter-mountains-link">Зимние походы в горы</a></li>
+        <li><a href="#" id="service-mountain-temples-link">Посещение храмов в горах</a></li>
+        <li><a href="#" id="service-extreme-tourism-link">Экстремальные виды туризма</a></li>
+        <li><a href="#" id="service-amazon-jungle-link">Походы в джунглях Амазонии</a></li>
+        <li><a href="#" id="service-africa-trip-link">Поездка в Африку</a></li>
+master
       </ul>
     </div>
 
     <div class="footer-col useful">
       <h3 class="footer-title">Важно для путешествий</h3>
       <ul class="footer-list">
+feature/homework-16
         <li>
           <a href="#" id="useful-hiking-prep-link">Как собрать в долгий поход?</a>
         </li>
+        <li><a href="#" id="useful-hiking-prep-link">Как собрать в долгий поход?</a></li>
+master
         <li>
           <a href="#" id="useful-essential-items-link">Жизненно важные предметы для похода</a>
         </li>
@@ -395,4 +520,7 @@
     </div>
   </div>
 </footer>
+feature/homework-16
 </div>
+
+master

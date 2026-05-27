@@ -1,4 +1,5 @@
 @use "sass:color";
+feature/homework-16
 
 .loader-overlay {
   position: fixed;
@@ -25,6 +26,7 @@
   display: none !important;
 }
 
+master
 .header, .hero {
   width: 100%;
   max-width: 1920px;
@@ -41,6 +43,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+ master
 .header__container {
   width: 100%;
   max-width: 1180px;
