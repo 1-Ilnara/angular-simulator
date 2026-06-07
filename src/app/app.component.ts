@@ -14,19 +14,18 @@ import { StorageService } from './services/storage.service';
 import { MessageType } from '../enums/MessageType';
 
 @Component({
-
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, FormsModule, NgTemplateOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
-
 })
-
 export class AppComponent {
+  
+  messageService: MessageService;
+  private storageService: StorageService;
 
   MessageType = MessageType;
-
   companyName: string = 'РумТибет';
 
   availableDates: string[] = [
@@ -149,47 +148,37 @@ export class AppComponent {
   ];
 
   socialLinks: ISocialLink[] = [
-    { slug: 'telegram', url: '[t.me](https://t.me/your_channel)', icon: 'tg_icon' },
-    { slug: 'vk', url: '[vk.com](https://vk.com/your_group)', icon: 'vk_icon' },
-    { slug: 'pinterest', url: '[pinterest.com](https://pinterest.com/your_profile)', icon: 'pinterest_icon' },
-    { slug: 'skype', url: '[skype.com](https://skype.com/your_profile)', icon: 'skype_icon' }
+    { slug: 'telegram', url: 'https://t.me/your_channel', icon: 'tg_icon' },
+    { slug: 'vk', url: 'https://vk.com/your_group', icon: 'vk_icon' },
+    { slug: 'pinterest', url: 'https://pinterest.com/your_profile', icon: 'pinterest_icon' },
+    { slug: 'skype', url: 'https://skype.com/your_profile', icon: 'skype_icon' }
   ];
 
   destinationCollection: Collection<IDestination>;
   blogPostCollection: Collection<IBlogPost>;
 
-  constructor(
-    public messageService: MessageService,
-    private storageService: StorageService
-  ) {
+  constructor(messageService: MessageService, storageService: StorageService) {
+    this.messageService = messageService;
+    this.storageService = storageService;
+
     this.setLastVisit();
     this.setVisitCount();
 
     this.destinationCollection = new Collection<IDestination>(this.destinations);
     this.blogPostCollection = new Collection<IBlogPost>(this.blogPosts);
-
-  }
-
-  isPrimaryColor(color: Color): boolean {
-    return color === Color.RED || color === Color.GREEN || color === Color.BLUE;
-  }
-
-  setLastVisit(): void {
-    this.storageService.setItem<string>('lastVisit', new Date().toLocaleString());
-  }
-
-  setVisitCount(): void {
-    const count = this.storageService.getItem<number>('visitCount') || 0;
-    this.storageService.setItem<number>('visitCount', count + 1);
   }
 
   get isSearchInvalid(): boolean {
     return !this.searchData.location || !this.searchData.availableDates || !this.searchData.participants;
   }
 
+  isPrimaryColor(color: Color): boolean {
+    return color === Color.RED || color === Color.GREEN || color === Color.BLUE;
+  }
+
   onSearch(): void {
     if (this.isSearchInvalid) {
-      this.messageService.addMessage('Message Content', MessageType.ERROR);
+      this.messageService.addMessage('Пожалуйста, заполните все поля поиска!', MessageType.ERROR);
       return;
     }
 
@@ -217,18 +206,29 @@ export class AppComponent {
 
   onViewTourProgram(event: Event): void {
     event.preventDefault();
-    this.messageService.addMessage('Message Content', MessageType.INFO);
+    this.messageService.addMessage('Программа тура открыта для просмотра.', MessageType.INFO);
   }
 
   onViewProgramsPrice(): void {
-    this.messageService.addMessage('Message Content', MessageType.SUCCESS);
+    this.messageService.addMessage('Информация о стоимости программ загружена.', MessageType.SUCCESS);
   }
 
   onViewDestinationsRating(): void {
-    this.messageService.addMessage('Message Content', MessageType.INFO);
+    this.messageService.addMessage('Рейтинг направлений успешно обновлен!', MessageType.INFO);
   }
 
   handleCloseMessage(id: number): void {
     this.messageService.closeMessage(id);
   }
-}
+
+  // Приватные методы строго в самом конце секции методов
+  private setLastVisit(): void {
+    this.storageService.setItem<string>('lastVisit', new Date().toLocaleString());
+  }
+
+  private setVisitCount(): void {
+    const count: number = this.storageService.getItem<number>('visitCount') || 0;
+    this.storageService.setItem<number>('visitCount', count + 1);
+  }
+
+} 
