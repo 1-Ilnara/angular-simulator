@@ -1,38 +1,60 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Color } from './enums/Color';
-import { IDestination } from './interfaces/IDestination';
-import { IBlogPost } from './interfaces/IBlogPost';
-import { SearchData } from './interfaces/ISearchData';
-import { IFeature } from './interfaces/IFeature';
-import { ITour } from './interfaces/ITour';
-import { ISocialLink } from './interfaces/ISocialLink';
-import { Collection } from './../collection';
+import { IDestination } from '../interfaces/IDestination';
+import { IBlogPost } from '../interfaces/IBlogPost';
+import { SearchData } from '../interfaces/ISearchData';
+import { IFeature } from '../interfaces/IFeature';
+import { ITourAbout } from '../interfaces/ITourAbout';
+import { ISocialLink } from '../interfaces/ISocialLink';
+import { Collection } from './collection';
+import { Color } from '../enums/color';
+import { MessageService } from './services/message.service';
+import { StorageService } from './services/storage.service';
+import { MessageType } from '../enums/MessageType';
 
 @Component({
 
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgTemplateOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
+
 })
 
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
+
+  MessageType = MessageType;
+
   companyName: string = 'РумТибет';
-  availableDates: string[] = ['2026-05-10', '2026-06-11', '2026-07-12', '2026-08-13', '2026-09-14'];
+
+  availableDates: string[] = [
+    '2026-05-10',
+    '2026-06-11',
+    '2026-07-12',
+    '2026-08-13',
+    '2026-09-14'
+  ];
+
   locations: string[] = ['Алтай', 'Кавказ', 'Памир', 'Урал'];
   participants: number[] = [1, 2, 3, 4, 5];
-  collageImages: string[] = ['tea_canyon', 'snake_canyon', 'snow_mobile', 'gree_hills'];
-  galleryImages: string[] = ['balloons_cappadocia', 'map_travel', 'dubai_hotel', 'tropical_coast', 'canyon_gallery', 'travel_items'];
-  
-  currentDate: string = '';
-  clickCount: number = 0;
-  showTimer: boolean = true;
-  liveText: string = '';
-  isLoading: boolean = true;
-  timerId: any;
+
+  collageImages: string[] = [
+    'tea_canyon',
+    'snake_canyon',
+    'snow_mobile',
+    'gree_hills'
+  ];
+
+  galleryImages: string[] = [
+    'balloons_cappadocia',
+    'map_travel',
+    'dubai_hotel',
+    'tropical_coast',
+    'canyon',
+    'travel_items'
+  ];
 
   searchData: SearchData = {
     location: '',
@@ -40,7 +62,9 @@ export class AppComponent implements OnInit, OnDestroy {
     participants: ''
   };
 
-  tourAbout: ITour = {
+  subscribeEmail: string = '';
+
+  tourAbout: ITourAbout = {
     subtitle: 'о нашем походе',
     title: 'Исследуйте все горные массивы мира вместе с нами',
     description: 'Его корни уходят в один фрагмент классической латыни 45 года н.э...',
@@ -125,98 +149,86 @@ export class AppComponent implements OnInit, OnDestroy {
   ];
 
   socialLinks: ISocialLink[] = [
-    {
-      slug: 'telegram',
-      url: 'https://t.me/your_channel',
-      icon: 'tg_icon'
-    },
-    {
-      slug: 'vk',
-      url: 'https://vk.com/your_group',
-      icon: 'vk_icon'
-    },
-    {
-      slug: 'pinterest',
-      url: 'https://pinterest.com/your_profile',
-      icon: 'pinterest_icon'
-    },
-    {
-      slug: 'skype',
-      url: 'https://skype.com/your_profile',
-      icon: 'skype_icon'
-    }
+    { slug: 'telegram', url: '[t.me](https://t.me/your_channel)', icon: 'tg_icon' },
+    { slug: 'vk', url: '[vk.com](https://vk.com/your_group)', icon: 'vk_icon' },
+    { slug: 'pinterest', url: '[pinterest.com](https://pinterest.com/your_profile)', icon: 'pinterest_icon' },
+    { slug: 'skype', url: '[skype.com](https://skype.com/your_profile)', icon: 'skype_icon' }
   ];
 
   destinationCollection: Collection<IDestination>;
   blogPostCollection: Collection<IBlogPost>;
 
-  constructor() {
+  constructor(
+    public messageService: MessageService,
+    private storageService: StorageService
+  ) {
     this.setLastVisit();
     this.setVisitCount();
+
     this.destinationCollection = new Collection<IDestination>(this.destinations);
     this.blogPostCollection = new Collection<IBlogPost>(this.blogPosts);
-  }
 
-  ngOnInit(): void {
-    this.updateDateTime();
-
-    this.timerId = setInterval(() => {
-      this.updateDateTime();
-    }, 1000);
-
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
-  }
-
-  ngOnDestroy(): void {
-    if (this.timerId) {
-      clearInterval(this.timerId);
-    }
-  }
-
-  updateDateTime(): void {
-    this.currentDate = new Date().toLocaleString('ru-RU');
-  }
-
-  increment(): void {
-    this.clickCount++;
-  }
-
-  decrement(): void {
-    if (this.clickCount > 0) {
-      this.clickCount--;
-    }
-  }
-
-  toggleHeaderContent(): void {
-    this.showTimer = !this.showTimer;
   }
 
   isPrimaryColor(color: Color): boolean {
-    const primaryColors: Color[] = [Color.RED, Color.GREEN, Color.BLUE];
-    return primaryColors.includes(color);
-  }
-
-  onSearch(): void {
-    alert('Поиск запущен!');
-  }
-
-  onSubscribe(): void {
-    alert('Спасибо за подписку!');
+    return color === Color.RED || color === Color.GREEN || color === Color.BLUE;
   }
 
   setLastVisit(): void {
-    localStorage.setItem('lastVisit', new Date().toLocaleString());
+    this.storageService.setItem<string>('lastVisit', new Date().toLocaleString());
   }
 
   setVisitCount(): void {
-    const savedCount: string | null = localStorage.getItem('visitCount');
-    const count: number = savedCount ? Number(savedCount) : 0;
-    localStorage.setItem('visitCount', (count + 1).toString());
+    const count = this.storageService.getItem<number>('visitCount') || 0;
+    this.storageService.setItem<number>('visitCount', count + 1);
   }
 
   get isSearchInvalid(): boolean {
     return !this.searchData.location || !this.searchData.availableDates || !this.searchData.participants;
+  }
+
+  onSearch(): void {
+    if (this.isSearchInvalid) {
+      this.messageService.addMessage('Message Content', MessageType.ERROR);
+      return;
+    }
+
+    this.messageService.addMessage(
+      `Поиск тура в ${this.searchData.location} успешно запущен!`,
+      MessageType.SUCCESS
+    );
+  }
+
+  onSubscribe(): void {
+    this.messageService.addMessage(
+      `Спасибо за подписку${this.subscribeEmail ? ', ' + this.subscribeEmail : ''}!`,
+      MessageType.SUCCESS
+    );
+
+    this.subscribeEmail = '';
+  }
+
+  onLoadMoreBlogs(): void {
+    this.messageService.addMessage(
+      'Загрузка дополнительных материалов...',
+      MessageType.WARNING
+    );
+  }
+
+  onViewTourProgram(event: Event): void {
+    event.preventDefault();
+    this.messageService.addMessage('Message Content', MessageType.INFO);
+  }
+
+  onViewProgramsPrice(): void {
+    this.messageService.addMessage('Message Content', MessageType.SUCCESS);
+  }
+
+  onViewDestinationsRating(): void {
+    this.messageService.addMessage('Message Content', MessageType.INFO);
+  }
+
+  handleCloseMessage(id: number): void {
+    this.messageService.closeMessage(id);
   }
 }
