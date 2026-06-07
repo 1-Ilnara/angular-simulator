@@ -1,4 +1,3 @@
-@use "sass:color";
 .header, .hero {
   width: 100%;
   max-width: 1920px;
@@ -65,6 +64,7 @@
   transition: opacity 0.3s ease;
 }
 
+// Исправлено: Объединили два блока .hero в один логический узел
 .hero {
   height: 965px;
   margin-top: -120px;
@@ -73,9 +73,7 @@
   display: flex;
   justify-content: center;
   color: #fff;
-}
 
-.hero {
   &__container {
     width: 100%;
     max-width: 1180px;
@@ -96,8 +94,6 @@
     max-width: 1080px;
     margin-top: 431px;
     margin-bottom: auto;
-
-
   }
 }
 
@@ -138,7 +134,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 0 15px;
-  color:white;
+  color: white;
   font-size: 16px;
   outline: none;
   box-sizing: border-box;
@@ -202,12 +198,12 @@
   z-index: 2;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   overflow: hidden;
-}
 
-.img-bottom img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .play-btn {
@@ -261,10 +257,10 @@
   border-radius: 4px;
   margin-top: 20px;
   transition: background 0.3s;
-}
 
-.btn:hover {
-  background-color: #2a5a54;
+  &:hover {
+    background-color: #2a5a54;
+  }
 }
 
 .offer-section {
@@ -272,7 +268,7 @@
   width: 1920px;
   height: 771px;
   margin: 0 auto;
-  background-color:rgba(243, 245, 244, 1);
+  background-color: rgba(243, 245, 244, 1);
   font-family: 'Inter', sans-serif;
   overflow: hidden;
 
@@ -379,7 +375,6 @@
   }
 }
 
-
 .destinations-section {
   width: 100%;
   max-width: 1920px; 
@@ -388,7 +383,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 }
 
 .destinations-header {
@@ -417,7 +411,7 @@
 
 .cards-grid {
   width: 1180px;  
-  height: auto;             
+  height: auto;              
   display: flex;
   justify-content: center;
   gap: 24px;                
@@ -434,7 +428,6 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  
 
   .rating-badge {
     position: absolute;
@@ -447,7 +440,6 @@
     color: black;
     font-size: 14px;
     font-weight: 800;
-    
     
     .star { color: #F2BE22; margin-right: 10px; }
   }
@@ -469,28 +461,28 @@
     box-sizing: border-box;
     color: #fff;
     border-radius: 0 0 30px 30px; 
+  }
+
+  .info {
+    h3 { margin: 0; font-size: 29px; font-weight: 600; } 
+    p { margin: 4px 0 0; font-size: 18px; opacity: 0.8; } 
+  }
+
+  .price-tag {
+    background: rgba(255, 255, 255, 0.2);
+    width: 86px;
+    height: 40px;
+    top: 435px;
+    left: 262px;
+    font-size: 24px;
+    opacity: 1;
+    border-radius: 4px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
-.info {
-   h3 { margin: 0; font-size: 29px; font-weight: 600; } 
-   p { margin: 4px 0 0; font-size: 18px; opacity: 0.8; } 
-  }
-
-    .price-tag {
-      background: rgba(255, 255, 255, 0.2);
-      width: 86px;
-      height: 40px;
-      top: 435px;
-      left: 262px;
-      font-size: 24px;
-      opacity: 1;
-      border-radius: 4px;
-      font-weight: 700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-
 
 .btn-rating {
   background: #143131;
@@ -523,20 +515,20 @@
 .blog-header {
   text-align: center;
   margin-bottom: 40px;
-}
 
-.blog-header .subtitle {
-  color: rgba(242, 190, 34, 1);
-  font-size: 16px;
-  text-transform: lowercase;
-  display: block;
-  margin-bottom: 8px;
-}
+  .subtitle {
+    color: rgba(242, 190, 34, 1);
+    font-size: 16px;
+    text-transform: lowercase;
+    display: block;
+    margin-bottom: 8px;
+  }
 
-.blog-header .title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #1A1A1A;
+  .title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1A1A1A;
+  }
 }
 
 .blog-grid {
@@ -557,6 +549,12 @@
   box-sizing: border-box;
   transition: transform 0.3s ease;
   cursor: pointer;
+
+  &:hover .card-title {
+    text-decoration: underline;
+    text-decoration-color: #143131;
+    text-underline-offset: 4px;
+  }
 }
 
 .card-img {
@@ -584,12 +582,6 @@
   display: inline-block;
 }
 
-.blog-card:hover .card-title {
-  text-decoration: underline;
-  text-decoration-color: #143131;
-  text-underline-offset: 4px;
-}
-
 .card-text {
   font-size: 14px;
   color: #666;
@@ -606,21 +598,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
 
-.card-footer .date {
-  color:rgba(242, 190, 34, 1);
-  font-size: 14px;
-  font-weight: 600;
-}
+  .date {
+    color: rgba(242, 190, 34, 1);
+    font-size: 14px;
+    font-weight: 600;
+  }
 
-.card-footer .read-more {
-  font-size: 14px;
-  color: #1A1A1A;
-  text-decoration: none;
-  font-weight: 500;
+  .read-more {
+    font-size: 14px;
+    color: #1A1A1A;
+    text-decoration: none;
+    font-weight: 500;
+  }
 }
-
 
 .btn-more {
   width: 220px;
@@ -633,10 +624,10 @@
   font-weight: 600;
   cursor: pointer;
   transition: background 0.3s;
-}
 
-.btn-more:hover {
-  background: #1d4646;
+  &:hover {
+    background: #1d4646;
+  }
 }
 
 .gallery-section {
@@ -712,12 +703,10 @@
   &:hover img {
     transform: scale(1.1);
   }
-  
 }
 
-
 $dark-green: #0a2622;
-$accent-orange:rgba(242, 190, 34, 1);
+$accent-orange: rgba(242, 190, 34, 1);
 $text-gray: #a5b1b0;
 $white: #ffffff;
 $container-width: 1180px;
@@ -816,8 +805,6 @@ $subscribe-height: 196px;
           font-weight: 500;
           cursor: pointer;
           transition: background 0.3s;
-          
-          &:hover { background-color: color.adjust(rgba(26, 62, 62, 1), $lightness: 5%); }
         }
       }
 
@@ -970,6 +957,7 @@ $subscribe-height: 196px;
   gap: 18px;
   width: 440px;
 }
+
 .message-toast {
   position: relative;
   display: flex;
@@ -982,6 +970,7 @@ $subscribe-height: 196px;
   color: #ffffff;
   animation: slideIn 0.3s ease;
 }
+
 .toast-icon-box {
   flex-shrink: 0;
   width: 40px;
@@ -990,15 +979,18 @@ $subscribe-height: 196px;
   align-items: center;
   justify-content: center;
 }
+
 .toast-icon {
   width: 40px;
   height: 40px;
   display: block;
   object-fit: contain;
 }
+
 .toast-content {
   flex: 1;
 }
+
 .toast-title {
   margin: 0 0 6px;
   font-size: 18px;
@@ -1006,12 +998,14 @@ $subscribe-height: 196px;
   line-height: 1.2;
   color: #ffffff;
 }
+
 .toast-text {
   margin: 0;
   font-size: 16px;
   line-height: 1.35;
   color: #e5e7eb;
 }
+
 .toast-close-btn {
   position: absolute;
   top: 12px;
@@ -1023,12 +1017,14 @@ $subscribe-height: 196px;
   background: transparent;
   color: #ffffff;
   cursor: pointer;
+
+  svg {
+    width: 26px;
+    height: 26px;
+    display: block;
+  }
 }
-.toast-close-btn svg {
-  width: 26px;
-  height: 26px;
-  display: block;
-}
+
 @keyframes slideIn {
   from {
     opacity: 0;

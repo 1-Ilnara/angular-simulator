@@ -87,7 +87,7 @@
           >
             <option value="" disabled selected>выберите из списка</option>
             @for (participant of participants; track $index) {
-              <option [value]="participant">{{ participant }}</option>
+              <option value="{{ participant }}">{{ participant }}</option>
             }
           </select>
         </div>
@@ -131,7 +131,7 @@
         href="#" 
         id="view-tour-program-link" 
         class="btn" 
-        (click)="$event.preventDefault(); messageService.addMessage('Message Content', MessageType.INFO)"
+        (click)="onViewTourProgram($event)"
       > 
         Программа тура 
       </a>
@@ -164,7 +164,7 @@
     <button 
       id="view-programs-price-button" 
       class="btn-primary"
-      (click)="messageService.addMessage('Message Content', MessageType.SUCCESS)"
+      (click)="onViewProgramsPrice()"
     >
       Стоимость программ
     </button>
@@ -210,7 +210,7 @@
     <button 
       id="view-destinations-rating-button" 
       class="btn-rating"
-      (click)="messageService.addMessage('Message Content', MessageType.ERROR)"
+      (click)="onViewDestinationsRating()"
     >
       Рейтинг направлений
     </button>
@@ -242,7 +242,7 @@
   <button 
     id="view-all-blog-posts-button" 
     class="btn-more"
-    (click)="messageService.addMessage('Message Content', MessageType.WARNING)"
+    (click)="onLoadMoreBlogs()"
   >
     Другие материалы
   </button>
@@ -281,7 +281,8 @@
                 type="email"
                 id="newsletter-email-input"
                 name="email"
-                #emailInput
+                [(ngModel)]="subscribeEmail"
+                #emailInput="ngModel"
                 placeholder="name@domain.com"
                 required
                 class="subscribe-input"
@@ -291,7 +292,7 @@
                 type="submit"
                 id="newsletter-subscribe-button"
                 class="btn-subscribe"
-                [disabled]="!emailInput.value"
+                [disabled]="!subscribeEmail"
               >
                 Подписаться на новости
               </button>
