@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IDestination } from '../interfaces/IDestination';
@@ -22,10 +22,10 @@ import { MessageType } from '../enums/MessageType';
 })
 export class AppComponent {
   
-  messageService: MessageService;
-  private storageService: StorageService;
+  messageService: MessageService = inject(MessageService);
+  private storageService: StorageService = inject(StorageService);
 
-  MessageType = MessageType;
+  MessageType: typeof MessageType = MessageType;
   companyName: string = 'РумТибет';
 
   availableDates: string[] = [
@@ -157,10 +157,8 @@ export class AppComponent {
   destinationCollection: Collection<IDestination>;
   blogPostCollection: Collection<IBlogPost>;
 
-  constructor(messageService: MessageService, storageService: StorageService) {
-    this.messageService = messageService;
-    this.storageService = storageService;
-
+  constructor() {
+  
     this.setLastVisit();
     this.setVisitCount();
 
@@ -221,7 +219,6 @@ export class AppComponent {
     this.messageService.closeMessage(id);
   }
 
-  // Приватные методы строго в самом конце секции методов
   private setLastVisit(): void {
     this.storageService.setItem<string>('lastVisit', new Date().toLocaleString());
   }

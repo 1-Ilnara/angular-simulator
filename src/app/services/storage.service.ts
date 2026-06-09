@@ -7,7 +7,7 @@ export class StorageService {
   
   setItem<T>(key: string, value: T): void {
     try {
-      const serializedValue = JSON.stringify(value);
+      const serializedValue: string = JSON.stringify(value);
       localStorage.setItem(key, serializedValue);
     } catch (error: unknown) {
       console.error('Ошибка записи в localStorage', error);
