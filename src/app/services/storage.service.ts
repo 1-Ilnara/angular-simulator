@@ -15,8 +15,8 @@ export class StorageService {
   }
 
   getItem<T>(key: string): T | null {
-    try {
-      const serializedValue = localStorage.getItem(key);
+    try {   
+      const serializedValue: string | null = localStorage.getItem(key);
 
       if (serializedValue === null) {
         return null;
