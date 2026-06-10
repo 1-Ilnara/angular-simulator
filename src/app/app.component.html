@@ -256,6 +256,7 @@
 
   <div class="gallery-container">
     @for (img of galleryImages; track $index) {
+      <div class="gallery-item" [class.wide]="$index === 0 || $index === 4"></div>
       <div class="gallery-item">
         <img [src]="'Images/' + img + '.png'" alt="" />
       </div>
