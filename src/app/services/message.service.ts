@@ -6,24 +6,15 @@ import { MessageType } from '../../enums/MessageType';
   providedIn: 'root'
 })
 export class MessageService {
-
   messages: IMessage[] = [];
-
   private nextId: number = 1;
 
   addMessage(text: string, type: MessageType): void {
-    const titles: Record<MessageType, string> = {
-      [MessageType.SUCCESS]: 'Success',
-      [MessageType.INFO]: 'Info',
-      [MessageType.WARNING]: 'Warn',
-      [MessageType.ERROR]: 'Error'
-    };
-
     const newMessage: IMessage = {
       id: this.nextId++,
-      text: text,
-      type: type,
-      title: titles[type]
+      text,
+      type,
+      title: type
     };
 
     this.messages = [newMessage, ...this.messages];
@@ -34,7 +25,6 @@ export class MessageService {
   }
 
   closeMessage(id: number): void {
-    this.messages = this.messages.filter((message: IMessage): boolean => message.id !== id);
+    this.messages = this.messages.filter(message => message.id !== id);
   }
-
-} 
+}

@@ -10,7 +10,7 @@ import { ISocialLink } from '../interfaces/ISocialLink';
 import { Collection } from './collection';
 import { Color } from '../enums/color';
 import { MessageService } from './services/message.service';
-import { StorageService } from './services/storage.service';
+import { LocalStorageService } from './services/storage.service';
 import { MessageType } from '../enums/MessageType';
 
 @Component({
@@ -21,11 +21,9 @@ import { MessageType } from '../enums/MessageType';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  
   messageService: MessageService = inject(MessageService);
-  private storageService: StorageService = inject(StorageService);
+  private localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  MessageType: typeof MessageType = MessageType;
   companyName: string = 'РумТибет';
 
   availableDates: string[] = [
@@ -158,7 +156,6 @@ export class AppComponent {
   blogPostCollection: Collection<IBlogPost>;
 
   constructor() {
-  
     this.setLastVisit();
     this.setVisitCount();
 
@@ -188,7 +185,7 @@ export class AppComponent {
 
   onSubscribe(): void {
     this.messageService.addMessage(
-      `Спасибо за подписку${this.subscribeEmail ? ', ' + this.subscribeEmail : ''}!`,
+      `Спасибо за подписку${this.subscribeEmail ? `, ${this.subscribeEmail}` : ''}!`,
       MessageType.SUCCESS
     );
 
@@ -220,12 +217,11 @@ export class AppComponent {
   }
 
   private setLastVisit(): void {
-    this.storageService.setItem<string>('lastVisit', new Date().toLocaleString());
+    this.localStorageService.setItem<string>('lastVisit', new Date().toLocaleString());
   }
 
   private setVisitCount(): void {
-    const count: number = this.storageService.getItem<number>('visitCount') || 0;
-    this.storageService.setItem<number>('visitCount', count + 1);
+    const count = this.localStorageService.getItem<number>('visitCount') || 0;
+    this.localStorageService.setItem<number>('visitCount', count + 1);
   }
-
-} 
+}

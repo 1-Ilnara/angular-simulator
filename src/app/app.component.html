@@ -87,7 +87,7 @@
           >
             <option value="" disabled selected>выберите из списка</option>
             @for (participant of participants; track $index) {
-              <option value="{{ participant }}">{{ participant }}</option>
+              <option [value]="participant">{{ participant }}</option>
             }
           </select>
         </div>
@@ -127,13 +127,13 @@
       <h2 class="title">{{ tourAbout.title }}</h2>
       <p class="description">{{ tourAbout.description }}</p>
 
-      <a 
-        href="#" 
-        id="view-tour-program-link" 
-        class="btn" 
+      <a
+        href="#"
+        id="view-tour-program-link"
+        class="btn"
         (click)="onViewTourProgram($event)"
-      > 
-        Программа тура 
+      >
+        Программа тура
       </a>
     </div>
   </div>
@@ -161,15 +161,15 @@
       }
     </div>
 
-    <button 
-      id="view-programs-price-button" 
+    <button
+      id="view-programs-price-button"
       class="btn-primary"
       (click)="onViewProgramsPrice()"
     >
       Стоимость программ
     </button>
-  </div> 
-  
+  </div>
+
   <div class="image-collage">
     @for (img of collageImages; track $index) {
       <div class="img-wrapper">
@@ -207,8 +207,8 @@
   </div>
 
   <div class="actions">
-    <button 
-      id="view-destinations-rating-button" 
+    <button
+      id="view-destinations-rating-button"
       class="btn-rating"
       (click)="onViewDestinationsRating()"
     >
@@ -232,15 +232,15 @@
           <p class="card-text">{{ post.text }}</p>
           <div class="card-footer">
             <span class="date">{{ post.date }}</span>
-            <a href="#" [id]="'blog-post-read-more-link-' + i" class="read-more"> Читать далее </a>
+            <a href="#" [id]="'blog-post-read-more-link-' + i" class="read-more">Читать далее</a>
           </div>
         </div>
       </article>
     }
   </div>
 
-  <button 
-    id="view-all-blog-posts-button" 
+  <button
+    id="view-all-blog-posts-button"
     class="btn-more"
     (click)="onLoadMoreBlogs()"
   >
@@ -256,13 +256,15 @@
 
   <div class="gallery-container">
     @for (img of galleryImages; track $index) {
-      <div class="gallery-item" [class.wide]="$index === 0 || $index === 4"></div>
-      <div class="gallery-item">
+      <div class="gallery-item" [class.wide]="$index === 0 || $index === 4">
         <img [src]="'Images/' + img + '.png'" alt="" />
       </div>
     }
   </div>
-  <button type="button" id="open-social-gallery-button" class="btn-pinterest">Наш Pinterest</button>
+
+  <button type="button" id="open-social-gallery-button" class="btn-pinterest">
+    Наш Pinterest
+  </button>
 </section>
 
 <footer class="main-footer">
@@ -322,18 +324,19 @@
         <a href="mailto:info@domain.com" id="footer-info-email-link" class="contact-link">info@domain.com</a>
         <a href="tel:+71234567890" id="footer-info-phone-link" class="contact-link">+7 (123) 456-78-90</a>
       </div>
-      <div class="social-icons">
-        @for (link of socialLinks; track $index; let i = $index) {
-          <a
-            [id]="'footer-social-link-' + link.slug"
-            [href]="link.url"
-            [attr.aria-label]="'Перейти в ' + link.slug"
-            class="social-link"
-          >
-            <img [src]="'Images/svg/' + link.icon + '.svg'" [alt]="link.slug" />
-          </a>
-        }
-      </div>
+        <div class="social-icons">
+          @for (link of socialLinks; track link.slug) {
+            <a
+              [id]="'footer-social-link-' + link.slug"
+              [href]="link.url"
+              [attr.aria-label]="'Перейти в ' + link.slug"
+              class="social-link"
+            >
+              <!-- Путь изменен на src/assets/... -->
+              <img [src]="'Images/svg/' + link.icon + '.svg'" [alt]="link.slug" />
+            </a>
+          }
+        </div>
     </div>
 
     <div class="footer-col services">
@@ -372,7 +375,9 @@
         <li>
           <a href="#" id="useful-insurance-safety-link">Медицинская страховка, гарантии безопасности</a>
         </li>
-        <li><a href="#" id="useful-medical-doctor-link">Если вы врач - загляните сюда</a></li>
+        <li>
+          <a href="#" id="useful-medical-doctor-link">Если вы врач - загляните сюда</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -405,6 +410,7 @@
       <p class="toast-text">{{ message.text }}</p>
     </div>
     <button
+      [id]="'toast-close-button-' + message.id"
       class="toast-close-btn"
       (click)="handleCloseMessage(message.id)"
       aria-label="Закрыть сообщение"
