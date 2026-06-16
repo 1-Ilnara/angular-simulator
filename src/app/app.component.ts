@@ -185,7 +185,7 @@ export class AppComponent {
 
   onSubscribe(): void {
     this.messageService.addMessage(
-      `Спасибо за подписку${this.subscribeEmail ? `, ${this.subscribeEmail}` : ''}!`,
+      `Спасибо за подписку${this.subscribeEmail ? ', ' + this.subscribeEmail : ''}!`,
       MessageType.SUCCESS
     );
 
@@ -222,6 +222,6 @@ export class AppComponent {
 
   private setVisitCount(): void {
     const count = this.localStorageService.getItem<number>('visitCount') || 0;
-    this.localStorageService.setItem<number>('visitCount', count + 1);
+    this.localStorageService.setItem('visitCount', count + 1);
   }
 }

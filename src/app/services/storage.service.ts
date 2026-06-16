@@ -15,7 +15,7 @@ export class LocalStorageService {
 
   getItem<T>(key: string): T | null {
     try {
-      const serializedValue = localStorage.getItem(key);
+      const serializedValue: string | null = localStorage.getItem(key);
       return serializedValue ? (JSON.parse(serializedValue) as T) : null;
     } catch (error: unknown) {
       console.error('Ошибка чтения из localStorage', error);
