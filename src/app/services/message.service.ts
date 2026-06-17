@@ -5,9 +5,7 @@ import { MessageType } from '../../enums/MessageType';
 @Injectable({
   providedIn: 'root'
 })
-@Injectable({
-  providedIn: 'root'
-})
+
 export class MessageService {
   messages: IMessage[] = [];
   private nextId: number = 1;
@@ -24,6 +22,6 @@ export class MessageService {
     }, 5000);
   }
   closeMessage(id: number): void {
-    this.messages = this.messages.filter(message => message.id !== id);
+    this.messages = this.messages.filter((message: IMessage) => message.id !== id);
   }
 }

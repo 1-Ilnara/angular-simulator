@@ -185,7 +185,7 @@ export class AppComponent {
 
   onSubscribe(): void {
     this.messageService.addMessage(
-      `Спасибо за подписку${this.subscribeEmail ? ', ' + this.subscribeEmail : ''}!`,
+      `Спасибо за подписку${ this.subscribeEmail ? ', ' + this.subscribeEmail : '' }!`,
       MessageType.SUCCESS
     );
 
