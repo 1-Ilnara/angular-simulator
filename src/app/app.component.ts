@@ -178,9 +178,7 @@ export class AppComponent {
     }
 
     this.messageService.addMessage(
-      `Поиск тура в ${this.searchData.location} успешно запущен!`,
-      MessageType.SUCCESS
-    );
+      `Поиск тура в ${this.searchData.location} успешно запущен!`, MessageType.SUCCESS);
   }
 
   onSubscribe(): void {
@@ -221,7 +219,7 @@ export class AppComponent {
   }
 
   private setVisitCount(): void {
-    const count = this.localStorageService.getItem<number>('visitCount') || 0;
+    const count: number = this.localStorageService.getItem<number>('visitCount') || 0;
     this.localStorageService.setItem('visitCount', count + 1);
   }
 }
