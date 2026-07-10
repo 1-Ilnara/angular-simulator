@@ -10,6 +10,7 @@ import { MessageService } from '../../services/message.service';
   styleUrl: './message.component.scss'
 })
 export class MessageComponent {
+  
   messageService: MessageService = inject(MessageService);
 
   handleCloseMessage(id: number): void {

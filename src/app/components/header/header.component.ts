@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
-interface INavigationItem {
-  label: string;
-  path: string;
-  id: string;
-}
+import { INavigation } from '../../../interfaces/INavigation';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +10,8 @@ interface INavigationItem {
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  navigationItems: INavigationItem[] = [
+  
+  navigationItems: INavigation[] = [ 
     {
       label: 'Главная',
       path: '/',
@@ -25,6 +21,6 @@ export class HeaderComponent {
       label: 'Пользователи',
       path: '/users',
       id: 'nav-link-users'
-    }
-  ];
+    } 
+  ]; 
 }

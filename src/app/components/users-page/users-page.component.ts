@@ -7,6 +7,7 @@ import { MessageService } from '../../services/message.service';
   styleUrl: './users-page.component.scss'
 })
 export class UsersPageComponent {
+  
   private messageService: MessageService = inject(MessageService);
   showUsersMessage(): void {
     this.messageService.showInfo('Страница пользователей открыта.');

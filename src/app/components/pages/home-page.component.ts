@@ -19,6 +19,7 @@ import { LocalStorageService } from '../../services/storage.service';
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent {
+  
   private messageService: MessageService = inject(MessageService);
   private localStorageService: LocalStorageService = inject(LocalStorageService);
 
