@@ -5,23 +5,42 @@ import { MessageType } from '../../enums/MessageType';
 @Injectable({
   providedIn: 'root'
 })
-
 export class MessageService {
   messages: IMessage[] = [];
   private nextId: number = 1;
-  addMessage(text: string, type: MessageType): void {
+
+  showSuccess(text: string): void {
+    this.addMessage(text, MessageType.SUCCESS);
+  }
+
+  showInfo(text: string): void {
+    this.addMessage(text, MessageType.INFO);
+  }
+
+  showWarn(text: string): void {
+    this.addMessage(text, MessageType.WARNING);
+  }
+
+  showError(text: string): void {
+    this.addMessage(text, MessageType.ERROR);
+  }
+
+  closeMessage(id: number): void {
+    this.messages = this.messages.filter((message: IMessage) => message.id !== id);
+  }
+
+  private addMessage(text: string, type: MessageType): void {
     const newMessage: IMessage = {
       id: this.nextId++,
       text,
       type,
       title: type
     };
+
     this.messages = [newMessage, ...this.messages];
+
     setTimeout((): void => {
       this.closeMessage(newMessage.id);
     }, 5000);
-  }
-  closeMessage(id: number): void {
-    this.messages = this.messages.filter((message: IMessage) => message.id !== id);
   }
 }
