@@ -10,17 +10,12 @@ import { INavigation } from '../../../interfaces/INavigation';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  
   navigationItems: INavigation[] = [ 
-    {
-      label: 'Главная',
-      path: '/',
-      id: 'nav-link-home'
-    },
-    {
-      label: 'Пользователи',
-      path: '/users',
-      id: 'nav-link-users'
-    } 
+    { label: 'Главная', path: '/' },
+    { label: 'Про гида', path: '/guide' },
+    { label: 'Программа тура', path: '/program' },
+    { label: 'Стоимость', path: '/price' },
+    { label: 'Блог', path: '/blog' },
+    { label: 'Контакты', path: '/contacts' }
   ]; 
 }

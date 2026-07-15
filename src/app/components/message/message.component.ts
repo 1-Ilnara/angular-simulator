@@ -16,4 +16,5 @@ export class MessageComponent {
   handleCloseMessage(id: number): void {
     this.messageService.closeMessage(id);
   }
+  
 }

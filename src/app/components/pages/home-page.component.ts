@@ -192,7 +192,9 @@ export class HomePageComponent {
   }
 
   private setVisitCount(): void {
-    const count = this.localStorageService.getItem<number>('visitCount') || 0;
-    this.localStorageService.setItem('visitCount', count + 1);
+    const storedCount = this.localStorageService.getItem<string>('visitCount');
+    const count = storedCount ? Number(storedCount) : 0;
+    this.localStorageService.setItem('visitCount', (count + 1).toString());
   }
+
 }
