@@ -1,0 +1,121 @@
+<footer class="main-footer">
+  <div class="subscribe__section">
+    <div class="subscribe-container">
+      <div class="subscribe-text">
+        <span class="label">актуально</span>
+        <h2 class="title">Получайте полезные рассылки о путешествиях</h2>
+      </div>
+
+      <div class="subscribe-form-wrapper">
+        <form class="subscribe-form" (ngSubmit)="onSubscribe()">
+          <div class="input-group">
+            <label for="newsletter-email-input">Введите e-mail адрес</label>
+            <div class="form-row">
+              <input
+                type="email"
+                id="newsletter-email-input"
+                name="email"
+                [(ngModel)]="subscribeEmail"
+                #emailInput="ngModel"
+                placeholder="name@domain.com"
+                required
+                class="subscribe-input"
+              />
+
+              <button
+                type="submit"
+                id="newsletter-subscribe-button"
+                class="btn-subscribe"
+                [disabled]="!subscribeEmail"
+              >
+                Подписаться на новости
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <p class="policy-text">
+          подписываясь на новости, вы автоматически соглашаетесь с
+          <a href="mailto:info@domain.com" id="footer-contact-email-link" class="contact-link">
+            info@domain.com
+          </a>
+          <a href="tel:+71234567890" id="footer-contact-phone-link" class="contact-link">
+            +7 (123) 456-78-90
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-container">
+    <div class="footer-col about">
+      <h3 class="footer-title">Компания «{{ companyName }}»</h3>
+      <p class="footer-text">Его корни уходят в один фрагмент классической латыни 45 года н.э.</p>
+      <div class="footer-contacts">
+        <a href="mailto:info@domain.com" id="footer-info-email-link" class="contact-link">info@domain.com</a>
+        <a href="tel:+71234567890" id="footer-info-phone-link" class="contact-link">+7 (123) 456-78-90</a>
+      </div>
+        <div class="social-icons">
+          @for (link of socialLinks; track link.slug) {
+            <a
+              [id]="'footer-social-link-' + link.slug"
+              [href]="link.url"
+              [attr.aria-label]="'Перейти в ' + link.slug"
+              class="social-link"
+            >
+              <img [src]="'Images/svg/' + link.icon + '.svg'" [alt]="link.slug"/>
+            </a>
+          }
+        </div>
+    </div>
+
+    <div class="footer-col services">
+      <h3 class="footer-title">Наши услуги</h3>
+      <ul class="footer-list">
+        <li>
+          <a href="#" id="service-summer-mountains-link">Прогулки в горы летом</a>
+        </li>
+        <li>
+          <a href="#" id="service-winter-mountains-link">Зимние походы в горы</a>
+        </li>
+        <li>
+          <a href="#" id="service-mountain-temples-link">Посещение храмов в горах</a>
+        </li>
+        <li>
+          <a href="#" id="service-extreme-tourism-link">Экстремальные виды туризма</a>
+        </li>
+        <li>
+          <a href="#" id="service-amazon-jungle-link">Походы в джунглях Амазонии</a>
+        </li>
+        <li>
+          <a href="#" id="service-africa-trip-link">Поездка в Африку</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col useful">
+      <h3 class="footer-title">Важно для путешествий</h3>
+      <ul class="footer-list">
+        <li>
+          <a href="#" id="useful-hiking-prep-link">Как собрать в долгий поход?</a>
+        </li>
+        <li>
+          <a href="#" id="useful-essential-items-link">Жизненно важные предметы для похода</a>
+        </li>
+        <li>
+          <a href="#" id="useful-insurance-safety-link">Медицинская страховка, гарантии безопасности</a>
+        </li>
+        <li>
+          <a href="#" id="useful-medical-doctor-link">Если вы врач - загляните сюда</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="bottom-container">
+      <span>ИП Константинопольский К.К., 2023</span>
+      <a href="#" id="footer-privacy-policy-link">Политика обработки персональных данных</a>
+    </div>
+  </div>
+</footer>

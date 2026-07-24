@@ -1,0 +1,28 @@
+<!Doctype html>
+<header class="header">
+  <div class="header__container">
+    <a [routerLink]="'/'" id="header-logo-link" class="header__logo">
+      <img src="Images/svg/logo_icon.svg" alt="РумТибет" />
+    </a>
+
+    <nav class="header__nav">
+      <ul class="nav__list">
+        @for (item of navigation; track item.path) {
+          <li class="nav__item">
+            <a 
+              [routerLink]="item.path"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [attr.id]="'nav-link-' + (item.path === '/' ? 'home' : item.path.replace('/', ''))"
+              class="nav__link"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <button id="header-consultation-button" class="header__btn">Консультация</button>
+  </div>
+</header>

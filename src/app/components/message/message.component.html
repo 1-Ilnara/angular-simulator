@@ -1,0 +1,7 @@
+ <!DOCTYPE html>
+ @if (message$ | async; as message) {
+  <div class="message" [class]=" 'message ' + message.type">
+    <span>{{ message.text }}</span>
+    <button type="button" (click)="onClose()">×</button>
+  </div>
+}
