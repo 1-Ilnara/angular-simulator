@@ -6,7 +6,6 @@
   place-items: center;
   z-index: 1000;
   cursor: progress;
-  /* Блокируем клики сквозь оверлей */
   pointer-events: all;
 }
 .spinner {

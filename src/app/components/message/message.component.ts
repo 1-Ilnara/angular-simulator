@@ -12,11 +12,11 @@ import { MessageService } from '../../services/message.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageComponent {
-  // inject() решает "used before initialization"
-  private messageService = inject(MessageService);
-  message$ = this.messageService.message$;
+  private messageService: MessageService = inject(MessageService);
+  message$: Observable<IMessage | null> = this.messageService.message$;
 
   onClose(): void {
     this.messageService.clearMessage();
   }
+  
 }
