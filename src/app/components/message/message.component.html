@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-@if (messages$ | async; as messages) {
-  @for (message of messages; track message.id) {
-    <div class="message" [class]="'message ' + message.type">
-      <span>{{ message.text }}</span>
-      <button (click)="onClose()">✕</button>
-    </div>
-  }
+@for (message of messages$ | async; track message.id) {
+  <div class="message" [class]="'message ' + message.type">
+    <span>{{ message.text }}</span>
+    <button type="button" (click)="onClose()">✕</button>
+  </div>
 }
