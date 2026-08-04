@@ -1,10 +1,8 @@
-import { Component, ChangeDetectionStrategy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { IUser } from '../../../interfaces/IUser';
-import { IMessage } from '../../../interfaces/IMessage';
 import { UserService } from '../../services/user.service';
-import { MessageService } from '../../services/message.service'; 
+import { IUser } from '../../../interfaces/IUser';
 
 @Component({
   selector: 'app-users-page',
@@ -15,23 +13,13 @@ import { MessageService } from '../../services/message.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersPageComponent implements OnInit {
-  private userService = inject(UserService);
-  private messageService = inject(MessageService); 
 
-  users$!: Observable<IUser[]>;
-  message$!: Observable<IMessage | null>; 
-  isLoading$!: Observable<boolean>;
+  private userService = inject(UserService);
+
+  users$: Observable<IUser[]> = this.userService.getUsers();
 
   ngOnInit(): void {
-    this.users$ = this.userService.getUsers();
-    
-    this.message$ = this.messageService.message$; 
-
     this.userService.loadUsers().subscribe();
   }
 
-  trackById(_index: number, u: IUser) {
-    return u.id;
-  }
-  
 }

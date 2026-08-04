@@ -1,7 +1,5 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-import { IMessage } from '../../../interfaces/IMessage';
 import { MessageService } from '../../services/message.service';
 
 @Component({
@@ -9,14 +7,16 @@ import { MessageService } from '../../services/message.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './message.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./message.component.scss']
 })
 export class MessageComponent {
-  private messageService: MessageService = inject(MessageService);
-  message$: Observable<IMessage | null> = this.messageService.message$;
+
+  private messageService = inject(MessageService);
+
+  messages$ = this.messageService.messages$;
 
   onClose(): void {
-    this.messageService.clearMessage();
+    this.messageService.closeMessage();
   }
-  
+
 }

@@ -3,18 +3,20 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { IMessage } from '../../interfaces/IMessage';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class MessageService {
-  private messageSubject: BehaviorSubject<IMessage | null> = new BehaviorSubject<IMessage | null>(null);
-  message$: Observable<IMessage | null> = this.messageSubject.asObservable();
 
-  showMessage(message: IMessage): void {
-    this.messageSubject.next(message);
+  private messagesSubject: BehaviorSubject<IMessage[]> = new BehaviorSubject<IMessage[]>([]);
+  messages$: Observable<IMessage[]> = this.messagesSubject.asObservable();
+
+  setMessage(message: IMessage): void {
+    const currentMessages = this.messagesSubject.getValue();
+    this.messagesSubject.next([...currentMessages, message]);
   }
 
-  clearMessage(): void {
-    this.messageSubject.next(null);
+  closeMessage(): void {
+    this.messagesSubject.next([]);
   }
-  
+
 }

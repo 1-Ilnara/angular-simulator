@@ -7,11 +7,12 @@ import { IUser } from '../../interfaces/IUser';
   providedIn: 'root'
 })
 export class UserApiService {
-  private http: HttpClient = inject(HttpClient);
-  private apiUrl: string = 'https://jsonplaceholder.typicode.com/users';
+
+  private http = inject(HttpClient);
+  private readonly apiUrl: string = 'https://jsonplaceholder.typicode.com/users';
 
   getUsers(): Observable<IUser[]> {
     return this.http.get<IUser[]>(this.apiUrl);
   }
-  
+
 }
