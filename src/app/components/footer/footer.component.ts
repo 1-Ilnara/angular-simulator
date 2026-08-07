@@ -14,7 +14,7 @@ import { MessageService } from '../../services/message.service';
 export class FooterComponent {
 
   private messageService = inject(MessageService);
-
+  
   companyName: string = 'РумТибет';
   subscribeEmail: string = '';
 
@@ -42,7 +42,7 @@ export class FooterComponent {
   ];
 
   onSubscribe(): void {
-    this.messageService.showSuccess(
+    (this.messageService as any).showSuccess(
       `Спасибо за подписку${this.subscribeEmail ? ', ' + this.subscribeEmail : ''}!`
     );
 

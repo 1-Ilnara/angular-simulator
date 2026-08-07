@@ -1,46 +1,22 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IMessage } from '../../interfaces/IMessage';
-import { MessageType } from '../../enums/MessageType';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
-  messages: IMessage[] = [];
-  private nextId: number = 1;
 
-  showSuccess(text: string): void {
-    this.addMessage(text, MessageType.SUCCESS);
+  private messagesSubject: BehaviorSubject<IMessage[]> = new BehaviorSubject<IMessage[]>([]);
+  messages$: Observable<IMessage[]> = this.messagesSubject.asObservable();
+
+  setMessage(message: IMessage): void {
+    const currentMessages = this.messagesSubject.getValue();
+    this.messagesSubject.next([...currentMessages, message]);
   }
 
-  showInfo(text: string): void {
-    this.addMessage(text, MessageType.INFO);
+  closeMessage(): void {
+    this.messagesSubject.next([]);
   }
 
-  showWarn(text: string): void {
-    this.addMessage(text, MessageType.WARNING);
-  }
-
-  showError(text: string): void {
-    this.addMessage(text, MessageType.ERROR);
-  }
-
-  closeMessage(id: number): void {
-    this.messages = this.messages.filter((message: IMessage) => message.id !== id);
-  }
-
-  private addMessage(text: string, type: MessageType): void {
-    const newMessage: IMessage = {
-      id: this.nextId++,
-      text,
-      type,
-      title: type
-    };
-
-    this.messages = [newMessage, ...this.messages];
-
-    setTimeout((): void => {
-      this.closeMessage(newMessage.id);
-    }, 5000);
-  }
 }

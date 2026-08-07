@@ -1,16 +1,21 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { INavigation } from '../../../interfaces/INavigation';
+import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router'; 
+
+interface INavigation {
+  label: string;
+  path: string;
+}
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  navigationItems: INavigation[] = [ 
+  navigation: INavigation[] = [ 
     { label: 'Главная', path: '/' },
     { label: 'Про гида', path: '/guide' },
     { label: 'Программа тура', path: '/program' },
@@ -18,4 +23,5 @@ export class HeaderComponent {
     { label: 'Блог', path: '/blog' },
     { label: 'Контакты', path: '/contacts' }
   ]; 
+  companyName: string = 'РумТибет';
 }

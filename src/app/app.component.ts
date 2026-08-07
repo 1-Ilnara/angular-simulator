@@ -5,6 +5,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { MessageComponent } from './components/message/message.component';
 import { MessageService } from './services/message.service';
 import { LocalStorageService } from './services/storage.service';
+import { LoaderComponent } from './components/loader/loader.component'
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { LocalStorageService } from './services/storage.service';
     HeaderComponent, 
     FooterComponent, 
     RouterOutlet, 
-    MessageComponent
+    MessageComponent,
+    LoaderComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

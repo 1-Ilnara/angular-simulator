@@ -1,19 +1,14 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './components/pages/home-page.component';
-import { UsersPageComponent } from './components/users-page/users-page.component';
-import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
+import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { UsersPageComponent } from './pages/users-page/users-page.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: HomePageComponent
-  },
-  {
-    path: 'users',
-    component: UsersPageComponent
-  },
-  {
-    path: '**',
-    component: NotFoundPageComponent
-  }
+  { path: '', component: UsersPageComponent },
+  { path: 'guide', component: UsersPageComponent },
+  { path: 'program', component: UsersPageComponent },
+  { path: 'price', component: UsersPageComponent },
+  { path: 'blog', component: UsersPageComponent },
+  { path: 'contacts', component: UsersPageComponent },
+  { path: 'user', component: UsersPageComponent },
+  { path: '**', component: NotFoundPageComponent }
 ];
