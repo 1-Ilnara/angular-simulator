@@ -13,7 +13,7 @@ import { IUser } from '../../../interfaces/IUser';
 })
 export class UserCreateComponent {
 
-  private fb = inject(FormBuilder);
+  private fb: FormBuilder = inject(FormBuilder);
 
   @Output() createUser: EventEmitter<IUser> = new EventEmitter<IUser>();
 
@@ -46,7 +46,7 @@ export class UserCreateComponent {
       return;
     }
 
-    const formValue = this.userForm.value;
+    const formValue: IUser = this.userForm.value as IUser;
     const newUser: IUser = {
       ...formValue,
       id: Date.now()

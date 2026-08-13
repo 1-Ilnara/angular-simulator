@@ -13,17 +13,18 @@ import { MessageType } from '../../enums/MessageType';
 })
 export class UserService {
 
-  private userApi = inject(UserApiService);
-  private loaderService = inject(LoaderService);
-  private messageService = inject(MessageService);
-  private localStorageService = inject(LocalStorageService);
+  private userApi: UserApiService = inject(UserApiService);
+  private loaderService: LoaderService = inject(LoaderService);
+  private messageService: MessageService = inject(MessageService);
+  private localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  private STORAGE_KEY = 'users_data';
-  private usersSubject = new BehaviorSubject<IUser[]>([]);
+  private STORAGE_KEY: string = 'users_data';
+  private usersSubject: BehaviorSubject<IUser[]> = new BehaviorSubject<IUser[]>([]);
   users$: Observable<IUser[]> = this.usersSubject.asObservable();
 
   setUsers(users: IUser[]): void {
     this.usersSubject.next(users);
+    this.localStorageService.setItem(this.STORAGE_KEY, users);
   }
 
   getUsers(): Observable<IUser[]> {
@@ -31,7 +32,7 @@ export class UserService {
   }
 
   loadUsers(): Observable<IUser[]> {
-    const cachedUsers = this.localStorageService.getItem<IUser[]>(this.STORAGE_KEY);
+    const cachedUsers: IUser[] | null = this.localStorageService.getItem<IUser[]>(this.STORAGE_KEY);
 
     if (cachedUsers && cachedUsers.length > 0) {
       this.setUsers(cachedUsers);
@@ -42,8 +43,7 @@ export class UserService {
 
     return this.userApi.getUsers().pipe(
       tap((users: IUser[]) => {
-        this.setUsers(users);
-        this.localStorageService.setItem(this.STORAGE_KEY, users);
+        this.setUsers(users); 
       }),
       catchError((error: unknown) => {
         this.messageService.setMessage({
@@ -62,19 +62,17 @@ export class UserService {
   }
 
   addUser(newUser: IUser): void {
-    const currentUsers = this.usersSubject.getValue();
-    const updatedUsers = [newUser, ...currentUsers];
+    const currentUsers: IUser[] = this.usersSubject.getValue();
+    const updatedUsers: IUser[] = [newUser, ...currentUsers];
 
     this.setUsers(updatedUsers);
-    this.localStorageService.setItem(this.STORAGE_KEY, updatedUsers);
   }
 
   deleteUser(id: number): void {
-    const currentUsers = this.usersSubject.getValue();
-    const updatedUsers = currentUsers.filter((user: IUser) => user.id !== id);
+    const currentUsers: IUser[] = this.usersSubject.getValue();
+    const updatedUsers: IUser[] = currentUsers.filter((user: IUser) => user.id !== id);
 
     this.setUsers(updatedUsers);
-    this.localStorageService.setItem(this.STORAGE_KEY, updatedUsers);
   }
 
 }
