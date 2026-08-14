@@ -19,6 +19,7 @@
   justify-content: space-between;
   align-items: center;
   font-family: 'Nunito Sans', sans-serif;
+  gap: 15px; 
 }
 
 .header__logo {
@@ -30,9 +31,11 @@
 
 .nav__list {
   display: flex;
-  width: 625px;
+  width: 500px; 
   justify-content: space-between;
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .nav__list .nav__link {
@@ -45,6 +48,23 @@
 .nav__link--active {
   font-weight: 700;
   color: #f2be22;
+}
+
+.header__theme-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header__mode-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header__theme-icon {
+  font-size: 16px;
+  color: #ffffff;
 }
 
 .header__btn {

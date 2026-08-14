@@ -55,18 +55,19 @@
         <a href="mailto:info@domain.com" id="footer-info-email-link" class="contact-link">info@domain.com</a>
         <a href="tel:+71234567890" id="footer-info-phone-link" class="contact-link">+7 (123) 456-78-90</a>
       </div>
-        <div class="social-icons">
-          @for (link of socialLinks; track link.slug) {
-            <a
-              [id]="'footer-social-link-' + link.slug"
-              [href]="link.url"
-              [attr.aria-label]="'Перейти в ' + link.slug"
-              class="social-link"
-            >
-              <img [src]="'Images/svg/' + link.icon + '.svg'" [alt]="link.slug"/>
-            </a>
-          }
-        </div>
+
+      <div class="social-icons">
+        @for (link of socialLinks; track link.slug) {
+          <a
+            [id]="'footer-social-link-' + link.slug"
+            [href]="link.url"
+            [attr.aria-label]="'Перейти в ' + link.slug"
+            class="social-link"
+          >
+            <fa-icon [icon]="link.icon"></fa-icon>
+          </a>
+        }
+      </div>
     </div>
 
     <div class="footer-col services">
