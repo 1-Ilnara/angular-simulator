@@ -12,10 +12,11 @@ export type PresetTheme = 'Aura' | 'Lara' | 'Nora';
   providedIn: 'root'
 })
 export class ThemeService {
+  
   private localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  private readonly DARK_MODE_KEY: string = 'is_dark_mode';
-  private readonly THEME_KEY: string = 'selected_theme';
+  private  DARK_MODE_KEY: string = 'is_dark_mode';
+  private  THEME_KEY: string = 'selected_theme';
 
   private initialIsDark: boolean = this.localStorageService.getItem<boolean>(this.DARK_MODE_KEY) ?? false;
   private initialTheme: PresetTheme = this.localStorageService.getItem<PresetTheme>(this.THEME_KEY) ?? 'Aura';

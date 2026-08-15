@@ -26,24 +26,21 @@
 
       <div class="header__mode-switch">
         <fa-icon [icon]="isDarkMode ? faMoon : faSun" class="header__theme-icon"></fa-icon>
-        <p-toggleSwitch 
-          [(ngModel)]="isDarkMode" 
-          (onChange)="onDarkModeToggle()">
-        </p-toggleSwitch>
+    
+        <p-toggleswitch
+          [(ngModel)]="isDarkMode"
+          (onChange)="onDarkModeToggle($event)">
+        </p-toggleswitch>
       </div>
 
-      <p-selectButton 
-        [options]="themeOptions" 
-        [(ngModel)]="selectedTheme" 
-        (onChange)="onThemeChange()"
+      <p-selectbutton
+        [options]="themeOptions"
+        [(ngModel)]="selectedTheme"
+        (onChange)="onThemeChange($event)"
         optionLabel="label"
         optionValue="value"
         [style]="{ width: '150px' }">
-       [(ngModel)]="selectedTheme" 
-       optionLabel="label" 
-       optionValue="value"
-       (onChange)="onThemeChange()">
-      </p-selectButton>
+      </p-selectbutton>
     </div>
 
     <button id="header-consultation-button" class="header__btn">Консультация</button>
