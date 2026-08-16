@@ -1,15 +1,14 @@
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router'; 
+import { Observable } from 'rxjs';
 
 import { ToggleSwitchChangeEvent, ToggleSwitchModule } from 'primeng/toggleswitch';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSun, faMoon, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { tap } from 'rxjs/operators';
 import { INavigation } from '../../../interfaces/INavigation';
 import { ThemeService } from '../../services/theme.service';
 import { PresetTheme } from '../../../enums/preset-theme';
@@ -34,9 +33,9 @@ interface IThemeOption {
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   
- companyName: string = 'РумТибет';
+  companyName: string = 'РумТибет';
 
   INavigation: INavigation[] = [ 
     { label: 'Главная', path: '/' },
@@ -48,13 +47,12 @@ export class HeaderComponent implements OnInit {
   ];
 
   private readonly themeService: ThemeService = inject(ThemeService);
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-   faSun: IconDefinition = faSun;
-   faMoon: IconDefinition = faMoon;
+  faSun: IconDefinition = faSun;
+  faMoon: IconDefinition = faMoon;
 
-  isDarkMode: boolean = false;
-  selectedTheme: PresetTheme = PresetTheme.Aura;
+  isDarkMode$ = this.themeService.isDarkMode$;
+  currentTheme$ = this.themeService.currentTheme$;
 
   themeOptions: IThemeOption[] = [
     { label: 'Aura', value: PresetTheme.Aura },
@@ -62,32 +60,18 @@ export class HeaderComponent implements OnInit {
     { label: 'Nora', value: PresetTheme.Nora }
   ];
 
-  ngOnInit(): void {
-  this.themeService.isDarkMode$.pipe(
-    tap((isDark: boolean) => {
-      this.isDarkMode = isDark;
-    }),
-    takeUntilDestroyed(this.destroyRef)
-  ).subscribe();
 
-  this.themeService.currentTheme$.pipe(
-    tap((presetTheme) => {
-      this.selectedTheme = presetTheme as PresetTheme;
-    }),
-    takeUntilDestroyed(this.destroyRef)
-  ).subscribe();
-}
-
-  onDarkModeToggle(event: ToggleSwitchChangeEvent): void {
-    const isChecked = event.checked ?? this.isDarkMode;
-    this.themeService.toggleDarkMode(isChecked);
-  }
-
-  onThemeChange(event: SelectButtonChangeEvent): void {
-    const theme = (event.value as PresetTheme) ?? this.selectedTheme;
-    if (theme) {
-      this.themeService.setTheme(theme);
+    onDarkModeToggle(event: ToggleSwitchChangeEvent): void {
+      if (event.checked !== undefined) {
+        this.themeService.toggleDarkMode(event.checked);
+      }
     }
-  }
+
+   onThemeChange(event: SelectButtonChangeEvent): void {
+      const theme = event.value as PresetTheme;
+      if (theme) {
+        this.themeService.setTheme(theme);
+      }
+    }
 
 }
