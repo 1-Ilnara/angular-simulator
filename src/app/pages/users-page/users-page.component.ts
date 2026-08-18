@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy, Pipe } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -7,6 +7,9 @@ import { IUser } from '../../../interfaces/IUser';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { UsersFilterComponent } from '../../components/users-filter/users-filter.component';
 import { UserCreateComponent } from '../../components/user-create/user-create.component';
+import { PluralPipe } from '../../pipes/plural.pipe/plural.pipe.component';
+
+
 
 @Component({
   selector: 'app-users-page',
@@ -15,7 +18,8 @@ import { UserCreateComponent } from '../../components/user-create/user-create.co
     CommonModule,
     UserCardComponent,
     UsersFilterComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    PluralPipe,
   ],
   templateUrl: './users-page.component.html',
   styleUrls: ['./users-page.component.scss'],

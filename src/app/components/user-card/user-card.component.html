@@ -1,13 +1,15 @@
-<article class="card">
+<article class="card" appAnimatedGradient>
   <header class="card__head">
-    <h3 class="card__title">{{ user.name || 'Неизвестно' }}</h3>
+    <h3 class="card__title">{{ (user.name | uppercase) || 'НЕИЗВЕСТНО' }}</h3>
     <div class="card__username">@{{ user.username || 'Неизвестно' }}</div>
   </header>
 
   <section class="card__section">
     <h4>КОНТАКТЫ</h4>
     <p><span>Эл. почта:</span> {{ user.email || 'Неизвестно' }}</p>
-    <p><span>Телефон:</span> {{ user.phone || 'Неизвестно' }}</p>
+    
+    <p><span>Телефон:</span> {{ user.phone ? (user.phone | phoneFormat:'international') : 'Неизвестно' }}</p>
+    
     <p><span>Веб-сайт:</span> {{ user.website || 'Неизвестно' }}</p>
   </section>
 
@@ -33,7 +35,13 @@
     <p><span>Специализация:</span> {{ user.company.bs || 'Неизвестно' }}</p>
   </section>
 
-  <button id="delete-user-btn" type="button" class="delete-btn" (click)="onDelete()">
+  <button 
+    id="delete-user-btn" 
+    type="button" 
+    class="delete-btn" 
+    appHoverBold 
+    (click)="onDelete()"
+  >
     Удалить пользователя
   </button>
 </article>

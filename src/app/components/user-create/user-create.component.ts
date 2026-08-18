@@ -2,11 +2,18 @@ import { Component, Output, EventEmitter, inject, ChangeDetectionStrategy } from
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IUser } from '../../../interfaces/IUser';
+import { HoverBoldDirective } from '../../directives/hover-bold.directive/hover-bold.directive.component';
+import { AnimatedGradientDirective } from '../../directives/animated-gradient.directive/animated-gradient.directive.component';
 
 @Component({
   selector: 'app-user-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    HoverBoldDirective, 
+    AnimatedGradientDirective
+  ],
   templateUrl: './user-create.component.html',
   styleUrls: ['./user-create.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
