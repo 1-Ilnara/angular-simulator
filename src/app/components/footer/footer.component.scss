@@ -168,17 +168,19 @@ $subscribe-height: 196px;
     }
 
     .social-icons {
-      fill: white;
-      display: flex;
-      gap: 16px;
+     display: flex;
+     gap: 12px;
 
-      .social-link img {
-        width: 32px;
-        height: 32px;
+      .social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 20px; 
+        transition: color 0.3s ease;
 
         &:hover {
-          opacity: 1;
-          filter: none;
+          color: #f2be22; 
         }
       }
     }
