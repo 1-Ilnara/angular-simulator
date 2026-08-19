@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, OnDestroy, Renderer2, inject } from '@angular/core';
+import { Directive,ElementRef,HostListener,Input,OnDestroy,Renderer2,inject } from '@angular/core';
 
 export interface GradientConfiguration {
   delay?: number;
@@ -8,23 +8,27 @@ export interface GradientConfiguration {
 
 @Directive({
   selector: '[appAnimatedGradient]',
-  standalone: true
+  standalone: true,
 })
 export class AnimatedGradientDirective implements OnDestroy {
+  
+  private readonly el: ElementRef<HTMLElement> = inject(ElementRef);
+  private readonly renderer: Renderer2 = inject(Renderer2);
 
-  private readonly el = inject(ElementRef);
-  private readonly renderer = inject(Renderer2);
-
-  // Разрешаем принимать пустую строку или undefined при вызове атрибута без значений
-  @Input('appAnimatedGradient') config?: GradientConfiguration | '' | undefined;
+  @Input('appAnimatedGradient') public config?:
+    | GradientConfiguration
+    | ''
+    | undefined;
 
   private timerId: ReturnType<typeof setTimeout> | null = null;
-  private isEffectActive = false;
+  private isEffectActive: boolean = false;
 
   @HostListener('mouseenter')
   onMouseEnter(): void {
-    // Безопасно извлекаем задержку
-    const delay = (typeof this.config === 'object' && this.config?.delay) ? this.config.delay : 1000;
+    const delay: number =
+      typeof this.config === 'object' && this.config?.delay
+        ? this.config.delay
+        : 1000;
 
     this.timerId = setTimeout(() => {
       this.applyGradient();
@@ -46,19 +50,40 @@ export class AnimatedGradientDirective implements OnDestroy {
   }
 
   private applyGradient(): void {
-    const configObj = typeof this.config === 'object' ? this.config : undefined;
-    const colors = configObj?.colors ?? ['#ff007f', '#7f00ff', '#00f0ff'];
-    const thickness = configObj?.thickness ?? '2px';
+    const configObj: GradientConfiguration | undefined =
+      typeof this.config === 'object' ? this.config : undefined;
+    const colors: string[] = configObj?.colors ?? [
+      '#ff007f',
+      '#7f00ff',
+      '#00f0ff',
+    ];
+    const thickness: string = configObj?.thickness ?? '2px';
 
-    this.renderer.setStyle(this.el.nativeElement, 'border', `${thickness} solid transparent`);
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'border',
+      `${thickness} solid transparent`
+    );
     this.renderer.setStyle(
       this.el.nativeElement,
       'background-image',
       `linear-gradient(white, white), linear-gradient(90deg, ${colors.join(', ')})`
     );
-    this.renderer.setStyle(this.el.nativeElement, 'background-origin', 'border-box');
-    this.renderer.setStyle(this.el.nativeElement, 'background-clip', 'padding-box, border-box');
-    this.renderer.setStyle(this.el.nativeElement, 'transition', 'all 0.3s ease');
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'background-origin',
+      'border-box'
+    );
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'background-clip',
+      'padding-box, border-box'
+    );
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'transition',
+      'all 0.3s ease'
+    );
   }
 
   private removeGradient(): void {
@@ -70,10 +95,10 @@ export class AnimatedGradientDirective implements OnDestroy {
   }
 
   private clearTimer(): void {
-    if (this.timerId) {
+    if (this.timerId !== null) {
       clearTimeout(this.timerId);
       this.timerId = null;
     }
   }
-  
+
 }

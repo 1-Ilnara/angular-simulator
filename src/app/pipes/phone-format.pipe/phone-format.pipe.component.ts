@@ -1,27 +1,39 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-export type PhoneFormatMode = 'compact' | 'international' | 'national' | 'masked';
+export type PhoneFormatMode =
+  | 'compact'
+  | 'international'
+  | 'national'
+  | 'masked';
 
 @Pipe({
   name: 'phoneFormat',
-  standalone: true
+  standalone: true,
 })
 export class PhoneFormatPipe implements PipeTransform {
+  
+  transform(
+    value: string | null | undefined,
+    mode: PhoneFormatMode = 'international'
+  ): string {
+    if (!value) {
+      return '';
+    }
 
-  transform(value: string | null | undefined, mode: PhoneFormatMode = 'international'): string {
-    if (!value) return '';
+    const digits: string = value.replace(/\D/g, '');
 
-    const digits = value.replace(/\D/g, '');
+    if (!digits) {
+      return '';
+    }
 
-    if (!digits) return '';
+    const countryCode: string =
+      digits.length > 10 ? digits.slice(0, digits.length - 10) : '';
+    const mainNumber: string = digits.slice(-10);
 
-    const countryCode = digits.length > 10 ? digits.slice(0, digits.length - 10) : '';
-    const mainNumber = digits.slice(-10); 
-
-    const op = mainNumber.slice(0, 3);   
-    const g1 = mainNumber.slice(3, 6);   
-    const g2 = mainNumber.slice(6, 8);   
-    const g3 = mainNumber.slice(8, 10);  
+    const op: string = mainNumber.slice(0, 3);
+    const g1: string = mainNumber.slice(3, 6);
+    const g2: string = mainNumber.slice(6, 8);
+    const g3: string = mainNumber.slice(8, 10);
 
     switch (mode) {
       case 'compact':
@@ -40,5 +52,5 @@ export class PhoneFormatPipe implements PipeTransform {
         return value;
     }
   }
-  
+
 }
