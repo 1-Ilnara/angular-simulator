@@ -20,9 +20,9 @@ import { AnimatedGradientDirective } from '../../directives/animated-gradient.di
 })
 export class UserCreateComponent {
 
-  private readonly fb: FormBuilder = inject(FormBuilder);
+  private fb: FormBuilder = inject(FormBuilder);
 
-  @Output() public createUser: EventEmitter<IUser> = new EventEmitter<IUser>();
+  @Output() createUser: EventEmitter<IUser> = new EventEmitter<IUser>();
 
   userForm: FormGroup = this.fb.group({
     name: [

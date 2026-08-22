@@ -11,7 +11,6 @@ export type PhoneFormatMode =
   standalone: true,
 })
 export class PhoneFormatPipe implements PipeTransform {
-  
   transform(
     value: string | null | undefined,
     mode: PhoneFormatMode = 'international'
@@ -38,19 +37,14 @@ export class PhoneFormatPipe implements PipeTransform {
     switch (mode) {
       case 'compact':
         return `+${digits}`;
-
       case 'international':
         return `+${countryCode} ${op} ${g1} ${g2} ${g3}`.trim();
-
       case 'national':
         return `${op} ${g1} ${g2} ${g3}`;
-
       case 'masked':
         return `+${countryCode} ${op} *** ** ${g3}`.trim();
-
       default:
         return value;
     }
   }
-
 }
