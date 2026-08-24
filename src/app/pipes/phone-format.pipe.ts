@@ -11,6 +11,7 @@ export type PhoneFormatMode =
   standalone: true,
 })
 export class PhoneFormatPipe implements PipeTransform {
+
   transform(
     value: string | null | undefined,
     mode: PhoneFormatMode = 'international'
@@ -47,4 +48,5 @@ export class PhoneFormatPipe implements PipeTransform {
         return value;
     }
   }
+  
 }

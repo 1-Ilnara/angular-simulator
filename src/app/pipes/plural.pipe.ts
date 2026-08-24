@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class PluralPipe implements PipeTransform {
-  
+
   transform(
     value: number | string,
     one: string,
@@ -35,5 +35,5 @@ export class PluralPipe implements PipeTransform {
 
     return `${num} ${word}`;
   }
-
+  
 }

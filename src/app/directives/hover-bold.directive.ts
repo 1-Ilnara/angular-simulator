@@ -11,6 +11,7 @@ import {
   standalone: true,
 })
 export class HoverBoldDirective {
+
   private el: ElementRef<HTMLElement> = inject(ElementRef);
   private renderer: Renderer2 = inject(Renderer2);
 
@@ -23,4 +24,5 @@ export class HoverBoldDirective {
   onMouseLeave(): void {
     this.renderer.removeStyle(this.el.nativeElement, 'font-weight');
   }
+  
 }

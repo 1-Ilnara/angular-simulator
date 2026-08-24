@@ -1,10 +1,9 @@
 import { Component,Input,Output,EventEmitter,ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, UpperCasePipe } from '@angular/common';
 import { IUser } from '../../../interfaces/IUser';
-import { PhoneFormatPipe } from '../../pipes/phone-format.pipe/phone-format.pipe.component';
-import { HoverBoldDirective } from '../../directives/hover-bold.directive/hover-bold.directive.component';
-import { AnimatedGradientDirective } from '../../directives/animated-gradient.directive/animated-gradient.directive.component';
-
+import { PhoneFormatPipe } from '../../pipes/phone-format.pipe';
+import { HoverBoldDirective } from '../../directives/hover-bold.directive';
+import { AnimatedGradientDirective } from '../../directives/animated-gradient.directive';
 @Component({
   selector: 'app-user-card',
   standalone: true,

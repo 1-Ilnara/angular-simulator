@@ -8,13 +8,14 @@ import {
   inject,
 } from '@angular/core';
 
-import { IGradientConfiguration } from '../../../interfaces/IGradientConfiguration';
+import { IGradientConfiguration } from '../../interfaces/IGradientConfiguration';
 
 @Directive({
   selector: '[appAnimatedGradient]',
   standalone: true,
 })
 export class AnimatedGradientDirective implements OnDestroy {
+
   private el: ElementRef<HTMLElement> = inject(ElementRef);
   private renderer: Renderer2 = inject(Renderer2);
 
@@ -79,4 +80,5 @@ export class AnimatedGradientDirective implements OnDestroy {
       this.timerId = null;
     }
   }
+  
 }

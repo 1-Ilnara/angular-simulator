@@ -2,8 +2,8 @@ import { Component,Output,EventEmitter,inject,ChangeDetectionStrategy } from '@a
 import { CommonModule } from '@angular/common';
 import {FormBuilder,FormGroup,ReactiveFormsModule,Validators,} from '@angular/forms';
 import { IUser } from '../../../interfaces/IUser';
-import { HoverBoldDirective } from '../../directives/hover-bold.directive/hover-bold.directive.component';
-import { AnimatedGradientDirective } from '../../directives/animated-gradient.directive/animated-gradient.directive.component';
+import { HoverBoldDirective } from '../../directives/hover-bold.directive';
+import { AnimatedGradientDirective } from '../../directives/animated-gradient.directive';
 
 @Component({
   selector: 'app-user-create',
