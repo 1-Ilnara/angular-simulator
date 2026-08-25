@@ -19,11 +19,24 @@ export class AnimatedGradientDirective implements OnDestroy {
   private el: ElementRef<HTMLElement> = inject(ElementRef);
   private renderer: Renderer2 = inject(Renderer2);
 
-  @Input('appAnimatedGradient') config: IGradientConfiguration = {
+  private _config: IGradientConfiguration = {
     delay: 1000,
     colors: ['#ff007f', '#7f00ff', '#00f0ff'],
     thickness: '2px',
   };
+
+  @Input('appAnimatedGradient')
+  set config(value: IGradientConfiguration | '' | null | undefined) {
+    if (value && typeof value === 'object') {
+      this._config = { ...this._config, ...value };
+    }
+  }
+
+  get config(): IGradientConfiguration {
+    return this._config;
+  }
+
+  static ngAcceptInputType_config: IGradientConfiguration | '' | null | undefined;
 
   private timerId: ReturnType<typeof setTimeout> | null = null;
   private isEffectActive: boolean = false;

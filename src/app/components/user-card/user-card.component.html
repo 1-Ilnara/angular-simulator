@@ -1,6 +1,6 @@
-<article class="card" appAnimatedGradient>
+<article class="card" [appAnimatedGradient]="{}">
   <header class="card__head">
-    <h3 class="card__title">{{ (user.name | uppercase) || 'НЕИЗВЕСТНО' }}</h3>
+    <h3 class="card__title">{{ user.name | uppercase }}</h3>
     <div class="card__username">@{{ user.username || 'Неизвестно' }}</div>
   </header>
 
@@ -9,7 +9,7 @@
     <p><span>Эл. почта:</span> {{ user.email || 'Неизвестно' }}</p>
     <p>
       <span>Телефон:</span>
-      {{ user.phone ? (user.phone | phoneFormat: 'international') : 'Неизвестно' }}
+      {{ user.phone ? (user.phone | phoneFormat:'international') : 'Неизвестно' }}
     </p>
     <p><span>Веб-сайт:</span> {{ user.website || 'Неизвестно' }}</p>
   </section>
