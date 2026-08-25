@@ -1,36 +1,130 @@
-<form id="create-user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()" class="create-form">
+<form
+  id="create-user-form"
+  [formGroup]="userForm"
+  (ngSubmit)="onSubmit()"
+  class="create-form"
+>
   <h2>Создать пользователя</h2>
 
   <div class="form-section">
     <h3>Основное</h3>
-    <input id="input-name" type="text" formControlName="name" placeholder="Имя *" />
-    <input id="input-username" type="text" formControlName="username" placeholder="Никнейм *" />
-    <input id="input-email" type="email" formControlName="email" placeholder="Email *" />
-    <input id="input-phone" type="text" formControlName="phone" placeholder="Телефон *" />
-    <input id="input-website" type="text" formControlName="website" placeholder="Веб-сайт" />
+    <input
+      id="input-name"
+      type="text"
+      formControlName="name"
+      placeholder="Имя *"
+      appAnimatedGradient
+    />
+    <input
+      id="input-username"
+      type="text"
+      formControlName="username"
+      placeholder="Никнейм *"
+      appAnimatedGradient
+    />
+    <input
+      id="input-email"
+      type="email"
+      formControlName="email"
+      placeholder="Email *"
+      appAnimatedGradient
+    />
+    <input
+      id="input-phone"
+      type="text"
+      formControlName="phone"
+      placeholder="Телефон *"
+      appAnimatedGradient
+    />
+    <input
+      id="input-website"
+      type="text"
+      formControlName="website"
+      placeholder="Веб-сайт"
+      appAnimatedGradient
+    />
   </div>
 
   <div class="form-section" formGroupName="address">
     <h3>Адрес</h3>
-    <input id="input-city" type="text" formControlName="city" placeholder="Город *" />
-    <input id="input-street" type="text" formControlName="street" placeholder="Улица *" />
-    <input id="input-suite" type="text" formControlName="suite" placeholder="Офис/Квартира" />
-    <input id="input-zipcode" type="text" formControlName="zipcode" placeholder="Индекс *" />
+    <input
+      id="input-city"
+      type="text"
+      formControlName="city"
+      placeholder="Город *"
+      appAnimatedGradient
+    />
+    <input
+      id="input-street"
+      type="text"
+      formControlName="street"
+      placeholder="Улица *"
+      appAnimatedGradient
+    />
+    <input
+      id="input-suite"
+      type="text"
+      formControlName="suite"
+      placeholder="Офис/Квартира"
+      appAnimatedGradient
+    />
+    <input
+      id="input-zipcode"
+      type="text"
+      formControlName="zipcode"
+      placeholder="Индекс *"
+      appAnimatedGradient
+    />
 
     <div formGroupName="geo" class="geo-inputs">
-      <input id="input-geo-lat" type="text" formControlName="lat" placeholder="Широта (lat) *" />
-      <input id="input-geo-lng" type="text" formControlName="lng" placeholder="Долгота (lng) *" />
+      <input
+        id="input-geo-lat"
+        type="text"
+        formControlName="lat"
+        placeholder="Широта (lat) *"
+        appAnimatedGradient
+      />
+      <input
+        id="input-geo-lng"
+        type="text"
+        formControlName="lng"
+        placeholder="Долгота (lng) *"
+        appAnimatedGradient
+      />
     </div>
   </div>
 
   <div class="form-section" formGroupName="company">
     <h3>Компания</h3>
-    <input id="input-company-name" type="text" formControlName="name" placeholder="Название компании *" />
-    <input id="input-company-phrase" type="text" formControlName="catchPhrase" placeholder="Слоган" />
-    <input id="input-company-bs" type="text" formControlName="bs" placeholder="Специализация" />
+    <input
+      id="input-company-name"
+      type="text"
+      formControlName="name"
+      placeholder="Название компании *"
+      appAnimatedGradient
+    />
+    <input
+      id="input-company-phrase"
+      type="text"
+      formControlName="catchPhrase"
+      placeholder="Слоган"
+      appAnimatedGradient
+    />
+    <input
+      id="input-company-bs"
+      type="text"
+      formControlName="bs"
+      placeholder="Специализация"
+      appAnimatedGradient
+    />
   </div>
 
-  <button id="btn-submit-user" type="submit" [disabled]="userForm.invalid">
+  <button
+    id="btn-submit-user"
+    type="submit"
+    appHoverBold
+    [disabled]="userForm.invalid"
+  >
     Создать пользователя
   </button>
 </form>
