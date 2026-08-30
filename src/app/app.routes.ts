@@ -1,14 +1,60 @@
 import { Routes } from '@angular/router';
-import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
-import { UsersPageComponent } from './pages/users-page/users-page.component';
 
 export const routes: Routes = [
-  { path: '', component: UsersPageComponent },
-  { path: 'guide', component: UsersPageComponent },
-  { path: 'program', component: UsersPageComponent },
-  { path: 'price', component: UsersPageComponent },
-  { path: 'blog', component: UsersPageComponent },
-  { path: 'contacts', component: UsersPageComponent },
-  { path: 'user', component: UsersPageComponent },
-  { path: '**', component: NotFoundPageComponent }
+  {
+    path: '',
+    loadComponent: () =>
+      import('./pages/users-page/users-page.component').then(
+        (m) => m.UsersPageComponent
+      ),
+  },
+  {
+    path: 'guide',
+    loadComponent: () =>
+      import('./pages/users-page/users-page.component').then(
+        (m) => m.UsersPageComponent
+      ),
+  },
+  {
+    path: 'program',
+    loadComponent: () =>
+      import('./pages/users-page/users-page.component').then(
+        (m) => m.UsersPageComponent
+      ),
+  },
+  {
+    path: 'price',
+    loadComponent: () =>
+      import('./pages/users-page/users-page.component').then(
+        (m) => m.UsersPageComponent
+      ),
+  },
+  {
+    path: 'blog',
+    loadComponent: () =>
+      import('./pages/users-page/users-page.component').then(
+        (m) => m.UsersPageComponent
+      ),
+  },
+  {
+    path: 'contacts',
+    loadComponent: () =>
+      import('./pages/users-page/users-page.component').then(
+        (m) => m.UsersPageComponent
+      ),
+  },
+  {
+    path: 'user',
+    loadComponent: () =>
+      import('./pages/users-page/users-page.component').then(
+        (m) => m.UsersPageComponent
+      ),
+  },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./pages/not-found-page/not-found-page.component').then(
+        (m) => m.NotFoundPageComponent
+      ),
+  },
 ];
