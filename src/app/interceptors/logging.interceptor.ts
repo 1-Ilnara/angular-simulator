@@ -1,22 +1,32 @@
-import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
-import { tap } from 'rxjs';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandlerFn,
+  HttpInterceptorFn,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 
-export const loggingInterceptor: HttpInterceptorFn = (req, next) => {
-  const startTime = performance.now();
-  const { method, urlWithParams } = req;
+export const loggingInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<unknown>> => {
+  const startTime: number = performance.now();
+  const { method, urlWithParams }: { method: string; urlWithParams: string } = req;
 
   return next(req).pipe(
     tap({
-      next: (event) => {
+      next: (event: HttpEvent<unknown>): void => {
         if (event instanceof HttpResponse) {
-          const elapsedTime = (performance.now() - startTime).toFixed(2);
+          const elapsedTime: string = (performance.now() - startTime).toFixed(2);
           console.log(
             `[HTTP Success] ${method} ${urlWithParams} | Status: ${event.status} | Time: ${elapsedTime}ms`
           );
         }
       },
-      error: (error) => {
-        const elapsedTime = (performance.now() - startTime).toFixed(2);
+      error: (error: HttpErrorResponse): void => {
+        const elapsedTime: string = (performance.now() - startTime).toFixed(2);
         console.error(
           `[HTTP Error] ${method} ${urlWithParams} | Status: ${error.status || 'Unknown'} | Time: ${elapsedTime}ms`
         );
