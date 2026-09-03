@@ -12,20 +12,20 @@ export const loggingInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
-  const startTime = performance.now();
+  const startTime: number = performance.now();
   const { method, urlWithParams } = req;
 
   return next(req).pipe(
     tap({
       next: (event: HttpEvent<unknown>): void => {
         if (event instanceof HttpResponse) {
-          const elapsedTime = (performance.now() - startTime).toFixed(2);
-          console.log(`[HTTP Success] ${method} ${urlWithParams} | Status: ${event.status} | Time: ${elapsedTime}ms`);
+          const elapsedTime: string = (performance.now() - startTime).toFixed(2);
+          console.log(`[HTTP Success] ${ method } ${ urlWithParams } | Status: ${ event.status } | Time: ${ elapsedTime }ms`);
         }
       },
       error: (error: HttpErrorResponse): void => {
-        const elapsedTime = (performance.now() - startTime).toFixed(2);
-        console.error(`[HTTP Error] ${method} ${urlWithParams} | Status: ${error.status || 'Unknown'} | Time: ${elapsedTime}ms`);
+        const elapsedTime: string = (performance.now() - startTime).toFixed(2);
+        console.error(`[HTTP Error] ${ method } ${ urlWithParams } | Status: ${ error.status || 'Unknown' } | Time: ${ elapsedTime }ms`);
       },
     })
   );
