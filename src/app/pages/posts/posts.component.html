@@ -1,0 +1,55 @@
+<p-contextmenu #cm [model]="contextMenuItems"></p-contextmenu>
+
+<div class="card">
+  <p-table
+    [value]="posts"
+    [lazy]="true"
+    (onLazyLoad)="loadPosts($event)"
+    [paginator]="true"
+    [rows]="rows"
+    [first]="first"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 50]"
+    [(contextMenuSelection)]="selectedPost"
+    [contextMenu]="cm"
+    dataKey="id"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Title</th>
+        <th>Tags</th>
+        <th>Views</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData>
+      <!-- Состояние загрузки (Skeleton) -->
+      <tr *ngIf="loading">
+        <td><p-skeleton width="80%"></p-skeleton></td>
+        <td><p-skeleton width="50%"></p-skeleton></td>
+        <td><p-skeleton width="30%"></p-skeleton></td>
+      </tr>
+
+      <!-- Основные данные -->
+      <tr
+        *ngIf="!loading"
+        [pContextMenuRow]="rowData"
+        (dblclick)="onRowDblClick(rowData)"
+      >
+        <td>{{ rowData.title }}</td>
+        <td>
+          <span *ngFor="let tag of rowData.tags" class="mr-1">
+            <p-tag [value]="tag"></p-tag>
+          </span>
+        </td>
+        <td>{{ rowData.views }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<app-post-edit-dialog
+  [(visible)]="isEditDialogVisible"
+  [post]="selectedPost"
+  (save)="savePostChanges($event)"
+></app-post-edit-dialog>
