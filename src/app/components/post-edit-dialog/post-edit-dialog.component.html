@@ -1,0 +1,29 @@
+<p-dialog
+  header="Редактировать пост"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '450px' }"
+  (onHide)="closeDialog()"
+>
+  <form [formGroup]="form" (ngSubmit)="onSave()" class="flex flex-column gap-3">
+    <div class="flex flex-column gap-1">
+      <label for="title">Заголовок</label>
+      <input pInputText id="title" formControlName="title" />
+    </div>
+
+    <div class="flex flex-column gap-1">
+      <label for="tags">Теги (через запятую)</label>
+      <input pInputText id="tags" formControlName="tags" />
+    </div>
+
+    <div class="flex flex-column gap-1">
+      <label for="views">Просмотры</label>
+      <p-inputNumber id="views" formControlName="views" min="0"></p-inputNumber>
+    </div>
+
+    <div class="flex justify-content-end gap-2 mt-3">
+      <p-button label="Отмена" severity="secondary" (click)="closeDialog()"></p-button>
+      <p-button label="Сохранить" type="submit" [disabled]="form.invalid"></p-button>
+    </div>
+  </form>
+</p-dialog>
