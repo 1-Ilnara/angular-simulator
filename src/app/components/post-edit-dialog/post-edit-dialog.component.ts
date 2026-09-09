@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { IPost } from '../../../interfaces/IPost';
@@ -13,31 +13,29 @@ import { IPost } from '../../../interfaces/IPost';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    DialogModule,
     ButtonModule,
     InputTextModule,
     InputNumberModule,
   ],
   templateUrl: './post-edit-dialog.component.html',
 })
-export class PostEditDialogComponent implements OnChanges {
-  @Input() visible: boolean = false;
-  @Input() post: IPost | null = null;
-  @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() save: EventEmitter<Partial<IPost>> = new EventEmitter<Partial<IPost>>();
+export class PostEditDialogComponent implements OnInit {
+  private fb: FormBuilder = inject(FormBuilder);
+  private ref: DynamicDialogRef = inject(DynamicDialogRef);
+  private config: DynamicDialogConfig = inject(DynamicDialogConfig);
 
-  form: FormGroup;
+  form: FormGroup = this.fb.group({
+    title: ['', Validators.required],
+    tags: ['', Validators.required],
+    views: [0, [Validators.required, Validators.min(0)]],
+  });
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      title: ['', Validators.required],
-      tags: ['', Validators.required],
-      views: [0, [Validators.required, Validators.min(0)]],
-    });
-  }
+  post: IPost | null = null;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['post'] && this.post) {
+  ngOnInit(): void {
+    this.post = this.config.data?.post ?? null;
+
+    if (this.post) {
       this.form.patchValue({
         title: this.post.title,
         tags: Array.isArray(this.post.tags) ? this.post.tags.join(', ') : this.post.tags,
@@ -62,11 +60,10 @@ export class PostEditDialogComponent implements OnChanges {
       views: this.form.value.views,
     };
 
-    this.save.emit(updatedData);
-    this.closeDialog();
+    this.ref.close(updatedData);
   }
 
   closeDialog(): void {
-    this.visibleChange.emit(false);
+    this.ref.close();
   }
 }

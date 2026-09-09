@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { tap } from 'rxjs';
 import { IPost } from '../../../interfaces/IPost';
 import { PostService } from '../../services/post.service';
 
@@ -21,7 +22,7 @@ import { PostService } from '../../services/post.service';
   templateUrl: './post-create.component.html',
 })
 export class PostCreateComponent {
-  
+
   private fb: FormBuilder = inject(FormBuilder);
   private postService: PostService = inject(PostService);
   private router: Router = inject(Router);
@@ -48,21 +49,21 @@ export class PostCreateComponent {
       .filter(Boolean);
 
     const newPost: Omit<IPost, 'id'> = {
-      title: this.form.value.title,
-      body: this.form.value.body,
+      ...this.form.value,
       tags: formattedTags,
-      userId: this.form.value.userId,
-      views: this.form.value.views,
       reactions: {
         likes: this.form.value.likes,
         dislikes: this.form.value.dislikes,
       },
     };
 
-    this.postService.addPost(newPost).subscribe({
-      next: (): void => {
-        this.router.navigate(['/posts']);
-      },
-    });
+    this.postService
+      .addPost(newPost)
+      .pipe(
+        tap((): void => {
+          this.router.navigate(['/posts']);
+        })
+      )
+      .subscribe();
   }
 }

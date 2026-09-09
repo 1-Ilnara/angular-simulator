@@ -21,18 +21,18 @@ export class PostApiService {
   }
 
   getPostById(id: number): Observable<IPost> {
-    return this.http.get<IPost>(`${this.baseUrl}/${id}`);
+    return this.http.get<IPost>(`${ this.baseUrl }/${ id }`);
   }
 
   createPost(post: Omit<IPost, 'id'>): Observable<IPost> {
-    return this.http.post<IPost>(`${this.baseUrl}/add`, post);
+    return this.http.post<IPost>(`${ this.baseUrl }/add`, post);
   }
 
   updatePost(id: number, post: Partial<IPost>): Observable<IPost> {
-    return this.http.put<IPost>(`${this.baseUrl}/${id}`, post);
+    return this.http.put<IPost>(`${ this.baseUrl }/${ id }`, post);
   }
 
   deletePost(id: number): Observable<IPost> {
-    return this.http.delete<IPost>(`${this.baseUrl}/${id}`);
+    return this.http.delete<IPost>(`${ this.baseUrl }/${ id }`);
   }
 }

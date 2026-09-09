@@ -3,9 +3,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { catchError, tap, EMPTY } from 'rxjs';
 import { IPostResponse } from '../../../interfaces/IPostResponse';
 import { IPost } from '../../../interfaces/IPost';
 import { PostService } from '../../services/post.service';
@@ -20,24 +22,27 @@ import { PostEditDialogComponent } from '../../components/post-edit-dialog/post-
     SkeletonModule,
     ContextMenuModule,
     TagModule,
-    PostEditDialogComponent,
+    DynamicDialogModule,
   ],
+  providers: [DialogService],
   templateUrl: './posts.component.html',
 })
 export class PostsComponent implements OnInit {
 
   private postService: PostService = inject(PostService);
   private router: Router = inject(Router);
+  private dialogService: DialogService = inject(DialogService);
 
   posts: IPost[] = Array(10).fill({}) as IPost[];
   totalRecords: number = 0;
-  loading: boolean = true;
+  isLoading: boolean = true;
   selectedPost: IPost | null = null;
   contextMenuItems: MenuItem[] = [];
-  isEditDialogVisible: boolean = false;
 
   first: number = 0;
   rows: number = 10;
+
+  private ref: DynamicDialogRef | null = null;
 
   ngOnInit(): void {
     this.contextMenuItems = [
@@ -60,20 +65,23 @@ export class PostsComponent implements OnInit {
   }
 
   loadPosts(event: TableLazyLoadEvent): void {
-    this.loading = true;
+    this.isLoading = true;
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
 
-    this.postService.fetchPosts(this.rows, this.first).subscribe({
-      next: (response: IPostResponse): void => {
-        this.posts = response.posts;
-        this.totalRecords = response.total;
-        this.loading = false;
-      },
-      error: (): void => {
-        this.loading = false;
-      },
-    });
+    this.postService.fetchPosts(this.rows, this.first)
+      .pipe(
+        tap((response: IPostResponse): void => {
+          this.posts = response.posts;
+          this.totalRecords = response.total;
+          this.isLoading = false;
+        }),
+        catchError(() => {
+          this.isLoading = false;
+          return EMPTY;
+        })
+      )
+      .subscribe();
   }
 
   onRowDblClick(post: IPost): void {
@@ -86,10 +94,24 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  openEditDialog(): void {
-    if (this.selectedPost) {
-      this.isEditDialogVisible = true;
+ openEditDialog(): void {
+    if (!this.selectedPost) {
+      return;
     }
+
+    this.ref = this.dialogService.open(PostEditDialogComponent, {
+      header: 'Редактировать пост',
+      width: '450px',
+      data: {
+        post: this.selectedPost,
+      },
+    });
+
+    this.ref?.onClose.subscribe((updatedData: Partial<IPost> | undefined) => {
+      if (updatedData) {
+        this.savePostChanges(updatedData);
+      }
+    });
   }
 
   savePostChanges(updatedData: Partial<IPost>): void {
