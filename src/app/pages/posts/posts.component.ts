@@ -7,11 +7,11 @@ import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dy
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { catchError, tap, EMPTY } from 'rxjs';
 import { IPostResponse } from '../../../interfaces/IPostResponse';
 import { IPost } from '../../../interfaces/IPost';
 import { PostService } from '../../services/post.service';
 import { PostEditDialogComponent } from '../../components/post-edit-dialog/post-edit-dialog.component';
+import { catchError, filter, tap, EMPTY } from 'rxjs'
 
 @Component({
   selector: 'app-posts',
@@ -107,11 +107,12 @@ export class PostsComponent implements OnInit {
       },
     });
 
-    this.ref?.onClose.subscribe((updatedData: Partial<IPost> | undefined) => {
-      if (updatedData) {
-        this.savePostChanges(updatedData);
-      }
-    });
+    this.ref?.onClose
+      .pipe(
+        filter(Boolean),
+        tap((updatedData: Partial<IPost>) => this.savePostChanges(updatedData))
+      )
+      .subscribe();
   }
 
   savePostChanges(updatedData: Partial<IPost>): void {
