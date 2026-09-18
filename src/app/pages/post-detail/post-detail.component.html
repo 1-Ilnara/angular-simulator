@@ -1,0 +1,14 @@
+<div class="card flex justify-content-center" *ngIf="post">
+  <p-card [header]="post.title" [subheader]="'Views: ' + post.views" [style]="{ width: '600px' }">
+    <p>{{ post.body }}</p>
+
+    <div class="flex gap-2 my-3">
+      <p-tag *ngFor="let tag of post.tags" [value]="tag"></p-tag>
+    </div>
+
+    <div class="flex justify-content-between align-items-center mt-3">
+      <span>User ID: {{ post.userId }}</span>
+      <p-button label="Назад к списку" icon="pi pi-arrow-left" routerLink="/posts"></p-button>
+    </div>
+  </p-card>
+</div>

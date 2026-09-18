@@ -6,8 +6,7 @@ import { MessageComponent } from './components/message/message.component';
 import { MessageService } from './services/message.service';
 import { LocalStorageService } from './services/storage.service';
 import { LoaderComponent } from './components/loader/loader.component'
-import { StyleTestOneComponent } from './components/style-test-one/style-test-one.component';
-import { StyleTestTwoComponent } from './components/style-test-two/style-test-two.component';
+
 
 @Component({
   selector: 'app-root',
@@ -18,8 +17,6 @@ import { StyleTestTwoComponent } from './components/style-test-two/style-test-tw
     RouterOutlet, 
     MessageComponent,
     LoaderComponent,
-    StyleTestOneComponent,
-    StyleTestTwoComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
