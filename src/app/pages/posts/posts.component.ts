@@ -7,11 +7,10 @@ import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dy
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { IPostResponse } from '../../../interfaces/IPostResponse';
+import { catchError, filter, tap, EMPTY } from 'rxjs';
 import { IPost } from '../../../interfaces/IPost';
-import { PostService } from '../../services/post.service';
 import { PostEditDialogComponent } from '../../components/post-edit-dialog/post-edit-dialog.component';
-import { catchError, filter, tap, EMPTY } from 'rxjs'
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-posts',
@@ -45,6 +44,18 @@ export class PostsComponent implements OnInit {
   private ref: DynamicDialogRef | null = null;
 
   ngOnInit(): void {
+    this.postService.posts$.pipe(
+      tap((posts: IPost[]): void => {
+        this.posts = posts;
+      })
+    ).subscribe();
+
+    this.postService.total$.pipe(
+      tap((total: number): void => {
+        this.totalRecords = total;
+      })
+    ).subscribe();
+
     this.contextMenuItems = [
       {
         label: 'Просмотр',
@@ -71,9 +82,7 @@ export class PostsComponent implements OnInit {
 
     this.postService.fetchPosts(this.rows, this.first)
       .pipe(
-        tap((response: IPostResponse): void => {
-          this.posts = response.posts;
-          this.totalRecords = response.total;
+        tap((): void => {
           this.isLoading = false;
         }),
         catchError(() => {
@@ -94,7 +103,7 @@ export class PostsComponent implements OnInit {
     }
   }
 
- openEditDialog(): void {
+  openEditDialog(): void {
     if (!this.selectedPost) {
       return;
     }
@@ -120,13 +129,7 @@ export class PostsComponent implements OnInit {
       return;
     }
 
-    this.postService.updatePost(this.selectedPost.id, updatedData).subscribe({
-      next: (updatedPost: IPost): void => {
-        this.posts = this.posts.map((p: IPost) =>
-          p.id === updatedPost.id ? { ...p, ...updatedPost } : p
-        );
-      },
-    });
+    this.postService.updatePost(this.selectedPost.id, updatedData).subscribe();
   }
 
   deletePost(post: IPost | null): void {
@@ -134,11 +137,6 @@ export class PostsComponent implements OnInit {
       return;
     }
 
-    this.postService.removePost(post.id).subscribe({
-      next: (): void => {
-        this.posts = this.posts.filter((p: IPost) => p.id !== post.id);
-        this.totalRecords--;
-      },
-    });
+    this.postService.removePost(post.id).subscribe();
   }
 }
