@@ -1,0 +1,50 @@
+<p-contextmenu #cm [model]="contextMenuItems"></p-contextmenu>
+
+<div class="card">
+  <p-table
+    [value]="posts"
+    [lazy]="true"
+    (onLazyLoad)="loadPosts($event)"
+    [paginator]="true"
+    [rows]="rows"
+    [first]="first"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 50]"
+    [(contextMenuSelection)]="selectedPost"
+    [contextMenu]="cm"
+    dataKey="id"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Title</th>
+        <th>Tags</th>
+        <th>Views</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData>
+      @if (isLoading) {
+        <tr>
+          <td><p-skeleton width="80%"></p-skeleton></td>
+          <td><p-skeleton width="50%"></p-skeleton></td>
+          <td><p-skeleton width="30%"></p-skeleton></td>
+        </tr>
+      } @else {
+        <tr
+          [pContextMenuRow]="rowData"
+          (dblclick)="onRowDblClick(rowData)"
+        >
+          <td>{{ rowData.title }}</td>
+          <td>
+            @for (tag of rowData.tags; track tag) {
+              <span class="mr-1">
+                <p-tag [value]="tag"></p-tag>
+              </span>
+            }
+          </td>
+          <td>{{ rowData.views }}</td>
+        </tr>
+      }
+    </ng-template>
+  </p-table>
+</div>
