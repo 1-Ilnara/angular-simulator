@@ -1,0 +1,44 @@
+<div class="flex align-items-center justify-content-center min-h-screen">
+  <div class="surface-card p-4 shadow-2 border-round w-full max-w-20rem">
+    <h2 class="text-center mb-4">Вход в систему</h2>
+
+    @if (errorMessage) {
+      <div class="p-error mb-3 text-center" id="login-error-message">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
+      <div class="flex flex-column gap-1">
+        <label for="username-input">Имя пользователя</label>
+        <input
+          pInputText
+          id="username-input"
+          formControlName="username"
+          class="w-full"
+        />
+      </div>
+
+      <div class="flex flex-column gap-1">
+        <label for="password-input">Пароль</label>
+        <p-password
+          id="password-input"
+          formControlName="password"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+        ></p-password>
+      </div>
+
+      <p-button
+        id="login-submit-button"
+        type="submit"
+        label="Войти"
+        [loading]="isLoading"
+        [disabled]="loginForm.invalid"
+        styleClass="w-full mt-2"
+      ></p-button>
+    </form>
+  </div>
+</div>
