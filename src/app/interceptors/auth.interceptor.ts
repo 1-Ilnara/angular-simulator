@@ -1,27 +1,39 @@
 import { inject } from '@angular/core';
 import {
   HttpErrorResponse,
+  HttpEvent,
   HttpHandlerFn,
   HttpInterceptorFn,
   HttpRequest,
 } from '@angular/common/http';
-import { catchError, switchMap, throwError } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service'; 
+import { IToken } from '../../interfaces/IToken'; 
+
+function addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
+  return req.clone({
+    setHeaders: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
-) => {
-  const authService = inject(AuthService);
-  const token = authService.accessToken;
+): Observable<HttpEvent<unknown>> => {
+  const authService: AuthService = inject(AuthService);
+  const token: string | null = authService.accessToken;
 
   let authReq = req;
-  if (token && !req.url.includes('/auth/login') && !req.url.includes('/auth/refresh')) {
-    authReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+
+  if (
+    token &&
+    !req.url.includes('/auth/login') &&
+    !req.url.includes('/auth/refresh')
+  ) {
+    authReq = addToken(req, token);
   }
 
   return next(authReq).pipe(
@@ -32,15 +44,11 @@ export const authInterceptor: HttpInterceptorFn = (
         !req.url.includes('/auth/refresh')
       ) {
         return authService.refreshTokenSession().pipe(
-          switchMap((res) => {
-            const newReq = req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${res.accessToken}`,
-              },
-            });
+          switchMap((res: IToken) => {
+            const newReq = addToken(req, res.accessToken);
             return next(newReq);
           }),
-          catchError((refreshError) => {
+          catchError((refreshError: unknown) => {
             authService.logout();
             return throwError(() => refreshError);
           })

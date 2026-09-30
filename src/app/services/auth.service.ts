@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import {IAuthResponse}from '../../interfaces/IAuthResponse';
+import { IAuthResponse } from '../../interfaces/IAuthResponse';
 import { IUser } from '../../interfaces/IUser';
-import { IRefreshResponse } from '../../interfaces/IRefreshResponse';
-import { ILoginCredentials} from '../../interfaces/ILoginCredentials';
+import { IToken } from '../../interfaces/IToken';
+import { ILoginCredentials } from '../../interfaces/ILoginCredentials';
 
 @Injectable({
   providedIn: 'root',
@@ -16,23 +16,25 @@ export class AuthService {
   private router: Router = inject(Router);
 
   private API_URL = 'https://dummyjson.com/auth';
-  private ACCESS_TOKEN_KEY = 'accessToken';
-  private REFRESH_TOKEN_KEY = 'refreshToken';
+  private TOKENS_KEY = 'tokens';
 
-  private currentUserSubject = new BehaviorSubject<IUser | null>(null);
+  private currentUserSubject: BehaviorSubject<IUser | null> =
+    new BehaviorSubject<IUser | null>(null);
   currentUser$: Observable<IUser | null> =
     this.currentUserSubject.asObservable();
 
   get accessToken(): string | null {
-    return localStorage.getItem(this.ACCESS_TOKEN_KEY);
+    const tokens = this.getStoredTokens();
+    return tokens?.accessToken ?? null;
   }
 
   get refreshToken(): string | null {
-    return localStorage.getItem(this.REFRESH_TOKEN_KEY);
+    const tokens = this.getStoredTokens();
+    return tokens?.refreshToken ?? null;
   }
 
   get isAuthenticated(): boolean {
-    return !!this.accessToken;
+    return !!this.currentUserSubject.value;
   }
 
   login(credentials: ILoginCredentials): Observable<IAuthResponse> {
@@ -43,7 +45,10 @@ export class AuthService {
       })
       .pipe(
         tap((response: IAuthResponse) => {
-          this.setTokens(response.accessToken, response.refreshToken);
+          this.setTokens({
+            accessToken: response.accessToken,
+            refreshToken: response.refreshToken,
+          });
           const { accessToken, refreshToken, ...user } = response;
           this.currentUserSubject.next(user as IUser);
         })
@@ -60,14 +65,14 @@ export class AuthService {
       tap((user: IUser) => {
         this.currentUserSubject.next(user);
       }),
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => {
         this.logout();
         return throwError(() => error);
       })
     );
   }
 
-  refreshTokenSession(): Observable<IRefreshResponse> {
+  refreshTokenSession(): Observable<IToken> {
     const token = this.refreshToken;
     if (!token) {
       this.logout();
@@ -75,15 +80,18 @@ export class AuthService {
     }
 
     return this.http
-      .post<IRefreshResponse>(`${this.API_URL}/refresh`, {
+      .post<IToken>(`${this.API_URL}/refresh`, {
         refreshToken: token,
         expiresInMins: 30,
       })
       .pipe(
-        tap((response: IRefreshResponse) => {
-          this.setTokens(response.accessToken, response.refreshToken);
+        tap((response: IToken) => {
+          this.setTokens({
+            accessToken: response.accessToken,
+            refreshToken: response.refreshToken,
+          });
         }),
-        catchError((error) => {
+        catchError((error: HttpErrorResponse) => {
           this.logout();
           return throwError(() => error);
         })
@@ -91,14 +99,25 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
-    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    localStorage.removeItem(this.TOKENS_KEY);
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
-  private setTokens(accessToken: string, refreshToken: string): void {
-    localStorage.setItem(this.ACCESS_TOKEN_KEY, accessToken);
-    localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
+  private setTokens(tokens: IToken): void {
+    localStorage.setItem(this.TOKENS_KEY, JSON.stringify(tokens));
+  }
+
+  private getStoredTokens(): IToken | null {
+    const tokensStr = localStorage.getItem(this.TOKENS_KEY);
+    if (!tokensStr) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(tokensStr) as IToken;
+    } catch {
+      return null;
+    }
   }
 }
