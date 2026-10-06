@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { LocalStorageService } from './local-storage.service';
 import { IAuthResponse } from '../../interfaces/IAuthResponse';
 import { IUser } from '../../interfaces/IUser';
 import { IToken } from '../../interfaces/IToken';
@@ -12,8 +13,10 @@ import { ILoginCredentials } from '../../interfaces/ILoginCredentials';
   providedIn: 'root',
 })
 export class AuthService {
+  
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
+  private localStorageService: LocalStorageService = inject(LocalStorageService);
 
   private API_URL = 'https://dummyjson.com/auth';
   private TOKENS_KEY = 'tokens';
@@ -24,12 +27,12 @@ export class AuthService {
     this.currentUserSubject.asObservable();
 
   get accessToken(): string | null {
-    const tokens = this.getStoredTokens();
+    const tokens: IToken | null = this.localStorageService.getItem<IToken>(this.TOKENS_KEY);
     return tokens?.accessToken ?? null;
   }
 
   get refreshToken(): string | null {
-    const tokens = this.getStoredTokens();
+    const tokens: IToken | null = this.localStorageService.getItem<IToken>(this.TOKENS_KEY);
     return tokens?.refreshToken ?? null;
   }
 
@@ -73,7 +76,7 @@ export class AuthService {
   }
 
   refreshTokenSession(): Observable<IToken> {
-    const token = this.refreshToken;
+    const token: string | null = this.refreshToken;
     if (!token) {
       this.logout();
       return throwError(() => new Error('No refresh token available'));
@@ -99,25 +102,12 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.TOKENS_KEY);
+    this.localStorageService.removeItem(this.TOKENS_KEY);
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
   private setTokens(tokens: IToken): void {
-    localStorage.setItem(this.TOKENS_KEY, JSON.stringify(tokens));
-  }
-
-  private getStoredTokens(): IToken | null {
-    const tokensStr = localStorage.getItem(this.TOKENS_KEY);
-    if (!tokensStr) {
-      return null;
-    }
-
-    try {
-      return JSON.parse(tokensStr) as IToken;
-    } catch {
-      return null;
-    }
+    this.localStorageService.setItem(this.TOKENS_KEY, tokens);
   }
 }

@@ -8,8 +8,8 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service'; 
-import { IToken } from '../../interfaces/IToken'; 
+import { AuthService } from '../services/auth.service';
+import { IToken } from '../../interfaces/IToken';
 
 function addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
   return req.clone({
@@ -19,6 +19,10 @@ function addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown
   });
 }
 
+function isAuthEndpoint(url: string): boolean {
+  return url.includes('/auth/login') || url.includes('/auth/refresh');
+}
+
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
@@ -26,31 +30,19 @@ export const authInterceptor: HttpInterceptorFn = (
   const authService: AuthService = inject(AuthService);
   const token: string | null = authService.accessToken;
 
-  let authReq = req;
+  let authReq: HttpRequest<unknown> = req;
 
-  if (
-    token &&
-    !req.url.includes('/auth/login') &&
-    !req.url.includes('/auth/refresh')
-  ) {
+  if (token && !isAuthEndpoint(req.url)) {
     authReq = addToken(req, token);
   }
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (
-        error.status === 401 &&
-        !req.url.includes('/auth/login') &&
-        !req.url.includes('/auth/refresh')
-      ) {
+      if (error.status === 401 && !isAuthEndpoint(req.url)) {
         return authService.refreshTokenSession().pipe(
           switchMap((res: IToken) => {
-            const newReq = addToken(req, res.accessToken);
+            const newReq: HttpRequest<unknown> = addToken(req, res.accessToken);
             return next(newReq);
-          }),
-          catchError((refreshError: unknown) => {
-            authService.logout();
-            return throwError(() => refreshError);
           })
         );
       }
