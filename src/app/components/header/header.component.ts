@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router'; 
 import { Observable } from 'rxjs';
-
 import { ToggleSwitchChangeEvent, ToggleSwitchModule } from 'primeng/toggleswitch';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
+import { ButtonModule } from 'primeng/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSun, faMoon, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-
 import { INavigation } from '../../../interfaces/INavigation';
 import { ThemeService } from '../../services/theme.service';
 import { PresetTheme } from '../../../enums/preset-theme';
+import { AuthService } from '../../services/auth.service';
+import { IUser } from '../../../interfaces/IUser';
 
 interface IThemeOption {
   label: string;
@@ -27,14 +28,18 @@ interface IThemeOption {
     RouterLink,
     RouterLinkActive,
     ToggleSwitchModule,
-    SelectButtonModule, 
+    SelectButtonModule,
+    ButtonModule,
     FontAwesomeModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  
+
+  private themeService: ThemeService = inject(ThemeService);
+  private authService: AuthService = inject(AuthService);
+
   companyName: string = 'РумТибет';
 
   INavigation: INavigation[] = [ 
@@ -46,13 +51,12 @@ export class HeaderComponent {
     { label: 'Контакты', path: '/contacts' }
   ];
 
-  private readonly themeService: ThemeService = inject(ThemeService);
-
   faSun: IconDefinition = faSun;
   faMoon: IconDefinition = faMoon;
 
   isDarkMode$ = this.themeService.isDarkMode$;
   currentTheme$ = this.themeService.currentTheme$;
+  currentUser$: Observable<IUser | null> = this.authService.currentUser$;
 
   themeOptions: IThemeOption[] = [
     { label: 'Aura', value: PresetTheme.Aura },
@@ -60,18 +64,20 @@ export class HeaderComponent {
     { label: 'Nora', value: PresetTheme.Nora }
   ];
 
-
-    onDarkModeToggle(event: ToggleSwitchChangeEvent): void {
-      if (event.checked !== undefined) {
-        this.themeService.toggleDarkMode(event.checked);
-      }
+  onDarkModeToggle(event: ToggleSwitchChangeEvent): void {
+    if (event.checked !== undefined) {
+      this.themeService.toggleDarkMode(event.checked);
     }
+  }
 
-   onThemeChange(event: SelectButtonChangeEvent): void {
-      const theme = event.value as PresetTheme;
-      if (theme) {
-        this.themeService.setTheme(theme);
-      }
+  onThemeChange(event: SelectButtonChangeEvent): void {
+    const theme = event.value as PresetTheme;
+    if (theme) {
+      this.themeService.setTheme(theme);
     }
+  }
 
+  onLogout(): void {
+    this.authService.logout();
+  }
 }
