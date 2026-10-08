@@ -18,10 +18,25 @@
               {{ item.label }}
             </a>
           </li>
+          @if (isAdmin$ | async) {
+          @for (item of adminNavigation; track item.path) {
+            <li class="nav__item">
+              <a
+                [routerLink]="item.path"
+                routerLinkActive="active"
+                [attr.id]="'nav-link-' + item.path.replace('/', '')"
+                class="nav__link"
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          }
+        }
         }
       </ul>
     </nav>
 
+  
     <div class="header__theme-controls">
 
       <div class="header__mode-switch">

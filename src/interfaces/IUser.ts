@@ -20,4 +20,5 @@ export interface IUser {
     catchPhrase: string;
     bs: string;
   };
+   role?: 'admin' | 'moderator' | 'user';
 }
