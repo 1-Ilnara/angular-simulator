@@ -15,7 +15,7 @@ export const adminGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
       return router.createUrlTree(['/login']);
     }
 
-    if (user.role === UserRole.Admin) {
+    if (user.role === UserRole.ADMIN) {
       return true;
     }
 

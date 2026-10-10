@@ -66,7 +66,7 @@ export class HeaderComponent {
   currentUser$: Observable<IUser | null> = this.authService.currentUser$;
 
   isAdmin$: Observable<boolean> = this.authService.currentUser$.pipe(
-    map((user: IUser | null) => user?.role === UserRole.Admin)
+    map((user: IUser | null) => user?.role === UserRole.ADMIN)
   );
 
   themeOptions: IThemeOption[] = [
