@@ -6,10 +6,13 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { PresetTheme } from '../enums/preset-theme';
 import { routes } from './app.routes';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { AuthService } from './services/auth.service';
+import { IUser } from '../interfaces/IUser';
 
 const themePresets: Record<PresetTheme, unknown> = {
   [PresetTheme.Aura]: Aura,
@@ -33,8 +36,11 @@ function getInitialPreset(): unknown {
   return Aura;
 }
 
-function initAuth(authService: AuthService) {
-  return () => (authService.isAuthenticated ? authService.getCurrentUser() : Promise.resolve());
+function initAuth(authService: AuthService): () => Observable<IUser | null> {
+  return (): Observable<IUser | null> =>
+    authService.accessToken
+      ? authService.getCurrentUser().pipe(catchError(() => of(null)))
+      : of(null);
 }
 
 export const appConfig: ApplicationConfig = {

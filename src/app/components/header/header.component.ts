@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router'; 
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ToggleSwitchChangeEvent, ToggleSwitchModule } from 'primeng/toggleswitch';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { ButtonModule } from 'primeng/button';
@@ -13,6 +14,7 @@ import { ThemeService } from '../../services/theme.service';
 import { PresetTheme } from '../../../enums/preset-theme';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../../interfaces/IUser';
+import { UserRole } from '../../../enums/user-role';
 
 interface IThemeOption {
   label: string;
@@ -42,7 +44,7 @@ export class HeaderComponent {
 
   companyName: string = 'РумТибет';
 
-  INavigation: INavigation[] = [ 
+  INavigation: INavigation[] = [
     { label: 'Главная', path: '/' },
     { label: 'Про гида', path: '/guide' },
     { label: 'Программа тура', path: '/program' },
@@ -51,12 +53,21 @@ export class HeaderComponent {
     { label: 'Контакты', path: '/contacts' }
   ];
 
+  adminNavigation: INavigation[] = [
+    { label: 'Посты', path: '/posts' },
+    { label: 'Пользователи', path: '/users' }
+  ];
+
   faSun: IconDefinition = faSun;
   faMoon: IconDefinition = faMoon;
 
   isDarkMode$ = this.themeService.isDarkMode$;
   currentTheme$ = this.themeService.currentTheme$;
   currentUser$: Observable<IUser | null> = this.authService.currentUser$;
+
+  isAdmin$: Observable<boolean> = this.authService.currentUser$.pipe(
+    map((user: IUser | null) => user?.role === UserRole.ADMIN)
+  );
 
   themeOptions: IThemeOption[] = [
     { label: 'Aura', value: PresetTheme.Aura },
