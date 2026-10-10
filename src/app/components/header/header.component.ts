@@ -14,6 +14,7 @@ import { ThemeService } from '../../services/theme.service';
 import { PresetTheme } from '../../../enums/preset-theme';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../../interfaces/IUser';
+import { UserRole } from '../../../enums/user-role';
 
 interface IThemeOption {
   label: string;
@@ -65,7 +66,7 @@ export class HeaderComponent {
   currentUser$: Observable<IUser | null> = this.authService.currentUser$;
 
   isAdmin$: Observable<boolean> = this.authService.currentUser$.pipe(
-    map((user: IUser | null) => user?.role === 'admin')
+    map((user: IUser | null) => user?.role === UserRole.Admin)
   );
 
   themeOptions: IThemeOption[] = [

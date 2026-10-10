@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { IUser } from '../../interfaces/IUser';
+import { UserRole } from '../../enums/user-role';
 
 export const adminGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
   const authService: AuthService = inject(AuthService);
@@ -14,7 +15,7 @@ export const adminGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
       return router.createUrlTree(['/login']);
     }
 
-    if (user.role === 'admin') {
+    if (user.role === UserRole.Admin) {
       return true;
     }
 

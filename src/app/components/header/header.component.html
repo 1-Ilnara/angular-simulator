@@ -8,7 +8,7 @@
       <ul class="nav__list">
         @for (item of INavigation; track item.path) {
           <li class="nav__item">
-            <a 
+            <a
               [routerLink]="item.path"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -19,33 +19,32 @@
             </a>
           </li>
           @if (isAdmin$ | async) {
-          @for (item of adminNavigation; track item.path) {
-            <li class="nav__item">
-              <a
-                [routerLink]="item.path"
-                routerLinkActive="active"
-                [attr.id]="'nav-link-' + item.path.replace('/', '')"
-                class="nav__link"
-              >
-                {{ item.label }}
-              </a>
-            </li>
+            @for (item of adminNavigation; track item.path) {
+              <li class="nav__item">
+                <a
+                  [routerLink]="item.path"
+                  routerLinkActive="active"
+                  [attr.id]="'nav-link-' + item.path.replace('/', '')"
+                  class="nav__link"
+                >
+                  {{ item.label }}
+                </a>
+              </li>
+            }
           }
-        }
         }
       </ul>
     </nav>
 
-  
     <div class="header__theme-controls">
-
       <div class="header__mode-switch">
-      <fa-icon [icon]="(isDarkMode$ | async) ? faMoon : faSun" class="header__theme-icon"></fa-icon>
-      <p-toggleswitch
-        [ngModel]="isDarkMode$ | async"
-        (onChange)="onDarkModeToggle($event)">
-      </p-toggleswitch>
-    </div>
+        <fa-icon
+          [icon]="(isDarkMode$ | async) ? faMoon : faSun"
+          class="header__theme-icon"
+        ></fa-icon>
+        <p-toggleswitch [ngModel]="isDarkMode$ | async" (onChange)="onDarkModeToggle($event)">
+        </p-toggleswitch>
+      </div>
 
       <p-selectbutton
         [options]="themeOptions"
@@ -53,9 +52,10 @@
         (onChange)="onThemeChange($event)"
         optionLabel="label"
         optionValue="value"
-        [style]="{ width: '150px' }">
+        [style]="{ width: '150px' }"
+      >
       </p-selectbutton>
     </div>
-      <button id="header-consultation-button" class="header__btn">Консультация</button>
+    <button id="header-consultation-button" class="header__btn">Консультация</button>
   </div>
 </header>
