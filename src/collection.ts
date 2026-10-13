@@ -1,5 +1,4 @@
 export class Collection<T> {
-
   private items: T[] = [];
 
   constructor(initialData: T[]) {
@@ -26,12 +25,11 @@ export class Collection<T> {
 
   replaceAt(index: number, newItem: T): void {
     if (index >= 0 && index < this.items.length) {
-      this.items = this.items.map((item: T, i: number) => i === index ? newItem : item);
-    } 
+      this.items = this.items.map((item: T, i: number) => (i === index ? newItem : item));
+    }
   }
 
   find(predicate: (item: T) => boolean): T | undefined {
     return this.items.find(predicate);
   }
-
 }

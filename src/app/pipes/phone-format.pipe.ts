@@ -1,21 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-export type PhoneFormatMode =
-  | 'compact'
-  | 'international'
-  | 'national'
-  | 'masked';
+export type PhoneFormatMode = 'compact' | 'international' | 'national' | 'masked';
 
 @Pipe({
   name: 'phoneFormat',
   standalone: true,
 })
 export class PhoneFormatPipe implements PipeTransform {
-
-  transform(
-    value: string | null | undefined,
-    mode: PhoneFormatMode = 'international'
-  ): string {
+  transform(value: string | null | undefined, mode: PhoneFormatMode = 'international'): string {
     if (!value) {
       return '';
     }
@@ -26,8 +18,7 @@ export class PhoneFormatPipe implements PipeTransform {
       return '';
     }
 
-    const countryCode: string =
-      digits.length > 10 ? digits.slice(0, digits.length - 10) : '';
+    const countryCode: string = digits.length > 10 ? digits.slice(0, digits.length - 10) : '';
     const mainNumber: string = digits.slice(-10);
 
     const op: string = mainNumber.slice(0, 3);
@@ -48,5 +39,4 @@ export class PhoneFormatPipe implements PipeTransform {
         return value;
     }
   }
-  
 }

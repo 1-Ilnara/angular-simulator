@@ -11,12 +11,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
       <div class="flex flex-column gap-1">
         <label for="username-input">Имя пользователя</label>
-        <input
-          pInputText
-          id="username-input"
-          formControlName="username"
-          class="w-full"
-        />
+        <input pInputText id="username-input" formControlName="username" class="w-full" />
       </div>
 
       <div class="flex flex-column gap-1">

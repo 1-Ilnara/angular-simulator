@@ -27,34 +27,37 @@ import { PostService } from '../../services/post.service';
   templateUrl: './posts.component.html',
 })
 export class PostsComponent implements OnInit {
-
   private postService: PostService = inject(PostService);
   private router: Router = inject(Router);
   private dialogService: DialogService = inject(DialogService);
 
   posts: IPost[] = Array(10).fill({}) as IPost[];
-  totalRecords: number = 0;
-  isLoading: boolean = true;
+  totalRecords = 0;
+  isLoading = true;
   selectedPost: IPost | null = null;
   contextMenuItems: MenuItem[] = [];
 
-  first: number = 0;
-  rows: number = 10;
+  first = 0;
+  rows = 10;
 
   private ref: DynamicDialogRef | null = null;
 
   ngOnInit(): void {
-    this.postService.posts$.pipe(
-      tap((posts: IPost[]): void => {
-        this.posts = posts;
-      })
-    ).subscribe();
+    this.postService.posts$
+      .pipe(
+        tap((posts: IPost[]): void => {
+          this.posts = posts;
+        }),
+      )
+      .subscribe();
 
-    this.postService.total$.pipe(
-      tap((total: number): void => {
-        this.totalRecords = total;
-      })
-    ).subscribe();
+    this.postService.total$
+      .pipe(
+        tap((total: number): void => {
+          this.totalRecords = total;
+        }),
+      )
+      .subscribe();
 
     this.contextMenuItems = [
       {
@@ -80,7 +83,8 @@ export class PostsComponent implements OnInit {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
 
-    this.postService.fetchPosts(this.rows, this.first)
+    this.postService
+      .fetchPosts(this.rows, this.first)
       .pipe(
         tap((): void => {
           this.isLoading = false;
@@ -88,7 +92,7 @@ export class PostsComponent implements OnInit {
         catchError(() => {
           this.isLoading = false;
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
   }
@@ -119,7 +123,7 @@ export class PostsComponent implements OnInit {
     this.ref?.onClose
       .pipe(
         filter(Boolean),
-        tap((updatedData: Partial<IPost>) => this.savePostChanges(updatedData))
+        tap((updatedData: Partial<IPost>) => this.savePostChanges(updatedData)),
       )
       .subscribe();
   }

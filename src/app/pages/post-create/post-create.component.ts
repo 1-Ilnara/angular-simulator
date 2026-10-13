@@ -12,17 +12,10 @@ import { PostService } from '../../services/post.service';
 @Component({
   selector: 'app-post-create',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    InputNumberModule,
-    ButtonModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, InputNumberModule, ButtonModule],
   templateUrl: './post-create.component.html',
 })
 export class PostCreateComponent {
-
   private fb: FormBuilder = inject(FormBuilder);
   private postService: PostService = inject(PostService);
   private router: Router = inject(Router);
@@ -62,7 +55,7 @@ export class PostCreateComponent {
       .pipe(
         tap((): void => {
           this.router.navigate(['/posts']);
-        })
+        }),
       )
       .subscribe();
   }

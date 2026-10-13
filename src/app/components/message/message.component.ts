@@ -7,10 +7,9 @@ import { MessageService } from '../../services/message.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './message.component.html',
-  styleUrls: ['./message.component.scss']
+  styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
-
   private messageService = inject(MessageService);
 
   messages$ = this.messageService.messages$;
@@ -18,5 +17,4 @@ export class MessageComponent {
   onClose(): void {
     this.messageService.closeMessage();
   }
-
 }

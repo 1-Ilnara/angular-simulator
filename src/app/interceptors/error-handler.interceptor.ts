@@ -12,7 +12,7 @@ import { MessageService } from '../services/message.service';
 
 export const errorHandlerInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
   const messageService: MessageService = inject(MessageService);
 
@@ -28,6 +28,6 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (
       }
 
       return throwError(() => error);
-    })
+    }),
   );
 };

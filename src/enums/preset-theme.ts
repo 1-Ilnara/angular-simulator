@@ -1,5 +1,5 @@
 export enum PresetTheme {
-  Aura = 'Aura',
-  Lara = 'Lara',
-  Nora = 'Nora'
+  AURA = 'Aura',
+  LARA = 'Lara',
+  NORA = 'Nora',
 }

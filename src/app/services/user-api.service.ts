@@ -4,15 +4,13 @@ import { Observable } from 'rxjs';
 import { IUser } from '../../interfaces/IUser';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserApiService {
-
   private http = inject(HttpClient);
   private readonly apiUrl: string = 'https://jsonplaceholder.typicode.com/users';
 
   getUsers(): Observable<IUser[]> {
     return this.http.get<IUser[]>(this.apiUrl);
   }
-
 }

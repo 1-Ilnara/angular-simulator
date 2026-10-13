@@ -10,13 +10,7 @@ import { IPost } from '../../../interfaces/IPost';
 @Component({
   selector: 'app-post-edit-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
-    InputNumberModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule],
   templateUrl: './post-edit-dialog.component.html',
 })
 export class PostEditDialogComponent implements OnInit {
@@ -50,9 +44,13 @@ export class PostEditDialogComponent implements OnInit {
     }
 
     const rawTags: string = this.form.value.tags;
-    const formattedTags: string[] = typeof rawTags === 'string'
-      ? rawTags.split(',').map((tag: string) => tag.trim()).filter(Boolean)
-      : rawTags;
+    const formattedTags: string[] =
+      typeof rawTags === 'string'
+        ? rawTags
+            .split(',')
+            .map((tag: string) => tag.trim())
+            .filter(Boolean)
+        : rawTags;
 
     const updatedData: Partial<IPost> = {
       title: this.form.value.title,

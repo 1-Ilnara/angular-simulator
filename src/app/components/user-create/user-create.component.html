@@ -1,9 +1,4 @@
-<form
-  id="create-user-form"
-  [formGroup]="userForm"
-  (ngSubmit)="onSubmit()"
-  class="create-form"
->
+<form id="create-user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()" class="create-form">
   <h2>Создать пользователя</h2>
 
   <div class="form-section">
@@ -119,12 +114,7 @@
     />
   </div>
 
-  <button
-    id="btn-submit-user"
-    type="submit"
-    appHoverBold
-    [disabled]="userForm.invalid"
-  >
+  <button id="btn-submit-user" type="submit" appHoverBold [disabled]="userForm.invalid">
     Создать пользователя
   </button>
 </form>

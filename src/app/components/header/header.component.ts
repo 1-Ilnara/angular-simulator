@@ -32,17 +32,16 @@ interface IThemeOption {
     ToggleSwitchModule,
     SelectButtonModule,
     ButtonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-
   private themeService: ThemeService = inject(ThemeService);
   private authService: AuthService = inject(AuthService);
 
-  companyName: string = 'РумТибет';
+  companyName = 'РумТибет';
 
   INavigation: INavigation[] = [
     { label: 'Главная', path: '/' },
@@ -50,12 +49,12 @@ export class HeaderComponent {
     { label: 'Программа тура', path: '/program' },
     { label: 'Стоимость', path: '/price' },
     { label: 'Блог', path: '/blog' },
-    { label: 'Контакты', path: '/contacts' }
+    { label: 'Контакты', path: '/contacts' },
   ];
 
   adminNavigation: INavigation[] = [
     { label: 'Посты', path: '/posts' },
-    { label: 'Пользователи', path: '/users' }
+    { label: 'Пользователи', path: '/users' },
   ];
 
   faSun: IconDefinition = faSun;
@@ -66,13 +65,13 @@ export class HeaderComponent {
   currentUser$: Observable<IUser | null> = this.authService.currentUser$;
 
   isAdmin$: Observable<boolean> = this.authService.currentUser$.pipe(
-    map((user: IUser | null) => user?.role === UserRole.ADMIN)
+    map((user: IUser | null) => user?.role === UserRole.ADMIN),
   );
 
   themeOptions: IThemeOption[] = [
-    { label: 'Aura', value: PresetTheme.Aura },
-    { label: 'Lara', value: PresetTheme.Lara },
-    { label: 'Nora', value: PresetTheme.Nora }
+    { label: 'Aura', value: PresetTheme.AURA },
+    { label: 'Lara', value: PresetTheme.LARA },
+    { label: 'Nora', value: PresetTheme.NORA },
   ];
 
   onDarkModeToggle(event: ToggleSwitchChangeEvent): void {

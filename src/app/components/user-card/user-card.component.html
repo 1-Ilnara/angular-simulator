@@ -9,7 +9,7 @@
     <p><span>Эл. почта:</span> {{ user.email || 'Неизвестно' }}</p>
     <p>
       <span>Телефон:</span>
-      {{ user.phone ? (user.phone | phoneFormat:'international') : 'Неизвестно' }}
+      {{ user.phone ? (user.phone | phoneFormat: 'international') : 'Неизвестно' }}
     </p>
     <p><span>Веб-сайт:</span> {{ user.website || 'Неизвестно' }}</p>
   </section>
@@ -36,13 +36,7 @@
     <p><span>Специализация:</span> {{ user.company.bs || 'Неизвестно' }}</p>
   </section>
 
-  <button
-    id="delete-user-btn"
-    type="button"
-    class="delete-btn"
-    appHoverBold
-    (click)="onDelete()"
-  >
+  <button id="delete-user-btn" type="button" class="delete-btn" appHoverBold (click)="onDelete()">
     Удалить пользователя
   </button>
 </article>

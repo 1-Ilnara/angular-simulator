@@ -8,7 +8,6 @@ import { PostApiService } from './post-api.service';
   providedIn: 'root',
 })
 export class PostService {
-
   private postApiService: PostApiService = inject(PostApiService);
 
   private postsSubject = new BehaviorSubject<IPost[]>([]);
@@ -22,7 +21,7 @@ export class PostService {
       tap((response: IPostResponse): void => {
         this.postsSubject.next(response.posts);
         this.totalSubject.next(response.total);
-      })
+      }),
     );
   }
 
@@ -36,7 +35,7 @@ export class PostService {
         const currentPosts = this.postsSubject.getValue();
         this.postsSubject.next([newPost, ...currentPosts]);
         this.totalSubject.next(this.totalSubject.getValue() + 1);
-      })
+      }),
     );
   }
 
@@ -45,10 +44,10 @@ export class PostService {
       tap((updatedPost: IPost): void => {
         const currentPosts = this.postsSubject.getValue();
         const updatedPosts = currentPosts.map((p: IPost) =>
-          p.id === updatedPost.id ? { ...p, ...updatedPost } : p
+          p.id === updatedPost.id ? { ...p, ...updatedPost } : p,
         );
         this.postsSubject.next(updatedPosts);
-      })
+      }),
     );
   }
 
@@ -58,7 +57,7 @@ export class PostService {
         const currentPosts = this.postsSubject.getValue();
         this.postsSubject.next(currentPosts.filter((p: IPost) => p.id !== id));
         this.totalSubject.next(this.totalSubject.getValue() - 1);
-      })
+      }),
     );
   }
 }

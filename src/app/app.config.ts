@@ -1,4 +1,9 @@
-import { ApplicationConfig, APP_INITIALIZER, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  APP_INITIALIZER,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -15,9 +20,9 @@ import { AuthService } from './services/auth.service';
 import { IUser } from '../interfaces/IUser';
 
 const themePresets: Record<PresetTheme, unknown> = {
-  [PresetTheme.Aura]: Aura,
-  [PresetTheme.Lara]: Lara,
-  [PresetTheme.Nora]: Nora,
+  [PresetTheme.AURA]: Aura,
+  [PresetTheme.LARA]: Lara,
+  [PresetTheme.NORA]: Nora,
 };
 
 function getInitialPreset(): unknown {

@@ -13,7 +13,6 @@ import { ILoginCredentials } from '../../interfaces/ILoginCredentials';
   providedIn: 'root',
 })
 export class AuthService {
-  
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
   private localStorageService: LocalStorageService = inject(LocalStorageService);
@@ -21,10 +20,11 @@ export class AuthService {
   private API_URL = 'https://dummyjson.com/auth';
   private TOKENS_KEY = 'tokens';
 
-  private currentUserSubject: BehaviorSubject<IUser | null> =
-    new BehaviorSubject<IUser | null>(null);
-  currentUser$: Observable<IUser | null> =
-    this.currentUserSubject.asObservable();
+  private currentUserSubject: BehaviorSubject<IUser | null> = new BehaviorSubject<IUser | null>(
+    null,
+  );
+
+  currentUser$: Observable<IUser | null> = this.currentUserSubject.asObservable();
 
   get accessToken(): string | null {
     const tokens: IToken | null = this.localStorageService.getItem<IToken>(this.TOKENS_KEY);
@@ -54,7 +54,7 @@ export class AuthService {
           });
           const { accessToken, refreshToken, ...user } = response;
           this.currentUserSubject.next(user as IUser);
-        })
+        }),
       );
   }
 
@@ -71,7 +71,7 @@ export class AuthService {
       catchError((error: HttpErrorResponse) => {
         this.logout();
         return throwError(() => error);
-      })
+      }),
     );
   }
 
@@ -97,7 +97,7 @@ export class AuthService {
         catchError((error: HttpErrorResponse) => {
           this.logout();
           return throwError(() => error);
-        })
+        }),
       );
   }
 

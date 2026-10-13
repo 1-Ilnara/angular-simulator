@@ -3,10 +3,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { IMessage } from '../../interfaces/IMessage';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessageService {
-
   private messagesSubject: BehaviorSubject<IMessage[]> = new BehaviorSubject<IMessage[]>([]);
   messages$: Observable<IMessage[]> = this.messagesSubject.asObservable();
 
@@ -18,5 +17,4 @@ export class MessageService {
   closeMessage(): void {
     this.messagesSubject.next([]);
   }
-
 }
