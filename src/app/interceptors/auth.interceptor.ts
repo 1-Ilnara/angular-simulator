@@ -25,7 +25,7 @@ function isAuthEndpoint(url: string): boolean {
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
   const authService: AuthService = inject(AuthService);
   const token: string | null = authService.accessToken;
@@ -43,11 +43,11 @@ export const authInterceptor: HttpInterceptorFn = (
           switchMap((res: IToken) => {
             const newReq: HttpRequest<unknown> = addToken(req, res.accessToken);
             return next(newReq);
-          })
+          }),
         );
       }
 
       return throwError(() => error);
-    })
+    }),
   );
 };

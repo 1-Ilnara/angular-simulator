@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 import { LoaderService } from '../../services/loader.service';
 
 @Component({

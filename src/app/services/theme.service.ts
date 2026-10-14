@@ -9,22 +9,30 @@ import Nora from '@primeuix/themes/nora';
 export type PresetTheme = 'Aura' | 'Lara' | 'Nora';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
-  
   private localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  private  DARK_MODE_KEY: string = 'is_dark_mode';
-  private  THEME_KEY: string = 'selected_theme';
+  private DARK_MODE_KEY = 'is_dark_mode';
+  private THEME_KEY = 'selected_theme';
 
-  private initialIsDark: boolean = this.localStorageService.getItem<boolean>(this.DARK_MODE_KEY) ?? false;
-  private initialTheme: PresetTheme = this.localStorageService.getItem<PresetTheme>(this.THEME_KEY) ?? 'Aura';
+  private initialIsDark: boolean =
+    this.localStorageService.getItem<boolean>(this.DARK_MODE_KEY) ?? false;
 
-  private isDarkModeSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.initialIsDark);
+  private initialTheme: PresetTheme =
+    this.localStorageService.getItem<PresetTheme>(this.THEME_KEY) ?? 'Aura';
+
+  private isDarkModeSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    this.initialIsDark,
+  );
+
   isDarkMode$: Observable<boolean> = this.isDarkModeSubject.asObservable();
 
-  private currentThemeSubject: BehaviorSubject<PresetTheme> = new BehaviorSubject<PresetTheme>(this.initialTheme);
+  private currentThemeSubject: BehaviorSubject<PresetTheme> = new BehaviorSubject<PresetTheme>(
+    this.initialTheme,
+  );
+
   currentTheme$: Observable<PresetTheme> = this.currentThemeSubject.asObservable();
 
   constructor() {
@@ -57,5 +65,4 @@ export class ThemeService {
     const presets: Record<PresetTheme, typeof Aura> = { Aura, Lara, Nora };
     usePreset(presets[theme]);
   }
-  
 }

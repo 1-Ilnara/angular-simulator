@@ -15,7 +15,6 @@ import { IGradientConfiguration } from '../../interfaces/IGradientConfiguration'
   standalone: true,
 })
 export class AnimatedGradientDirective implements OnDestroy {
-
   private el: ElementRef<HTMLElement> = inject(ElementRef);
   private renderer: Renderer2 = inject(Renderer2);
 
@@ -39,7 +38,7 @@ export class AnimatedGradientDirective implements OnDestroy {
   static ngAcceptInputType_config: IGradientConfiguration | '' | null | undefined;
 
   private timerId: ReturnType<typeof setTimeout> | null = null;
-  private isEffectActive: boolean = false;
+  private isEffectActive = false;
 
   @HostListener('mouseenter')
   onMouseEnter(): void {
@@ -72,7 +71,7 @@ export class AnimatedGradientDirective implements OnDestroy {
     this.renderer.setStyle(
       this.el.nativeElement,
       'background-image',
-      `linear-gradient(white, white), linear-gradient(90deg, ${colors.join(', ')})`
+      `linear-gradient(white, white), linear-gradient(90deg, ${colors.join(', ')})`,
     );
     this.renderer.setStyle(this.el.nativeElement, 'background-origin', 'border-box');
     this.renderer.setStyle(this.el.nativeElement, 'background-clip', 'padding-box, border-box');
@@ -93,5 +92,4 @@ export class AnimatedGradientDirective implements OnDestroy {
       this.timerId = null;
     }
   }
-  
 }

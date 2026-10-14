@@ -30,10 +30,7 @@
           <td><p-skeleton width="30%"></p-skeleton></td>
         </tr>
       } @else {
-        <tr
-          [pContextMenuRow]="rowData"
-          (dblclick)="onRowDblClick(rowData)"
-        >
+        <tr [pContextMenuRow]="rowData" (dblclick)="onRowDblClick(rowData)">
           <td>{{ rowData.title }}</td>
           <td>
             @for (tag of rowData.tags; track tag) {

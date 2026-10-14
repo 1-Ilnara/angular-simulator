@@ -5,16 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class PluralPipe implements PipeTransform {
-
-  transform(
-    value: number | string,
-    one: string,
-    few: string,
-    many: string
-  ): string {
-    const num: number = Math.abs(
-      typeof value === 'string' ? parseInt(value, 10) : value
-    );
+  transform(value: number | string, one: string, few: string, many: string): string {
+    const num: number = Math.abs(typeof value === 'string' ? parseInt(value, 10) : value);
 
     if (isNaN(num)) {
       return `${value} ${many}`;
@@ -35,5 +27,4 @@ export class PluralPipe implements PipeTransform {
 
     return `${num} ${word}`;
   }
-  
 }

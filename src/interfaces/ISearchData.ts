@@ -1,4 +1,4 @@
-export interface SearchData {
+export interface ISearchData {
   location: string;
   availableDates: string;
   participants: string;

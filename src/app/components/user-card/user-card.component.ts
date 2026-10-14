@@ -1,4 +1,4 @@
-import { Component,Input,Output,EventEmitter,ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, UpperCasePipe } from '@angular/common';
 import { IUser } from '../../../interfaces/IUser';
 import { PhoneFormatPipe } from '../../pipes/phone-format.pipe';
@@ -19,8 +19,8 @@ import { AnimatedGradientDirective } from '../../directives/animated-gradient.di
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserCardComponent {
-  @Input({ required: true }) public user!: IUser;
-  @Output() public deleteUser: EventEmitter<number> = new EventEmitter<number>();
+  @Input({ required: true }) user!: IUser;
+  @Output() deleteUser: EventEmitter<number> = new EventEmitter<number>();
 
   onDelete(): void {
     this.deleteUser.emit(this.user.id);

@@ -28,6 +28,6 @@ export const adminGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
 
   return authService.getCurrentUser().pipe(
     map(checkAdmin),
-    catchError(() => of(router.createUrlTree(['/login'])))
+    catchError(() => of(router.createUrlTree(['/login']))),
   );
 };

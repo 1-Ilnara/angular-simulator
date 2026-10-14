@@ -1,44 +1,49 @@
 <div class="card flex justify-content-center">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-3" style="width: 500px">
+  <form
+    [formGroup]="form"
+    (ngsubmit)="onSubmit()"
+    class="flex flex-column gap-3"
+    style="width: 500px"
+  >
     <h2>Создать новый пост</h2>
 
     <div class="flex flex-column gap-1">
       <label for="title">Заголовок</label>
-      <input pInputText id="title" formControlName="title" />
+      <input pinputtext id="title" formcontrolname="title" />
     </div>
 
     <div class="flex flex-column gap-1">
       <label for="body">Содержание</label>
-      <textarea pInputTextarea id="body" formControlName="body" rows="5"></textarea>
+      <textarea pinputtextarea id="body" formcontrolname="body" rows="5"></textarea>
     </div>
 
     <div class="flex flex-column gap-1">
       <label for="tags">Теги (через запятую)</label>
-      <input pInputText id="tags" formControlName="tags" />
+      <input pinputtext id="tags" formcontrolname="tags" />
     </div>
 
     <div class="flex gap-2">
       <div class="flex flex-column gap-1 flex-1">
         <label for="userId">User ID</label>
-        <p-inputNumber id="userId" formControlName="userId"></p-inputNumber>
+        <p-inputnumber id="userId" formcontrolname="userId"></p-inputnumber>
       </div>
       <div class="flex flex-column gap-1 flex-1">
         <label for="views">Просмотры</label>
-        <p-inputNumber id="views" formControlName="views"></p-inputNumber>
+        <p-inputnumber id="views" formcontrolname="views"></p-inputnumber>
       </div>
     </div>
 
     <div class="flex gap-2">
       <div class="flex flex-column gap-1 flex-1">
         <label for="likes">Лайки</label>
-        <p-inputNumber id="likes" formControlName="likes"></p-inputNumber>
+        <p-inputnumber id="likes" formcontrolname="likes"></p-inputnumber>
       </div>
       <div class="flex flex-column gap-1 flex-1">
         <label for="dislikes">Дизлайки</label>
-        <p-inputNumber id="dislikes" formControlName="dislikes"></p-inputNumber>
+        <p-inputnumber id="dislikes" formcontrolname="dislikes"></p-inputnumber>
       </div>
     </div>
 
-    <button pButton label="Создать пост" type="submit" [disabled]="form.invalid"></button>
+    <button pbutton type="submit" [disabled]="form.invalid">Создать пост</button>
   </form>
 </div>

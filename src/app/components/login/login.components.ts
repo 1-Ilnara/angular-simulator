@@ -11,23 +11,16 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    PasswordModule,
-    ButtonModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, PasswordModule, ButtonModule],
   templateUrl: './login.components.html',
 })
 export class LoginComponent {
-    
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
 
   errorMessage: string | null = null;
-  isLoading: boolean = false;
+  isLoading = false;
 
   loginForm = this.fb.group({
     username: ['emilys', [Validators.required]],
@@ -53,7 +46,7 @@ export class LoginComponent {
           this.isLoading = false;
           this.errorMessage = err.error?.message || 'Неверное имя пользователя или пароль';
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
   }

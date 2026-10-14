@@ -21,5 +21,5 @@ export interface IUser {
     catchPhrase: string;
     bs: string;
   };
-   role: UserRole;
+  role: UserRole;
 }

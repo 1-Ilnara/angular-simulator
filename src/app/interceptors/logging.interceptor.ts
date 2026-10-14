@@ -10,7 +10,7 @@ import { Observable, tap } from 'rxjs';
 
 export const loggingInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
   const startTime: number = performance.now();
   const { method, urlWithParams } = req;
@@ -20,13 +20,17 @@ export const loggingInterceptor: HttpInterceptorFn = (
       next: (event: HttpEvent<unknown>): void => {
         if (event instanceof HttpResponse) {
           const elapsedTime: string = (performance.now() - startTime).toFixed(2);
-          console.log(`[HTTP Success] ${ method } ${ urlWithParams } | Status: ${ event.status } | Time: ${ elapsedTime }ms`);
+          console.warn(
+            `[HTTP Success] ${method} ${urlWithParams} | Status: ${event.status} | Time: ${elapsedTime}ms`,
+          );
         }
       },
       error: (error: HttpErrorResponse): void => {
         const elapsedTime: string = (performance.now() - startTime).toFixed(2);
-        console.error(`[HTTP Error] ${ method } ${ urlWithParams } | Status: ${ error.status || 'Unknown' } | Time: ${ elapsedTime }ms`);
+        console.error(
+          `[HTTP Error] ${method} ${urlWithParams} | Status: ${error.status || 'Unknown'} | Time: ${elapsedTime}ms`,
+        );
       },
-    })
+    }),
   );
 };

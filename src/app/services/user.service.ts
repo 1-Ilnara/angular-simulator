@@ -9,16 +9,15 @@ import { LocalStorageService } from './local-storage.service';
 import { MessageType } from '../../enums/MessageType';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
   private userApi: UserApiService = inject(UserApiService);
   private loaderService: LoaderService = inject(LoaderService);
   private messageService: MessageService = inject(MessageService);
   private localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  private STORAGE_KEY: string = 'users_data';
+  private STORAGE_KEY = 'users_data';
   private usersSubject: BehaviorSubject<IUser[]> = new BehaviorSubject<IUser[]>([]);
   users$: Observable<IUser[]> = this.usersSubject.asObservable();
 
@@ -43,21 +42,21 @@ export class UserService {
 
     return this.userApi.getUsers().pipe(
       tap((users: IUser[]) => {
-        this.setUsers(users); 
+        this.setUsers(users);
       }),
-      catchError((error: unknown) => {
+      catchError(() => {
         this.messageService.setMessage({
           id: Date.now(),
           title: 'Ошибка',
           text: 'Ошибка при загрузке пользователей!',
-          type: MessageType.ERROR
+          type: MessageType.ERROR,
         });
         this.setUsers([]);
         return of([]);
       }),
       finalize(() => {
         this.loaderService.hideLoader();
-      })
+      }),
     );
   }
 
@@ -74,5 +73,4 @@ export class UserService {
 
     this.setUsers(updatedUsers);
   }
-
 }

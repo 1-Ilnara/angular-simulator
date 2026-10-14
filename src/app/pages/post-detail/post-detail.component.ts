@@ -13,7 +13,6 @@ import { IPost } from '../../../interfaces/IPost';
   templateUrl: './post-detail.component.html',
 })
 export class PostDetailComponent implements OnInit {
-  
   route: ActivatedRoute = inject(ActivatedRoute);
   post!: IPost;
 
