@@ -5,6 +5,7 @@ import { usePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
+import { APP_CONFIG } from '../tokens/app-config.token';
 
 export type PresetTheme = 'Aura' | 'Lara' | 'Nora';
 
@@ -13,15 +14,18 @@ export type PresetTheme = 'Aura' | 'Lara' | 'Nora';
 })
 export class ThemeService {
   private localStorageService: LocalStorageService = inject(LocalStorageService);
+  private config = inject(APP_CONFIG);
 
   private DARK_MODE_KEY = 'is_dark_mode';
   private THEME_KEY = 'selected_theme';
 
-  private initialIsDark: boolean =
-    this.localStorageService.getItem<boolean>(this.DARK_MODE_KEY) ?? false;
+  private initialIsDark: boolean = this.config.enableTheming
+    ? (this.localStorageService.getItem<boolean>(this.DARK_MODE_KEY) ?? false)
+    : false;
 
-  private initialTheme: PresetTheme =
-    this.localStorageService.getItem<PresetTheme>(this.THEME_KEY) ?? 'Aura';
+  private initialTheme: PresetTheme = this.config.enableTheming
+    ? (this.localStorageService.getItem<PresetTheme>(this.THEME_KEY) ?? 'Aura')
+    : 'Aura';
 
   private isDarkModeSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     this.initialIsDark,
@@ -41,12 +45,18 @@ export class ThemeService {
   }
 
   toggleDarkMode(isDark: boolean): void {
+    if (!this.config.enableTheming) {
+      return;
+    }
     this.isDarkModeSubject.next(isDark);
     this.localStorageService.setItem(this.DARK_MODE_KEY, isDark);
     this.applyDarkMode(isDark);
   }
 
   setTheme(theme: PresetTheme): void {
+    if (!this.config.enableTheming) {
+      return;
+    }
     this.currentThemeSubject.next(theme);
     this.localStorageService.setItem(this.THEME_KEY, theme);
     this.applyPresetTheme(theme);

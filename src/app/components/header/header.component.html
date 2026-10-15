@@ -1,7 +1,7 @@
 <header class="header">
   <div class="header__container">
     <a [routerLink]="'/'" id="header-logo-link" class="header__logo">
-      <img src="Images/svg/logo_icon.svg" alt="РумТибет" />
+      <img src="Images/svg/logo_icon.svg" [alt]="config.companyName" />
     </a>
 
     <nav class="header__nav">
@@ -18,44 +18,50 @@
               {{ item.label }}
             </a>
           </li>
-          @if (isAdmin$ | async) {
-            @for (item of adminNavigation; track item.path) {
-              <li class="nav__item">
-                <a
-                  [routerLink]="item.path"
-                  routerLinkActive="active"
-                  [attr.id]="'nav-link-' + item.path.replace('/', '')"
-                  class="nav__link"
-                >
-                  {{ item.label }}
-                </a>
-              </li>
-            }
+        }
+        @if (isAdmin$ | async) {
+          @for (item of adminNavigation; track item.path) {
+            <li class="nav__item">
+              <a
+                [routerLink]="item.path"
+                routerLinkActive="active"
+                [attr.id]="'nav-link-' + item.path.replace('/', '')"
+                class="nav__link"
+              >
+                {{ item.label }}
+              </a>
+            </li>
           }
         }
       </ul>
     </nav>
 
-    <div class="header__theme-controls">
-      <div class="header__mode-switch">
-        <fa-icon
-          [icon]="(isDarkMode$ | async) ? faMoon : faSun"
-          class="header__theme-icon"
-        ></fa-icon>
-        <p-toggleswitch [ngModel]="isDarkMode$ | async" (onChange)="onDarkModeToggle($event)">
-        </p-toggleswitch>
-      </div>
+    @if (config.enableTheming) {
+      <div class="header__theme-controls">
+        <div class="header__mode-switch">
+          <fa-icon
+            [icon]="(isDarkMode$ | async) ? faMoon : faSun"
+            class="header__theme-icon"
+          ></fa-icon>
+          <p-toggleswitch [ngModel]="isDarkMode$ | async" (onChange)="onDarkModeToggle($event)">
+          </p-toggleswitch>
+        </div>
 
-      <p-selectbutton
-        [options]="themeOptions"
-        [ngModel]="currentTheme$ | async"
-        (onChange)="onThemeChange($event)"
-        optionLabel="label"
-        optionValue="value"
-        [style]="{ width: '150px' }"
-      >
-      </p-selectbutton>
-    </div>
+        <p-selectbutton
+          [options]="themeOptions"
+          [ngModel]="currentTheme$ | async"
+          (onChange)="onThemeChange($event)"
+          optionlabel="label"
+          optionvalue="value"
+          [style]="{ width: '150px' }"
+        >
+        </p-selectbutton>
+      </div>
+    }
+
+    @if (lastLogin$ | async; as lastLogin) {
+      <span class="header__last-login">Последний вход: {{ lastLogin | date: dateFormat }}</span>
+    }
     <button id="header-consultation-button" class="header__btn">Консультация</button>
   </div>
 </header>

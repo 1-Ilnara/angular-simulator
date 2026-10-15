@@ -15,7 +15,8 @@
                 type="email"
                 id="newsletter-email-input"
                 name="email"
-                [(ngModel)]="subscribeEmail"
+                [ngModel]="subscribeEmail"
+                (ngModelChange)="subscribeEmail = $event"
                 #emailInput="ngModel"
                 placeholder="name@domain.com"
                 required
@@ -49,7 +50,7 @@
 
   <div class="footer-container">
     <div class="footer-col about">
-      <h3 class="footer-title">Компания «{{ companyName }}»</h3>
+      <h3 class="footer-title">Компания «{{ config.companyName }}»</h3>
       <p class="footer-text">Его корни уходят в один фрагмент классической латыни 45 года н.э.</p>
       <div class="footer-contacts">
         <a href="mailto:info@domain.com" id="footer-info-email-link" class="contact-link"
