@@ -4,6 +4,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -18,6 +19,16 @@ import { routes } from './app.routes';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { AuthService } from './services/auth.service';
 import { IUser } from '../interfaces/IUser';
+import { IAppConfig } from './tokens/IAppConfig';
+import { APP_CONFIG } from './tokens/app-config.token';
+
+const appSettings: IAppConfig = {
+  companyName: 'РумТибет',
+  enableLogs: true,
+  enableNotifications: true,
+  enableTheming: true,
+  sessionTimeout: 30,
+};
 
 const themePresets: Record<PresetTheme, unknown> = {
   [PresetTheme.AURA]: Aura,
@@ -26,6 +37,9 @@ const themePresets: Record<PresetTheme, unknown> = {
 };
 
 function getInitialPreset(): unknown {
+  if (!appSettings.enableTheming) {
+    return Aura;
+  }
   try {
     const rawTheme = localStorage.getItem('selected_theme');
     if (rawTheme) {
@@ -63,6 +77,11 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    { provide: APP_CONFIG, useValue: appSettings },
+    {
+      provide: DATE_PIPE_DEFAULT_OPTIONS,
+      useValue: { dateFormat: 'dd.MM.yyyy HH:mm' },
+    },
     {
       provide: APP_INITIALIZER,
       useFactory: initAuth,

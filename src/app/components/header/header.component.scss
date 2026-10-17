@@ -29,6 +29,10 @@
   object-fit: contain;
 }
 
+.header__last-login {
+  white-space: nowrap;
+}
+
 .nav__list {
   display: flex;
   width: 500px;

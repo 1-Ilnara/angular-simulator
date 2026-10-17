@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTelegram, faVk, faPinterest, faSkype } from '@fortawesome/free-brands-svg-icons';
 import { ISocialLink } from '../../../interfaces/ISocialLink';
+import { APP_CONFIG } from '../../tokens/app-config.token';
+import { IAppConfig } from '../../tokens/IAppConfig';
 
 @Component({
   selector: 'app-footer',
@@ -13,7 +15,7 @@ import { ISocialLink } from '../../../interfaces/ISocialLink';
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-  companyName = 'РумТибет';
+  config: IAppConfig = inject(APP_CONFIG);
   subscribeEmail = '';
 
   socialLinks: ISocialLink[] = [

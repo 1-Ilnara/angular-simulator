@@ -15,6 +15,8 @@ import { PresetTheme } from '../../../enums/preset-theme';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../../interfaces/IUser';
 import { UserRole } from '../../../enums/user-role';
+import { APP_CONFIG } from '../../tokens/app-config.token';
+import { IAppConfig } from '../../tokens/IAppConfig';
 
 interface IThemeOption {
   label: string;
@@ -41,7 +43,7 @@ export class HeaderComponent {
   private themeService: ThemeService = inject(ThemeService);
   private authService: AuthService = inject(AuthService);
 
-  companyName = 'РумТибет';
+  config: IAppConfig = inject(APP_CONFIG);
 
   INavigation: INavigation[] = [
     { label: 'Главная', path: '/' },
@@ -63,7 +65,7 @@ export class HeaderComponent {
   isDarkMode$ = this.themeService.isDarkMode$;
   currentTheme$ = this.themeService.currentTheme$;
   currentUser$: Observable<IUser | null> = this.authService.currentUser$;
-
+  lastLogin$: Observable<string | null> = this.authService.lastLogin$;
   isAdmin$: Observable<boolean> = this.authService.currentUser$.pipe(
     map((user: IUser | null) => user?.role === UserRole.ADMIN),
   );

@@ -6,12 +6,21 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { APP_CONFIG } from '../tokens/app-config.token';
+import { IAppConfig } from '../tokens/IAppConfig';
 
 export const loggingInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
+  const config: IAppConfig = inject(APP_CONFIG);
+
+  if (!config.enableLogs) {
+    return next(req);
+  }
+
   const startTime: number = performance.now();
   const { method, urlWithParams } = req;
 

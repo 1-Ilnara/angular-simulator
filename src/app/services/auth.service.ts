@@ -8,7 +8,8 @@ import { IAuthResponse } from '../../interfaces/IAuthResponse';
 import { IUser } from '../../interfaces/IUser';
 import { IToken } from '../../interfaces/IToken';
 import { ILoginCredentials } from '../../interfaces/ILoginCredentials';
-
+import { APP_CONFIG } from '../tokens/app-config.token';
+import { IAppConfig } from '../tokens/IAppConfig';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,15 +17,22 @@ export class AuthService {
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
   private localStorageService: LocalStorageService = inject(LocalStorageService);
+  private config: IAppConfig = inject(APP_CONFIG);
 
   private API_URL = 'https://dummyjson.com/auth';
   private TOKENS_KEY = 'tokens';
+  private LAST_LOGIN_KEY = 'lastLogin';
 
   private currentUserSubject: BehaviorSubject<IUser | null> = new BehaviorSubject<IUser | null>(
     null,
   );
 
+  private lastLoginSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    localStorage.getItem(this.LAST_LOGIN_KEY),
+  );
+
   currentUser$: Observable<IUser | null> = this.currentUserSubject.asObservable();
+  lastLogin$: Observable<string | null> = this.lastLoginSubject.asObservable();
 
   get accessToken(): string | null {
     const tokens: IToken | null = this.localStorageService.getItem<IToken>(this.TOKENS_KEY);
@@ -44,7 +52,7 @@ export class AuthService {
     return this.http
       .post<IAuthResponse>(`${this.API_URL}/login`, {
         ...credentials,
-        expiresInMins: credentials.expiresInMins ?? 30,
+        expiresInMins: this.config.sessionTimeout,
       })
       .pipe(
         tap((response: IAuthResponse) => {
@@ -54,6 +62,7 @@ export class AuthService {
           });
           const { accessToken, refreshToken, ...user } = response;
           this.currentUserSubject.next(user as IUser);
+          this.saveLastLogin();
         }),
       );
   }
@@ -85,7 +94,7 @@ export class AuthService {
     return this.http
       .post<IToken>(`${this.API_URL}/refresh`, {
         refreshToken: token,
-        expiresInMins: 30,
+        expiresInMins: this.config.sessionTimeout,
       })
       .pipe(
         tap((response: IToken) => {
@@ -109,5 +118,11 @@ export class AuthService {
 
   private setTokens(tokens: IToken): void {
     this.localStorageService.setItem(this.TOKENS_KEY, tokens);
+  }
+
+  private saveLastLogin(): void {
+    const now: string = new Date().toISOString();
+    localStorage.setItem(this.LAST_LOGIN_KEY, now);
+    this.lastLoginSubject.next(now);
   }
 }
