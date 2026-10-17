@@ -1,0 +1,5 @@
+<p>В родителе: {{ user.name }}, {{ user.age }}</p>
+<app-child [user]="user"></app-child>
+<button (click)="changeName()">Изменить имя (мутация)</button>
+<button (click)="changeNameFixed()">Изменить имя (новый объект)</button>
+<button (click)="reset()">Сбросить</button>

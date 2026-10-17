@@ -1,0 +1,16 @@
+<p>OnPush</p>
+<h2>Count: {{ count }}</h2>
+
+<p>Изменение count (без ChangeDetectorRef):</p>
+<button (click)="changeCountClick()">click</button>
+<button (click)="changeCountSetTimeout()">setTimeout</button>
+<button (click)="changeCountSetInterval()">setInterval</button>
+<button (click)="changeCountPromise()">Promise</button>
+
+<p>Часть 1 и 2:</p>
+<button (click)="changeCountWithMarkForCheck()">setTimeout + markForCheck</button>
+<button (click)="changeCountWithDetectChanges()">setTimeout + detectChanges</button>
+
+<p>Часть 3 и 4:</p>
+<button (click)="detach()">detach</button>
+<button (click)="reattach()">reattach</button>
