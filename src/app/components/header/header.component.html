@@ -60,7 +60,7 @@
     }
 
     @if (lastLogin$ | async; as lastLogin) {
-      <span class="header__last-login">Последний вход: {{ lastLogin | date: dateFormat }}</span>
+      <span class="header__last-login">Последний вход: {{ lastLogin | date }}</span>
     }
     <button id="header-consultation-button" class="header__btn">Консультация</button>
   </div>

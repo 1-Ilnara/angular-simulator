@@ -15,8 +15,8 @@ import { PresetTheme } from '../../../enums/preset-theme';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../../interfaces/IUser';
 import { UserRole } from '../../../enums/user-role';
-import { DATE_FORMAT } from '../../tokens/date-format.token';
 import { APP_CONFIG } from '../../tokens/app-config.token';
+import { IAppConfig } from '../../tokens/IAppConfig';
 
 interface IThemeOption {
   label: string;
@@ -43,8 +43,7 @@ export class HeaderComponent {
   private themeService: ThemeService = inject(ThemeService);
   private authService: AuthService = inject(AuthService);
 
-  config = inject(APP_CONFIG);
-  dateFormat = inject(DATE_FORMAT);
+  config: IAppConfig = inject(APP_CONFIG);
 
   INavigation: INavigation[] = [
     { label: 'Главная', path: '/' },

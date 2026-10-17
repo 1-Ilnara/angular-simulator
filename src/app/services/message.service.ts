@@ -1,13 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IMessage } from '../../interfaces/IMessage';
+import { IAppConfig } from '../tokens/IAppConfig';
 import { APP_CONFIG } from '../tokens/app-config.token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
-  private config = inject(APP_CONFIG);
+  private config: IAppConfig = inject(APP_CONFIG);
 
   private messagesSubject: BehaviorSubject<IMessage[]> = new BehaviorSubject<IMessage[]>([]);
   messages$: Observable<IMessage[]> = this.messagesSubject.asObservable();

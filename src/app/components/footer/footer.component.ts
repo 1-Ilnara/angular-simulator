@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTelegram, faVk, faPinterest, faSkype } from '@fortawesome/free-brands-svg-icons';
 import { ISocialLink } from '../../../interfaces/ISocialLink';
 import { APP_CONFIG } from '../../tokens/app-config.token';
+import { IAppConfig } from '../../tokens/IAppConfig';
 
 @Component({
   selector: 'app-footer',
@@ -14,7 +15,7 @@ import { APP_CONFIG } from '../../tokens/app-config.token';
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-  config = inject(APP_CONFIG);
+  config: IAppConfig = inject(APP_CONFIG);
   subscribeEmail = '';
 
   socialLinks: ISocialLink[] = [

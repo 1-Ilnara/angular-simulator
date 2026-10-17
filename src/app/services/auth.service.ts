@@ -9,7 +9,7 @@ import { IUser } from '../../interfaces/IUser';
 import { IToken } from '../../interfaces/IToken';
 import { ILoginCredentials } from '../../interfaces/ILoginCredentials';
 import { APP_CONFIG } from '../tokens/app-config.token';
-
+import { IAppConfig } from '../tokens/IAppConfig';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,7 +17,7 @@ export class AuthService {
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
   private localStorageService: LocalStorageService = inject(LocalStorageService);
-  private config = inject(APP_CONFIG);
+  private config: IAppConfig = inject(APP_CONFIG);
 
   private API_URL = 'https://dummyjson.com/auth';
   private TOKENS_KEY = 'tokens';
