@@ -82,15 +82,15 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'homework-28',
+    loadComponent: (): Promise<Type<unknown>> =>
+      import('../homework-28/homework-28.component').then((m) => m.Homework28Component),
+  },
+  {
     path: '**',
     loadComponent: () =>
       import('./pages/not-found-page/not-found-page.component').then(
         (m) => m.NotFoundPageComponent,
       ),
-  },
-  {
-    path: 'homework-28',
-    loadComponent: (): Promise<Type<unknown>> =>
-      import('../homework-28/homework-28.component').then((m) => m.Homework28Component),
   },
 ];
