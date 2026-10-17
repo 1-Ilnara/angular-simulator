@@ -88,4 +88,9 @@ export const routes: Routes = [
         (m) => m.NotFoundPageComponent,
       ),
   },
+  {
+    path: 'homework-28',
+    loadComponent: (): Promise<Type<unknown>> =>
+      import('../homework-28/homework-28.component').then((m) => m.Homework28Component),
+  },
 ];
