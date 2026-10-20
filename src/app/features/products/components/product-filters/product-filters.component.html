@@ -1,0 +1,39 @@
+<div class="filters">
+  <input
+    pInputText
+    id="products-search"
+    type="text"
+    class="filters-search"
+    placeholder="Поиск товаров"
+    [value]="search()"
+    (input)="onSearchInput($event)"
+  />
+
+  <p-select
+    id="products-category"
+    placeholder="Все категории"
+    [options]="categories()"
+    [showClear]="true"
+    [ngModel]="category()"
+    (ngModelChange)="onCategoryChange($event)"
+  />
+
+  <p-select
+    id="products-sort-field"
+    optionLabel="label"
+    optionValue="value"
+    [options]="sortFieldOptions"
+    [ngModel]="sortField()"
+    (ngModelChange)="onSortFieldChange($event)"
+  />
+
+  <p-selectbutton
+    id="products-sort-order"
+    optionLabel="label"
+    optionValue="value"
+    [options]="sortOrderOptions"
+    [allowEmpty]="false"
+    [ngModel]="sortOrder()"
+    (ngModelChange)="onSortOrderChange($event)"
+  />
+</div>

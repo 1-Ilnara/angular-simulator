@@ -3,8 +3,34 @@ import { Routes } from '@angular/router';
 import { authGuard } from './interceptors/auth.guard';
 import { adminGuard } from './interceptors/admin.guard';
 import { postResolver } from './services/post.resolver';
+import { productResolver } from './features/products/routing/product.resolver';
 
 export const routes: Routes = [
+  {
+    path: 'products',
+    canActivate: [authGuard],
+    loadComponent: (): Promise<Type<unknown>> =>
+      import('./features/products/pages/product-list-page/product-list-page.component').then(
+        (m) => m.ProductListPageComponent,
+      ),
+  },
+  {
+    path: 'products/:id',
+    canActivate: [authGuard],
+    loadComponent: (): Promise<Type<unknown>> =>
+      import('./features/products/pages/product-detail-page/product-detail-page.component').then(
+        (m) => m.ProductDetailPageComponent,
+      ),
+    resolve: { product: productResolver },
+  },
+  {
+    path: 'cart',
+    canActivate: [authGuard],
+    loadComponent: (): Promise<Type<unknown>> =>
+      import('./features/products/pages/cart-page/cart-page.component').then(
+        (m) => m.CartPageComponent,
+      ),
+  },
   {
     path: 'login',
     loadComponent: () =>
