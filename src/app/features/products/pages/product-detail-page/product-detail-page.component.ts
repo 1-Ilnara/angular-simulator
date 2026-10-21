@@ -13,21 +13,22 @@ import { IProduct } from '../../interfaces/IProduct';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductDetailPageComponent {
-  private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  
+  private route: ActivatedRoute = inject(ActivatedRoute);
 
-  protected readonly product: IProduct = this.route.snapshot.data['product'] as IProduct;
+  product: IProduct = this.route.snapshot.data['product'] as IProduct;
 
-  protected readonly cartService: CartService = inject(CartService);
+  cartService: CartService = inject(CartService);
 
-  protected readonly selectedImage: WritableSignal<string> = signal<string>(
+  selectedImage: WritableSignal<string> = signal<string>(
     this.product.images[0] ?? this.product.thumbnail,
   );
 
-  protected onAddToCart(): void {
+  onAddToCart(): void {
     this.cartService.add(this.product);
   }
 
-  protected onSelectImage(image: string): void {
+  onSelectImage(image: string): void {
     this.selectedImage.set(image);
   }
 }

@@ -14,7 +14,6 @@ export const productResolver: ResolveFn<IProduct> = (
     .getProductById(id)
     .pipe(
       catchError((): Observable<never> => {
-        // Продукт не найден или ошибка сети: возвращаем к списку.
         void router.navigate(['/products']);
 
         return EMPTY;

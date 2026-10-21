@@ -9,6 +9,7 @@ import { IProductsResponse } from '../interfaces/IProductsResponse';
   providedIn: 'root',
 })
 export class ProductApiService {
+  
   private http: HttpClient = inject(HttpClient);
 
   private apiUrl: string = 'https://dummyjson.com/products';

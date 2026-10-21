@@ -21,6 +21,7 @@ import { ProductApiService } from './product-api.service';
   providedIn: 'root',
 })
 export class ProductService {
+  
   private productApi: ProductApiService = inject(ProductApiService);
 
   private searchDebounceMs: number = 300;
@@ -42,7 +43,7 @@ export class ProductService {
 
   private _sortOrder: WritableSignal<Order> = signal<Order>(Order.ASC);
 
-  private readonly _page: WritableSignal<number> = linkedSignal<unknown, number>({
+  private _page: WritableSignal<number> = linkedSignal<unknown, number>({
     source: (): unknown => ({
       search: this._search(),
       category: this._selectedCategory(),
@@ -67,7 +68,7 @@ export class ProductService {
 
   skip: Signal<number> = computed((): number => (this.page() - 1) * this.pageSize());
 
-  private readonly query: Signal<IProductQuery> = computed((): IProductQuery => ({
+  private query: Signal<IProductQuery> = computed((): IProductQuery => ({
     search: this._search(),
     category: this._selectedCategory(),
     params: {
@@ -78,7 +79,7 @@ export class ProductService {
     },
   }));
 
-  private readonly productsResource: ResourceRef<IProductsResponse> = rxResource({
+  private productsResource: ResourceRef<IProductsResponse> = rxResource({
     params: (): IProductQuery => this.query(),
     stream: ({ params }): Observable<IProductsResponse> => {
       const request$: Observable<IProductsResponse> = this.loadProducts(params);
@@ -95,9 +96,7 @@ export class ProductService {
     defaultValue: this.emptyResponse,
   });
 
-  readonly products: Signal<IProduct[]> = computed(
-    (): IProduct[] => this.productsResource.value().products,
-  );
+  products: Signal<IProduct[]> = computed((): IProduct[] => this.productsResource.value().products);
 
   total: Signal<number> = linkedSignal<{ loading: boolean; total: number }, number>({
     source: (): { loading: boolean; total: number } => ({

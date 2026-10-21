@@ -14,7 +14,6 @@ import { Order } from '../../enums/Order';
 import { SortBy } from '../../enums/SortBy';
 import { IOption } from '../../interfaces/IOption';
 
-/** Панель фильтров: поиск, категория, сортировка. Состояние не хранит. */
 @Component({
   selector: 'app-product-filters',
   imports: [FormsModule, InputTextModule, SelectModule, SelectButtonModule],
@@ -23,14 +22,15 @@ import { IOption } from '../../interfaces/IOption';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductFiltersComponent {
-  protected readonly sortFieldOptions: IOption<SortBy>[] = [
+
+  sortFieldOptions: IOption<SortBy>[] = [
     { label: 'Название', value: SortBy.TITLE },
     { label: 'Цена', value: SortBy.PRICE },
     { label: 'Рейтинг', value: SortBy.RATING },
     { label: 'Наличие', value: SortBy.STOCK },
   ];
 
-  protected readonly sortOrderOptions: IOption<Order>[] = [
+  sortOrderOptions: IOption<Order>[] = [
     { label: 'По возрастанию', value: Order.ASC },
     { label: 'По убыванию', value: Order.DESC },
   ];
@@ -53,19 +53,19 @@ export class ProductFiltersComponent {
 
   sortOrderChange: OutputEmitterRef<Order> = output<Order>();
 
-  protected onSearchInput(event: Event): void {
+  onSearchInput(event: Event): void {
     this.searchChange.emit((event.target as HTMLInputElement).value);
   }
 
-  protected onCategoryChange(value: string | null): void {
+  onCategoryChange(value: string | null): void {
     this.categoryChange.emit(value);
   }
 
-  protected onSortFieldChange(value: SortBy): void {
+  onSortFieldChange(value: SortBy): void {
     this.sortFieldChange.emit(value);
   }
 
-  protected onSortOrderChange(value: Order): void {
+  onSortOrderChange(value: Order): void {
     this.sortOrderChange.emit(value);
   }
 }

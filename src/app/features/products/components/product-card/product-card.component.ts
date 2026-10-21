@@ -11,7 +11,6 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { IProduct } from '../../interfaces/IProduct';
 
-/** Карточка продукта. Данные получает через input, действия отдаёт через output. */
 @Component({
   selector: 'app-product-card',
   imports: [CurrencyPipe, CardModule, ButtonModule],
@@ -20,18 +19,18 @@ import { IProduct } from '../../interfaces/IProduct';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductCardComponent {
+  
   product: InputSignal<IProduct> = input.required<IProduct>();
 
   addToCart: OutputEmitterRef<IProduct> = output<IProduct>();
 
   open: OutputEmitterRef<IProduct> = output<IProduct>();
 
-  protected onOpen(): void {
+  onOpen(): void {
     this.open.emit(this.product());
   }
 
-  protected onAddToCart(event: MouseEvent): void {
-    // Клик по кнопке не должен открывать страницу продукта.
+  onAddToCart(event: MouseEvent): void {
     event.stopPropagation();
     this.addToCart.emit(this.product());
   }

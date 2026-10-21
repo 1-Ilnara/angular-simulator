@@ -1,5 +1,4 @@
 import { ICartProduct } from './ICartProduct';
-
 export interface ICartResponse {
   id: number;
   products: ICartProduct[];

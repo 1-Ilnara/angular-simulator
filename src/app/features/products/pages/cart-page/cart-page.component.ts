@@ -12,21 +12,22 @@ import { CartService } from '../../data-access/cart.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartPageComponent {
-  protected readonly cartService: CartService = inject(CartService);
+  
+  cartService: CartService = inject(CartService);
 
-  protected onDecrease(id: number, quantity: number): void {
+  onDecrease(id: number, quantity: number): void {
     this.cartService.setQuantity(id, quantity - 1);
   }
 
-  protected onIncrease(id: number, quantity: number): void {
+  onIncrease(id: number, quantity: number): void {
     this.cartService.setQuantity(id, quantity + 1);
   }
 
-  protected onRemove(id: number): void {
+  onRemove(id: number): void {
     this.cartService.remove(id);
   }
 
-  protected onClear(): void {
+  onClear(): void {
     this.cartService.clear();
   }
 }

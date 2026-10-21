@@ -12,6 +12,7 @@ import { CartApiService } from './cart-api.service';
   providedIn: 'root',
 })
 export class CartService {
+  
   private cartApi: CartApiService = inject(CartApiService);
 
   private userId: number = 1;
@@ -37,13 +38,9 @@ export class CartService {
     ),
   );
 
-  readonly tax: Signal<number> = computed((): number =>
-    this.roundMoney(this.subtotal() * this.taxRate),
-  );
+  tax: Signal<number> = computed((): number => this.roundMoney(this.subtotal() * this.taxRate));
 
-  readonly total: Signal<number> = computed((): number =>
-    this.roundMoney(this.subtotal() + this.tax()),
-  );
+  total: Signal<number> = computed((): number => this.roundMoney(this.subtotal() + this.tax()));
 
   constructor() {
     this.loadUserCart();

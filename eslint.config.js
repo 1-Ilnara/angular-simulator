@@ -3,7 +3,7 @@ const { defineConfig } = require('eslint/config');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 const stylistic = require('@stylistic/eslint-plugin');
-const prettierRecommended = require('eslint-plugin-prettier/recommended');
+const eslintConfigPrettier = require('eslint-config-prettier');
 
 module.exports = defineConfig([
   {
@@ -15,7 +15,7 @@ module.exports = defineConfig([
       eslint.configs.recommended,
       tseslint.configs.recommended,
       angular.configs.tsRecommended,
-      prettierRecommended,
+      eslintConfigPrettier,
     ],
     processor: angular.processInlineTemplates,
     plugins: {
@@ -76,19 +76,12 @@ module.exports = defineConfig([
         },
       ],
 
-      // Разрешаем const { a, b, ...rest } = obj, где a и b нужны только чтобы исключить поля.
       '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
-
-      // Эти два правила прямо конфликтуют с Prettier (он убирает пустые строки
-      // в начале и конце класса и пробелы внутри ${}), поэтому они отключены
-      // последними, как и рекомендует eslint-config-prettier.
-      '@stylistic/padded-blocks': 'off',
-      '@stylistic/template-curly-spacing': 'off',
     },
   },
   {
     files: ['**/*.html'],
-    extends: [angular.configs.templateRecommended, prettierRecommended],
+    extends: [angular.configs.templateRecommended, eslintConfigPrettier],
     rules: {
       '@angular-eslint/template/banana-in-box': 'error',
 
