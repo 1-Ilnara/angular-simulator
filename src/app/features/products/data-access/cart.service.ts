@@ -12,7 +12,7 @@ import { CartApiService } from './cart-api.service';
   providedIn: 'root',
 })
 export class CartService {
-  
+
   private cartApi: CartApiService = inject(CartApiService);
 
   private userId: number = 1;
@@ -106,11 +106,7 @@ export class CartService {
           this.cartId = cart?.id ?? null;
           const products: ICartProduct[] = cart?.products ?? [];
 
-          this._items.set(
-            products.map((product: ICartProduct): ICartItem =>
-              this.mapCartProductToCartItem(product),
-            ),
-          );
+          this._items.set(products);
         }),
         catchError((): Observable<never> => EMPTY),
       )
@@ -120,12 +116,12 @@ export class CartService {
   private updateItems(next: ICartItem[]): void {
     this._items.set(next);
 
-    this.saveCartOnServer(next)
+    this.saveCart(next)
       .pipe(catchError((): Observable<never> => EMPTY))
       .subscribe();
   }
 
-  private saveCartOnServer(items: ICartItem[]): Observable<ICartResponse> {
+  private saveCart(items: ICartItem[]): Observable<ICartResponse> {
     const products: ICartProductPayload[] = items.map(
       ({ id, quantity }: ICartItem): ICartProductPayload => ({ id, quantity }),
     );
@@ -145,18 +141,8 @@ export class CartService {
     return { id, title, price, thumbnail, quantity: 1 };
   }
 
-  private mapCartProductToCartItem({
-    id,
-    title,
-    price,
-    quantity,
-    thumbnail,
-  }: ICartProduct): ICartItem {
-    return { id, title, price, quantity, thumbnail };
-  }
-
   private roundMoney(value: number): number {
     return Math.round(value * 100) / 100;
   }
-
+  
 }
