@@ -34,4 +34,5 @@ export class ProductCardComponent {
     event.stopPropagation();
     this.addToCart.emit(this.product());
   }
+  
 }

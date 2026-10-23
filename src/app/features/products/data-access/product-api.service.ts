@@ -9,7 +9,7 @@ import { IProductsResponse } from '../interfaces/IProductsResponse';
   providedIn: 'root',
 })
 export class ProductApiService {
-  
+
   private http: HttpClient = inject(HttpClient);
 
   private apiUrl: string = 'https://dummyjson.com/products';
@@ -40,4 +40,5 @@ export class ProductApiService {
   getCategories(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/category-list`);
   }
+  
 }

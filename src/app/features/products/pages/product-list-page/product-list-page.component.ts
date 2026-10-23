@@ -16,7 +16,7 @@ import { IProduct } from '../../interfaces/IProduct';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductListPageComponent {
-  
+
   productService: ProductService = inject(ProductService);
 
   cartService: CartService = inject(CartService);
@@ -54,4 +54,5 @@ export class ProductListPageComponent {
 
     this.productService.setPage((event.page ?? 0) + 1);
   }
+  
 }

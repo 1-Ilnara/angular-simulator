@@ -21,7 +21,7 @@ import { ProductApiService } from './product-api.service';
   providedIn: 'root',
 })
 export class ProductService {
-  
+
   private productApi: ProductApiService = inject(ProductApiService);
 
   private searchDebounceMs: number = 300;
@@ -98,18 +98,9 @@ export class ProductService {
 
   products: Signal<IProduct[]> = computed((): IProduct[] => this.productsResource.value().products);
 
-  total: Signal<number> = linkedSignal<{ loading: boolean; total: number }, number>({
-    source: (): { loading: boolean; total: number } => ({
-      loading: this.productsResource.isLoading(),
-      total: this.productsResource.value().total,
-    }),
-    computation: (
-      source: { loading: boolean; total: number },
-      previous?: { value: number },
-    ): number => (source.loading && previous ? previous.value : source.total),
-  });
+  total: Signal<number> = computed((): number => this.productsResource.value().total);
 
-  loading: Signal<boolean> = this.productsResource.isLoading;
+  isLoading: Signal<boolean> = this.productsResource.isLoading;
 
   categories: Signal<string[]> = toSignal(
     this.productApi.getCategories().pipe(catchError((): Observable<string[]> => of([]))),
@@ -156,4 +147,5 @@ export class ProductService {
 
     return this.productApi.getProducts(params);
   }
+  
 }

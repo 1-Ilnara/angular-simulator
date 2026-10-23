@@ -57,7 +57,7 @@ export class CartService {
       return;
     }
 
-    this.commit([...this._items(), this.toCartItem(product)]);
+    this.updateItems([...this._items(), this.mapProductToCartItem(product)]);
   }
 
   setQuantity(id: number, quantity: number): void {
@@ -71,13 +71,13 @@ export class CartService {
       item.id === id ? { ...item, quantity } : item,
     );
 
-    this.commit(next);
+    this.updateItems(next);
   }
 
   remove(id: number): void {
     const next: ICartItem[] = this._items().filter((item: ICartItem): boolean => item.id !== id);
 
-    this.commit(next);
+    this.updateItems(next);
   }
 
   clear(): void {
@@ -107,7 +107,9 @@ export class CartService {
           const products: ICartProduct[] = cart?.products ?? [];
 
           this._items.set(
-            products.map((product: ICartProduct): ICartItem => this.fromCartProduct(product)),
+            products.map((product: ICartProduct): ICartItem =>
+              this.mapCartProductToCartItem(product),
+            ),
           );
         }),
         catchError((): Observable<never> => EMPTY),
@@ -115,15 +117,15 @@ export class CartService {
       .subscribe();
   }
 
-  private commit(next: ICartItem[]): void {
+  private updateItems(next: ICartItem[]): void {
     this._items.set(next);
 
-    this.sync(next)
+    this.saveCartOnServer(next)
       .pipe(catchError((): Observable<never> => EMPTY))
       .subscribe();
   }
 
-  private sync(items: ICartItem[]): Observable<ICartResponse> {
+  private saveCartOnServer(items: ICartItem[]): Observable<ICartResponse> {
     const products: ICartProductPayload[] = items.map(
       ({ id, quantity }: ICartItem): ICartProductPayload => ({ id, quantity }),
     );
@@ -139,15 +141,22 @@ export class CartService {
     return this.cartApi.updateCart(this.cartId, products);
   }
 
-  private toCartItem({ id, title, price, thumbnail }: IProduct): ICartItem {
+  private mapProductToCartItem({ id, title, price, thumbnail }: IProduct): ICartItem {
     return { id, title, price, thumbnail, quantity: 1 };
   }
 
-  private fromCartProduct({ id, title, price, quantity, thumbnail }: ICartProduct): ICartItem {
+  private mapCartProductToCartItem({
+    id,
+    title,
+    price,
+    quantity,
+    thumbnail,
+  }: ICartProduct): ICartItem {
     return { id, title, price, quantity, thumbnail };
   }
 
   private roundMoney(value: number): number {
     return Math.round(value * 100) / 100;
   }
+
 }

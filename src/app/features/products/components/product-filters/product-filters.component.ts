@@ -1,15 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  InputSignal,
-  output,
-  OutputEmitterRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { ProductService } from '../../data-access/product.service';
 import { Order } from '../../enums/Order';
 import { SortBy } from '../../enums/SortBy';
 import { IOption } from '../../interfaces/IOption';
@@ -22,6 +16,8 @@ import { IOption } from '../../interfaces/IOption';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductFiltersComponent {
+  
+  productService: ProductService = inject(ProductService);
 
   sortFieldOptions: IOption<SortBy>[] = [
     { label: 'Название', value: SortBy.TITLE },
@@ -35,37 +31,20 @@ export class ProductFiltersComponent {
     { label: 'По убыванию', value: Order.DESC },
   ];
 
-  search: InputSignal<string> = input.required<string>();
-
-  category: InputSignal<string | null> = input.required<string | null>();
-
-  sortField: InputSignal<SortBy> = input.required<SortBy>();
-
-  sortOrder: InputSignal<Order> = input.required<Order>();
-
-  categories: InputSignal<string[]> = input.required<string[]>();
-
-  searchChange: OutputEmitterRef<string> = output<string>();
-
-  categoryChange: OutputEmitterRef<string | null> = output<string | null>();
-
-  sortFieldChange: OutputEmitterRef<SortBy> = output<SortBy>();
-
-  sortOrderChange: OutputEmitterRef<Order> = output<Order>();
-
   onSearchInput(event: Event): void {
-    this.searchChange.emit((event.target as HTMLInputElement).value);
+    this.productService.setSearch((event.target as HTMLInputElement).value);
   }
 
   onCategoryChange(value: string | null): void {
-    this.categoryChange.emit(value);
+    this.productService.setCategory(value);
   }
 
   onSortFieldChange(value: SortBy): void {
-    this.sortFieldChange.emit(value);
+    this.productService.setSortField(value);
   }
 
   onSortOrderChange(value: Order): void {
-    this.sortOrderChange.emit(value);
+    this.productService.setSortOrder(value);
   }
+
 }

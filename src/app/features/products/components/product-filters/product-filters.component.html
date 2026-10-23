@@ -5,16 +5,16 @@
     type="text"
     class="filters-search"
     placeholder="Поиск товаров"
-    [value]="search()"
+    [value]="productService.search()"
     (input)="onSearchInput($event)"
   />
 
   <p-select
     id="products-category"
     placeholder="Все категории"
-    [options]="categories()"
+    [options]="productService.categories()"
     [showClear]="true"
-    [ngModel]="category()"
+    [ngModel]="productService.selectedCategory()"
     (ngModelChange)="onCategoryChange($event)"
   />
 
@@ -23,7 +23,7 @@
     optionLabel="label"
     optionValue="value"
     [options]="sortFieldOptions"
-    [ngModel]="sortField()"
+    [ngModel]="productService.sortField()"
     (ngModelChange)="onSortFieldChange($event)"
   />
 
@@ -33,7 +33,7 @@
     optionValue="value"
     [options]="sortOrderOptions"
     [allowEmpty]="false"
-    [ngModel]="sortOrder()"
+    [ngModel]="productService.sortOrder()"
     (ngModelChange)="onSortOrderChange($event)"
   />
 </div>
