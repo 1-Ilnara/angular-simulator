@@ -1,0 +1,28 @@
+<p-card class="card" (click)="onOpen()">
+  <ng-template #header>
+    <img class="card-image" [src]="product().thumbnail" [alt]="product().title" />
+  </ng-template>
+
+  <ng-template #title>{{ product().title }}</ng-template>
+  <ng-template #subtitle>{{ product().category }}</ng-template>
+
+  <div class="card-info">
+    <span class="card-price">{{ product().price | currency }}</span>
+    <span class="card-rating">★ {{ product().rating }}</span>
+  </div>
+
+  @if (product().stock > 0) {
+    <p class="card-stock">В наличии: {{ product().stock }}</p>
+  } @else {
+    <p class="card-stock card-stock-out">Нет в наличии</p>
+  }
+
+  <ng-template #footer>
+    <p-button
+      label="В корзину"
+      [id]="'product-card-add-to-cart-' + product().id"
+      [disabled]="product().stock === 0"
+      (onClick)="onAddToCart($event)"
+    />
+  </ng-template>
+</p-card>

@@ -1,0 +1,41 @@
+<section class="products">
+  <div class="products-top">
+    <h1>Товары</h1>
+    <a id="products-cart-link" routerLink="/cart">Корзина ({{ cartService.itemsCount() }})</a>
+  </div>
+
+  <app-product-filters />
+
+  <div class="products-grid">
+    @if (productService.isLoading()) {
+      @for (item of skeletonItems(); track item) {
+        <div class="skeleton-card">
+          <p-skeleton height="180px" />
+          <p-skeleton width="80%" height="1.2rem" />
+          <p-skeleton width="50%" height="1rem" />
+          <p-skeleton width="40%" height="1rem" />
+        </div>
+      }
+    } @else {
+      @for (product of productService.products(); track product.id) {
+        <app-product-card
+          [product]="product"
+          (addToCart)="onAddToCart($event)"
+          (open)="onOpen($event)"
+        />
+      } @empty {
+        <p class="products-message">Ничего не найдено.</p>
+      }
+    }
+  </div>
+
+  <p-paginator
+    [first]="productService.skip()"
+    [rows]="productService.pageSize()"
+    [totalRecords]="productService.total()"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="pageReportTemplate"
+    (onPageChange)="onPageChange($event)"
+  />
+</section>

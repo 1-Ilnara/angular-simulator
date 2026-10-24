@@ -1,0 +1,26 @@
+.card {
+  display: block;
+  height: 100%;
+  cursor: pointer;
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.card-stock {
+  margin: 8px 0 0;
+  color: #15803d;
+}
+
+.card-stock-out {
+  color: #b91c1c;
+}

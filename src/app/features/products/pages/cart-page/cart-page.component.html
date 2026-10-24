@@ -1,0 +1,72 @@
+<section class="cart">
+  <h1>Корзина</h1>
+
+  @if (cartService.items().length === 0) {
+    <p>Корзина пуста.</p>
+    <a id="cart-to-products" routerLink="/products">К товарам</a>
+  } @else {
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of cartService.items(); track item.id) {
+          <tr>
+            <td>
+              <img class="cart-image" [src]="item.thumbnail" [alt]="item.title" />
+            </td>
+            <td>
+              <a [routerLink]="['/products', item.id]">{{ item.title }}</a>
+            </td>
+            <td>{{ item.price | currency }}</td>
+            <td>
+              <p-button
+                label="−"
+                severity="secondary"
+                size="small"
+                [id]="'cart-decrease-' + item.id"
+                (onClick)="onDecrease(item.id, item.quantity)"
+              />
+              <span class="cart-quantity">{{ item.quantity }}</span>
+              <p-button
+                label="+"
+                severity="secondary"
+                size="small"
+                [id]="'cart-increase-' + item.id"
+                (onClick)="onIncrease(item.id, item.quantity)"
+              />
+            </td>
+            <td>{{ item.price * item.quantity | currency }}</td>
+            <td>
+              <p-button
+                label="Удалить"
+                severity="danger"
+                size="small"
+                [id]="'cart-remove-' + item.id"
+                (onClick)="onRemove(item.id)"
+              />
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <dl class="cart-summary">
+      <dt>Subtotal</dt>
+      <dd>{{ cartService.subtotal() | currency }}</dd>
+      <dt>Tax</dt>
+      <dd>{{ cartService.tax() | currency }}</dd>
+      <dt class="cart-total">Total</dt>
+      <dd class="cart-total">{{ cartService.total() | currency }}</dd>
+    </dl>
+
+    <p-button id="cart-clear" label="Очистить корзину" severity="danger" (onClick)="onClear()" />
+  }
+</section>

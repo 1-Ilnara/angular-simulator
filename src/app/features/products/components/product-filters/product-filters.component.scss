@@ -1,0 +1,11 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.filters-search {
+  min-width: 240px;
+}
