@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { MessageComponent } from './components/message/message.component';
-import { MessageService } from './services/message.service';
-import { LocalStorageService } from './services/storage.service';
-import { LoaderComponent } from './components/loader/loader.component';
+import { HeaderComponent } from './core/layout/header/header.component';
+import { FooterComponent } from './core/layout/footer/footer.component';
+import { MessageComponent } from './core/layout/message/message.component';
+import { MessageService } from './core/services/message.service';
+import { LocalStorageService } from './core/services/storage.service';
+import { LoaderComponent } from './core/layout/loader/loader.component';
 
 @Component({
   selector: 'app-root',
