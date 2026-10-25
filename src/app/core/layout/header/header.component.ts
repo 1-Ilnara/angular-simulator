@@ -11,10 +11,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSun, faMoon, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { INavigation } from '../../interfaces/INavigation';
 import { ThemeService } from '../../services/theme.service';
-import { PresetTheme } from '../../enums/preset-theme';
+import { PresetTheme } from '../../enums/PresetTheme';
 import { AuthService } from '../../../features/auth/data-access/auth.service';
 import { IUser } from '../../interfaces/IUser';
-import { UserRole } from '../../enums/user-role';
+import { UserRole } from '../../enums/UserRole';
 import { APP_CONFIG } from '../../tokens/app-config.token';
 import { IAppConfig } from '../../tokens/IAppConfig';
 

@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { MessageType } from '../enums/MessageType';
+import { MessageType } from '../../shared/enums/MessageType';
 import { MessageService } from '../services/message.service';
 
 export const errorHandlerInterceptor: HttpInterceptorFn = (

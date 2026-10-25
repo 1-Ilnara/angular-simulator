@@ -14,7 +14,7 @@ import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { PresetTheme } from './core/enums/preset-theme';
+import { PresetTheme } from './core/enums/PresetTheme';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './features/auth/data-access/auth.service';

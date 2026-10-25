@@ -61,10 +61,8 @@ UI и логика: Smart/Dumb компоненты и CBD. Страница «�
 src/app/
 ├── core/
 │ ├── enums/
-│ │ ├── MessageType.ts
-│ │ ├── color.ts
-│ │ ├── preset-theme.ts
-│ │ └── user-role.ts
+│ │ ├── PresetTheme.ts
+│ │ └── UserRole.ts
 │ ├── guards/
 │ │ ├── admin.guard.ts
 │ │ └── auth.guard.ts
@@ -183,6 +181,9 @@ src/app/
 │ ├── directives/
 │ │ ├── animated-gradient.directive.ts
 │ │ └── hover-bold.directive.ts
+│ ├── enums/
+│ │ ├── Color.ts
+│ │ └── MessageType.ts
 │ ├── interfaces/
 │ │ ├── IBlogPost.ts
 │ │ ├── IDestination.ts
@@ -199,3 +200,7 @@ src/app/
 └── collection.ts
 
 Папки компонентов и страниц кроме .ts содержат ещё .html и .scss, для краткости они не показаны.
+
+```
+
+```

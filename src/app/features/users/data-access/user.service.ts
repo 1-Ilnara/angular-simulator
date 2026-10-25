@@ -6,7 +6,7 @@ import { UserApiService } from './user-api.service';
 import { LoaderService } from '../../../core/services/loader.service';
 import { MessageService } from '../../../core/services/message.service';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
-import { MessageType } from '../../../core/enums/MessageType';
+import { MessageType } from '../../../shared/enums/MessageType';
 
 @Injectable({
   providedIn: 'root',

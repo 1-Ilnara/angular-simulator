@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { AuthService } from '../../features/auth/data-access/auth.service';
 import { IUser } from '../interfaces/IUser';
-import { UserRole } from '../enums/user-role';
+import { UserRole } from '../enums/UserRole';
 
 export const adminGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
   const authService: AuthService = inject(AuthService);
