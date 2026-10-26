@@ -14,13 +14,13 @@ import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { PresetTheme } from '../enums/preset-theme';
+import { PresetTheme } from './core/enums/PresetTheme';
 import { routes } from './app.routes';
-import { authInterceptor } from './interceptors/auth.interceptor';
-import { AuthService } from './services/auth.service';
-import { IUser } from '../interfaces/IUser';
-import { IAppConfig } from './tokens/IAppConfig';
-import { APP_CONFIG } from './tokens/app-config.token';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { AuthService } from './features/auth/data-access/auth.service';
+import { IUser } from './core/interfaces/IUser';
+import { IAppConfig } from './core/tokens/IAppConfig';
+import { APP_CONFIG } from './core/tokens/app-config.token';
 
 const appSettings: IAppConfig = {
   companyName: 'РумТибет',
