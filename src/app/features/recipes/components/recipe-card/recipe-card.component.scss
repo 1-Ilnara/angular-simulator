@@ -1,0 +1,28 @@
+.recipe-card {
+  display: block;
+
+  &__name {
+    margin: 0 0 12px;
+    font-size: 18px;
+  }
+
+  &__info {
+    margin: 0;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 0;
+
+    dt {
+      opacity: 0.7;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+}

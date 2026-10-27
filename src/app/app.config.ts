@@ -6,6 +6,8 @@ import {
 } from '@angular/core';
 import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { provideRouter } from '@angular/router';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
@@ -66,6 +68,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
+    provideStore(),
+    provideEffects(),
     provideZoneChangeDetection(),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimationsAsync(),

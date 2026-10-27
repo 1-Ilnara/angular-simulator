@@ -1,0 +1,57 @@
+<section class="quotes-page">
+  <h1 class="quotes-page__title">Цитаты</h1>
+
+  <div class="quotes-page__stats" id="quotes-stats">
+    <span>Избранное: {{ quotesStore.favoritesCount() }}</span>
+    <span>Авторов: {{ quotesStore.authorsCount() }}</span>
+  </div>
+
+  <div class="quotes-page__toolbar">
+    <p-selectbutton
+      id="quotes-filter"
+      [options]="filterOptions"
+      [ngModel]="quotesStore.filter()"
+      optionLabel="label"
+      optionValue="value"
+      (onChange)="onFilterChange($event)"
+    ></p-selectbutton>
+
+    <p-button
+      id="quotes-random-button"
+      label="Случайная цитата"
+      icon="pi pi-sync"
+      (onClick)="onRandomQuote()"
+    ></p-button>
+  </div>
+
+  @if (quotesStore.randomQuote(); as randomQuote) {
+    <div class="quotes-page__random" id="quotes-random-block">
+      <h2 class="quotes-page__random-title">Случайная цитата</h2>
+      <p class="quotes-page__random-text">«{{ randomQuote.quote }}»</p>
+      <p class="quotes-page__random-author">— {{ randomQuote.author }}</p>
+    </div>
+  }
+
+  @if (quotesStore.loading()) {
+    <p class="quotes-page__loading" id="quotes-loading-message">Загрузка цитат...</p>
+  }
+
+  @if (quotesStore.error(); as errorMessage) {
+    <div class="quotes-page__error" id="quotes-error-block">
+      <p>{{ errorMessage }}</p>
+
+      <p-button
+        id="quotes-retry-button"
+        label="Повторить"
+        severity="danger"
+        (onClick)="onRetry()"
+      ></p-button>
+    </div>
+  }
+
+  <div class="quotes-page__list">
+    @for (quote of quotesStore.visibleQuotes(); track quote.id) {
+      <app-quote-card [quote]="quote" (favoriteToggle)="onFavoriteToggle($event)"></app-quote-card>
+    }
+  </div>
+</section>

@@ -1,0 +1,31 @@
+.recipes-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__error {
+    color: #c0392b;
+  }
+
+  &__loading {
+    opacity: 0.7;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+}

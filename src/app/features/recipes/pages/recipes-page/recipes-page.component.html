@@ -1,0 +1,27 @@
+<section class="recipes-page">
+  <header class="recipes-page__header">
+    <h1 class="recipes-page__title">Рецепты</h1>
+
+    <p-button
+      id="recipes-reload-button"
+      label="Обновить рецепты"
+      icon="pi pi-refresh"
+      [loading]="loading()"
+      (onClick)="onReload()"
+    ></p-button>
+  </header>
+
+  @if (error(); as errorMessage) {
+    <p class="recipes-page__error" id="recipes-error-message">{{ errorMessage }}</p>
+  }
+
+  @if (loading()) {
+    <p class="recipes-page__loading" id="recipes-loading-message">Загрузка рецептов...</p>
+  }
+
+  <div class="recipes-page__grid">
+    @for (recipe of recipes(); track recipe.id) {
+      <app-recipe-card [recipe]="recipe"></app-recipe-card>
+    }
+  </div>
+</section>
