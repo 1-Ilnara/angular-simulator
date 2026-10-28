@@ -14,12 +14,12 @@ interface IFilterOption {
 @Component({
   selector: 'app-quotes-page',
   imports: [FormsModule, ButtonModule, SelectButtonModule, QuoteCardComponent],
+  providers: [QuotesStore],
   templateUrl: './quotes-page.component.html',
   styleUrl: './quotes-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuotesPageComponent implements OnInit {
-
   quotesStore: InstanceType<typeof QuotesStore> = inject(QuotesStore);
 
   filterOptions: IFilterOption[] = [
@@ -48,5 +48,4 @@ export class QuotesPageComponent implements OnInit {
   onRetry(): void {
     this.quotesStore.loadQuotes();
   }
-
 }

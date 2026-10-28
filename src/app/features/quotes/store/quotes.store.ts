@@ -1,4 +1,4 @@
-import { computed, inject } from '@angular/core';
+import { computed, inject, Signal } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, EMPTY, Observable, pipe, switchMap, tap } from 'rxjs';
@@ -18,11 +18,12 @@ const initialQuotesState: IQuotesState = {
 };
 
 export const QuotesStore = signalStore(
-  { providedIn: 'root' },
   withState<IQuotesState>(initialQuotesState),
   withRequestStatus(),
   withComputed(({ quotes, favorites, filter }) => {
-    const favoriteIds = computed((): Set<number> => new Set(favorites().map((item: IQuote): number => item.id)));
+    const favoriteIds: Signal<Set<number>> = computed(
+      (): Set<number> => new Set(favorites().map((item: IQuote): number => item.id)),
+    );
 
     return {
       favoritesCount: computed((): number => favorites().length),
@@ -34,9 +35,10 @@ export const QuotesStore = signalStore(
       visibleQuotes: computed((): IQuoteCard[] => {
         const source: IQuote[] = filter() === QuoteFilter.FAVORITES ? favorites() : quotes();
 
-        return source.map(
-          (item: IQuote): IQuoteCard => ({ ...item, isFavorite: favoriteIds().has(item.id) }),
-        );
+        return source.map((item: IQuote): IQuoteCard => ({
+          ...item,
+          isFavorite: favoriteIds().has(item.id),
+        }));
       }),
     };
   }),
@@ -44,19 +46,18 @@ export const QuotesStore = signalStore(
     loadQuotes: rxMethod<void>(
       pipe(
         tap((): void => store.startRequest()),
-        switchMap(
-          (): Observable<IQuotesResponse> =>
-            quoteApiService.getQuotes().pipe(
-              tap((response: IQuotesResponse): void => {
-                patchState(store, { quotes: response.quotes });
-                store.finishRequest();
-              }),
-              catchError((): Observable<never> => {
-                store.failRequest('Не удалось загрузить цитаты');
+        switchMap((): Observable<IQuotesResponse> =>
+          quoteApiService.getQuotes().pipe(
+            tap((response: IQuotesResponse): void => {
+              patchState(store, { quotes: response.quotes });
+              store.finishRequest();
+            }),
+            catchError((): Observable<never> => {
+              store.failRequest('Не удалось загрузить цитаты');
 
-                return EMPTY;
-              }),
-            ),
+              return EMPTY;
+            }),
+          ),
         ),
       ),
     ),
@@ -76,7 +77,9 @@ export const QuotesStore = signalStore(
         return;
       }
 
-      const quote: IQuote | undefined = store.quotes().find((item: IQuote): boolean => item.id === id);
+      const quote: IQuote | undefined = store
+        .quotes()
+        .find((item: IQuote): boolean => item.id === id);
 
       if (quote) {
         patchState(store, { favorites: [...store.favorites(), quote] });
