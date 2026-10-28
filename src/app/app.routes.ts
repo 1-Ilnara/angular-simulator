@@ -32,6 +32,20 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'recipes',
+    canActivate: [authGuard],
+    loadChildren: (): Promise<Routes> =>
+      import('./features/recipes/routing/recipes.routes').then((m) => m.recipesRoutes),
+  },
+  {
+    path: 'quotes',
+    canActivate: [authGuard],
+    loadComponent: (): Promise<Type<unknown>> =>
+      import('./features/quotes/pages/quotes-page/quotes-page.component').then(
+        (m) => m.QuotesPageComponent,
+      ),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./features/auth/components/login/login.components').then((m) => m.LoginComponent),

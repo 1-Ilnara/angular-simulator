@@ -52,6 +52,8 @@ export class HeaderComponent {
     { label: 'Стоимость', path: '/price' },
     { label: 'Блог', path: '/blog' },
     { label: 'Контакты', path: '/contacts' },
+    { label: 'Рецепты', path: '/recipes' },
+    { label: 'Цитаты', path: '/quotes' },
   ];
 
   adminNavigation: INavigation[] = [

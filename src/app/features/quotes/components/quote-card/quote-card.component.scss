@@ -1,0 +1,14 @@
+.quote-card {
+  display: block;
+
+  &__text {
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-style: italic;
+  }
+
+  &__author {
+    margin: 0 0 16px;
+    font-weight: 600;
+  }
+}

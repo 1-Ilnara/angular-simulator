@@ -1,0 +1,20 @@
+<p-card class="recipe-card">
+  <h2 class="recipe-card__name">{{ recipe().name }}</h2>
+
+  <dl class="recipe-card__info">
+    <div class="recipe-card__row">
+      <dt>Кухня</dt>
+      <dd>{{ recipe().cuisine }}</dd>
+    </div>
+
+    <div class="recipe-card__row">
+      <dt>Время приготовления</dt>
+      <dd>{{ totalTimeMinutes() }} мин</dd>
+    </div>
+
+    <div class="recipe-card__row">
+      <dt>Рейтинг</dt>
+      <dd>{{ recipe().rating }}</dd>
+    </div>
+  </dl>
+</p-card>
